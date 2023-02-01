@@ -1,3 +1,9 @@
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/recipes', 'ProductsController.fetchAll');
+// Products route
+Route
+    .group(() => {
+        Route.get('/:id', 'ProductsController.fetchById');
+        Route.get('', 'ProductsController.paginate');
+    })
+    .prefix("/products")
