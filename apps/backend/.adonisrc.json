@@ -10,7 +10,8 @@
     "App": "app",
     "Config": "config",
     "Database": "database",
-    "Contracts": "contracts"
+    "Contracts": "contracts",
+    "Types": "../../packages/types/src"
   },
   "preloads": [
     "./start/routes",
