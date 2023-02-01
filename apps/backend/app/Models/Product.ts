@@ -5,6 +5,12 @@ export default class Product extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public name: string
+
+  @column()
+  public imageUrl: string | null
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
