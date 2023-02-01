@@ -21,6 +21,9 @@
         "preview": {
           "ssr": "src/entry.preview.tsx",
           "mode": "production"
+        },
+        "production": {
+          "configFile": "apps/web/adaptors/express/vite.config.ts"
         }
       },
       "dependsOn": ["build"]
