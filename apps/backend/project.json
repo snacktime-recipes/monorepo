@@ -19,6 +19,13 @@
                     "cwd": "apps/backend"
                 }
             }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "node ace test",
+                "cwd": "apps/backend"
+            }
         }
     },
     "tags": []
