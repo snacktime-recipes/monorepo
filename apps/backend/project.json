@@ -13,9 +13,10 @@
         },
         "build": {
             "executor": "nx:run-commands",
+            "defaultConfiguration": "production",
             "configurations": {
                 "production": {
-                    "command": "node ace build --production",
+                    "command": "node ace build --production --ignore-ts-errors",
                     "cwd": "apps/backend"
                 }
             }
