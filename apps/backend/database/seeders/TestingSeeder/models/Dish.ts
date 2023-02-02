@@ -8,12 +8,7 @@ export default class extends BaseSeeder {
       name: "Spicy Arrabiata Penne",
       description: "Something in Spanish"
     });
-
-    dish
-      .related('recipe')
-      .query()
-      .from('recipes')
-      .select('*')
-      .where('id', 1);
+   
+    await dish.save();
   }
 }

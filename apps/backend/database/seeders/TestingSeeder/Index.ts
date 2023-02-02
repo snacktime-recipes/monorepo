@@ -9,7 +9,6 @@ export default class extends BaseSeeder {
 
   public async run() {
     await this.runSeeder(await import('./models/Product'))
-    await this.runSeeder(await import('./models/CookStep'))
     await this.runSeeder(await import('./models/Recipe'))
     await this.runSeeder(await import('./models/Dish'))
   };

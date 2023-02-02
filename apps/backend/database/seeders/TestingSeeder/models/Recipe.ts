@@ -1,6 +1,7 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Recipe from 'App/Models/Recipe';
 import RecipeDifficulty from 'Types/Recipe/RecipeDifficulty.enum';
+import Product from 'App/Models/Product';
 
 export default class extends BaseSeeder {
   public async run () {
@@ -8,20 +9,32 @@ export default class extends BaseSeeder {
         id: 1,
         cookingTime: 3600,
         difficulty: RecipeDifficulty.HARD
-      })
-      
-      recipe
-        .related('products')
-        .query()
-        .from('products')
-        .select('*')
-        .whereIn('id', [2, 3]);
+      });
 
-      recipe
+      await recipe.save();
+
+      await recipe
         .related('steps')
-        .query()
-        .from('cook_steps')
-        .select('*')
-        .whereIn('id', [1, 2]);
+        .createMany([
+          {
+              id: 1,
+              title: 'Mush apple in potato syrop',
+              description: 'Just mush\'em!',
+          },
+          {
+              id: 2,
+              title: 'Add sugar',
+              description: 'You know'
+          }
+      ]);
+
+      const productIds = [1, 2];
+      for (let productId of productIds) {
+        const product = await Product.find(productId);
+        if (!product) return;
+
+        const recipeProduct = await recipe.related('products').create({});
+        await recipeProduct.related('product').associate(product);
+      };
   }
 }
