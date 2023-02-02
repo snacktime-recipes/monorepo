@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeFetch, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Product from './Product'
 
 export default class RecipeProduct extends BaseModel {
@@ -12,15 +12,15 @@ export default class RecipeProduct extends BaseModel {
   @column({ serializeAs: null })
   public productId: number
 
-  @column()
+  @column({ serializeAs: 'productCount' })
   public productCount: number
 
   @belongsTo(() => Product)
   public product: BelongsTo<typeof Product>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: 'createdAt' })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'createdAt' })
   public updatedAt: DateTime
 }

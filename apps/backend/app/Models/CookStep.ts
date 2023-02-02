@@ -11,15 +11,15 @@ export default class CookStep extends BaseModel {
   @column()
   public description: string | null
 
-  @column()
+  @column({ serializeAs: "videoUrl" })
   public videoUrl: string | null
 
-  @column()
+  @column({ serializeAs: null })
   public recipeId: number
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: "createdAt" })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: "updatedAt" })
   public updatedAt: DateTime
 }

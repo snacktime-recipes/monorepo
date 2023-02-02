@@ -8,7 +8,7 @@ export default class Recipe extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
+  @column({ serializeAs: null })
   public dishId: number
 
   @hasMany(() => RecipeProduct)
@@ -17,15 +17,15 @@ export default class Recipe extends BaseModel {
   @hasMany(() => CookStep)
   public steps: HasMany<typeof CookStep>
 
-  @column()
+  @column({ serializeAs: 'cookingTime' })
   public cookingTime: number
 
   @column()
   public difficulty: RecipeDifficulty;
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: 'createdAt' })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'updatedAt' })
   public updatedAt: DateTime
 }
