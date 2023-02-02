@@ -19,3 +19,4 @@
 */
 
 import './routes/products';
+import './routes/auth';
