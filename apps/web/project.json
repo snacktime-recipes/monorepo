@@ -4,14 +4,14 @@
   "projectType": "application",
   "sourceRoot": "apps/web/src",
   "targets": {
-    "build": {
+    "build-vite": {
       "executor": "@nrwl/vite:build",
       "options": {
         "outputPath": "dist/apps/web",
         "configFile": "apps/web/vite.config.ts"
       }
     },
-    "build-ssr": {
+    "build": {
       "executor": "@nrwl/vite:build",
       "defaultConfiguration": "preview",
       "options": {
@@ -26,14 +26,14 @@
           "configFile": "apps/web/adaptors/express/vite.config.ts"
         }
       },
-      "dependsOn": ["build"]
+      "dependsOn": ["build-vite"]
     },
     "preview": {
       "executor": "@nrwl/vite:preview-server",
       "options": {
-        "buildTarget": "web:build-ssr"
+        "buildTarget": "web:build"
       },
-      "dependsOn": ["build"]
+      "dependsOn": ["build-vite"]
     },
     "test": {
       "executor": "@nrwl/vite:test",
@@ -47,16 +47,16 @@
       "executor": "@nrwl/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "web:build",
+        "buildTarget": "web:build-vite",
         "mode": "ssr"
       },
       "configurations": {
         "development": {
-          "buildTarget": "web:build:development",
+          "buildTarget": "web:build-vite:development",
           "hmr": true
         },
         "production": {
-          "buildTarget": "web:build:production",
+          "buildTarget": "web:build-vite:production",
           "hmr": false
         }
       }
