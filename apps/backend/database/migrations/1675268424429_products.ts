@@ -11,7 +11,7 @@ export default class extends BaseSchema {
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
       table
-        .integer('recipe_id')
+        .integer('recipeId')
         .unsigned()
         .references('recipes.id')
         .onDelete('CASCADE');
