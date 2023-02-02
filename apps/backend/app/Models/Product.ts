@@ -8,15 +8,15 @@ export default class Product extends BaseModel {
   @column()
   public name: string
 
-  @column()
+  @column({ serializeAs: "imageUrl" })
   public imageUrl: string | null
 
   @column()
   public recipeId: number
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ serializeAs: "createdAt", autoCreate: true })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ serializeAs: "updatedAt", autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 }
