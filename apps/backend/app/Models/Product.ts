@@ -11,9 +11,6 @@ export default class Product extends BaseModel {
   @column({ serializeAs: "imageUrl" })
   public imageUrl: string | null
 
-  @column()
-  public recipeId: number
-
   @column.dateTime({ serializeAs: "createdAt", autoCreate: true })
   public createdAt: DateTime
 
