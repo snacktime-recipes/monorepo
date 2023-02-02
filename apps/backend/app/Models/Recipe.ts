@@ -8,6 +8,9 @@ export default class Recipe extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public dishId: number
+
   @hasMany(() => Product)
   public products: HasMany<typeof Product>
 

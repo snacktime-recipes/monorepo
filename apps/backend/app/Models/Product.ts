@@ -11,6 +11,9 @@ export default class Product extends BaseModel {
   @column()
   public imageUrl: string | null
 
+  @column()
+  public recipeId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

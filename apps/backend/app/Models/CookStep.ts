@@ -14,6 +14,9 @@ export default class CookStep extends BaseModel {
   @column()
   public videoUrl: string | null
 
+  @column()
+  public recipeId: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
