@@ -70,15 +70,12 @@ test.group('Dishes', () => {
 
     response.assertStatus(200);
 
-    response.assert?.properties(body, ["id", "products", "steps", "cookingTime", "difficulty", "createdAt", "updatedAt"]);
+    response.assert?.properties(body, ["id", "steps", "cookingTime", "difficulty", "createdAt", "updatedAt"]);
     
-    response.assert?.isArray(body.products);
-    response.assert?.properties(body.products[0], ["id", "name", "imageUrl", "createdAt", "updatedAt"]);
-
     response.assert?.isArray(body.steps);
-    response.assert?.properties(body.steps[0], ["id", "title", "description", "videoUrl", "createdAt", "updatedAt"]);
+    response.assert?.properties(body.steps[0], ["id", "title", "createdAt", "updatedAt"]);
 
-    response.assert?.oneOf(body.difficulty, [Object.values(RecipeDifficulty)]);
+    response.assert?.oneOf(body.difficulty, Object.values(RecipeDifficulty));
   });
 
   /*
@@ -102,6 +99,6 @@ test.group('Dishes', () => {
     response.assertStatus(200);
 
     response.assert?.isArray(body);
-    response.assert?.properties(body[0], ["id", "name", "imageUrl", "createdAt", "updatedAt"]);
+    response.assert?.properties(body[0], ["id", "name", "count", "imageUrl", "createdAt", "updatedAt"]);
   });
 })

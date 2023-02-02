@@ -1,24 +1,28 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'cook_steps'
+  protected tableName = 'recipe_products'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id').primary()
+      table.increments('id')
+      table.integer('product_count').defaultTo(1)
 
-      table.string('title').notNullable()
-      table.string('description').nullable()
-      table.string('videoUrl').nullable()
-
-      // Relationships
       table
         .integer('recipe_id')
         .unsigned()
         .references('recipes.id')
         .onDelete('CASCADE')
 
-      // Meta
+      table
+        .integer('product_id')
+        .unsigned()
+        .references('products.id')
+        .onDelete('CASCADE')
+
+      /**
+       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+       */
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

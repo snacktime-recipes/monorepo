@@ -15,9 +15,9 @@ export default class Dish extends BaseModel {
   @hasOne(() => Recipe)
   public recipe: HasOne<typeof Recipe>
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: 'createdAt'  })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'updatedAt'  })
   public updatedAt: DateTime
 }

@@ -19,4 +19,5 @@
 */
 
 import './routes/products';
+import './routes/dishes';
 import './routes/auth';

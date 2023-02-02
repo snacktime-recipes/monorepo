@@ -1,5 +1,6 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Dish from 'App/Models/Dish';
+import Recipe from 'App/Models/Recipe';
 
 export default class extends BaseSeeder {
   public async run () {
@@ -8,12 +9,8 @@ export default class extends BaseSeeder {
       name: "Spicy Arrabiata Penne",
       description: "Something in Spanish"
     });
-
-    dish
-      .related('recipe')
-      .query()
-      .from('recipes')
-      .select('*')
-      .where('id', 1);
+   
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(1))!);
   }
 }
