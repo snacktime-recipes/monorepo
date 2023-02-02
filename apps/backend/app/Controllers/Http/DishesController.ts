@@ -7,18 +7,21 @@ export default class DishesController {
     };
 
     public async getRecipe({params}: HttpContextContract) {
-        const dish = await Dish.find(params.id);
-        console.log(dish);
-        console.log( await dish?.load('recipe'));
+        const dish = await Dish
+            .query()
+            .where('id', params.id)
+            .preload('recipe');
+        return dish[0].recipe;
     }
 
     public async getProducts({params}: HttpContextContract) {
-        return await Dish
+        const dish = await Dish
             .query()
             .where('id', params.id)
             .preload('recipe', (query) => {
                 query.preload('products');
-            })
+            });
+        return dish[0].recipe.products;
     }
 
     public async paginate({ request }: HttpContextContract) {
