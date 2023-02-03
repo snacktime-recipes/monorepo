@@ -4,8 +4,8 @@ import Route from '@ioc:Adonis/Core/Route'
 Route
     .group(() => {
         Route.post('/login', 'AuthorizationController.login');
-        Route.post('/logout', 'AuthorizationController.paginate');
-        Route.get('/products', 'AuthorizationController.paginate');
+        Route.post('/logout', 'AuthorizationController.logout');
+        Route.get('/products', 'AuthorizationController.getProducts');
         Route.get('', 'AuthorizationController.getProfile');
     })
     .prefix("/profile")

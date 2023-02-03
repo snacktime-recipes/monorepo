@@ -33,7 +33,7 @@ export default class extends BaseSeeder {
         const product = await Product.find(productId);
         if (!product) return;
 
-        const recipeProduct = await recipe.related('products').create({});
+        const recipeProduct = await recipe.related('products').create({productCount: 2});
         await recipeProduct.related('product').associate(product);
       };
   }
