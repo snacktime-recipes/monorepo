@@ -1,7 +1,9 @@
 import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
 
-test.group('Dishes -> FetchOne', () => {
+test.group('Dishes -> FetchOne', (group) => {
+  group.tap((test) => test.tags(["dishes"]));
+
   /*
   | Route: GET /dishes/:id
   | Returns: Instance of a Dish model
