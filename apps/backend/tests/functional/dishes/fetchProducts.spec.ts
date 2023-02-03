@@ -33,7 +33,7 @@ test.group('Dishes -> FetchProducts', (group) => {
     const { response: { body } } = response;
 
     response.assertStatus(404);
-    response.assert?.equal(body, {
+    response.assert?.deepEqual(body, {
       error: ErrorType.NOT_FOUND,
       entity: "DISH"
     });
@@ -44,6 +44,6 @@ test.group('Dishes -> FetchProducts', (group) => {
     const { response: { body } } = response;
 
     response.assertStatus(200);
-    response.assert?.equal(body, []);
+    response.assert?.deepEqual(body, []);
   });
 });

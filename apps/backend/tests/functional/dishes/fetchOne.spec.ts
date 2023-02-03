@@ -29,7 +29,7 @@ test.group('Dishes -> FetchOne', (group) => {
     const { response: { body } } = response;
 
     response.assertStatus(404);
-    response.assert?.equal(body, {
+    response.assert?.deepEqual(body, {
       error: ErrorType.NOT_FOUND
     });
   });

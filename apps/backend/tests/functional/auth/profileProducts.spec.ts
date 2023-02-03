@@ -21,7 +21,7 @@ test.group('Authorization -> ProfileProducts', (group) => {
         const { response: { body } } = response;
 
         response.assertStatus(401);
-        response.assert?.equal(body, {
+        response.assert?.deepEqual(body, {
             error: ErrorType.UNAUTHORIZED,
         });
     });

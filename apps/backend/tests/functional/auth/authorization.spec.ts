@@ -20,7 +20,7 @@ test.group('Authorization', (group) => {
         const { response: { body } } = response;
 
         response.assertStatus(400);
-        response.assert?.equal(body, {
+        response.assert?.deepEqual(body, {
             error: ErrorType.INVALID_PAYLOAD,
         });
     });
@@ -32,7 +32,7 @@ test.group('Authorization', (group) => {
         const { response: { body } } = response;
 
         response.assertStatus(200);
-        response.assert?.equal(body, { ok: true });
+        response.assert?.deepEqual(body, { ok: true });
     });
 
     test('try to logout while unauthorized', async ({ client }) => {
@@ -40,7 +40,7 @@ test.group('Authorization', (group) => {
         const { response: { body } } = response;
 
         response.assertStatus(401);
-        response.assert?.equal(body, {
+        response.assert?.deepEqual(body, {
             error: ErrorType.UNAUTHORIZED,
         });
     });
