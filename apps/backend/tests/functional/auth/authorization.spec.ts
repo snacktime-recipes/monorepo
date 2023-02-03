@@ -1,7 +1,9 @@
 import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
 
-test.group('Authorization', () => {
+test.group('Authorization', (group) => {
+    group.tap((test) => test.tags(["auth"]));
+
     test('authorize user using email and password', async ({ client }) => {
         const response = await client.post('/profile/login').json({
             email: "test@smail.com",

@@ -2,7 +2,9 @@ import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
 import { RecipeDifficulty } from "Types/Recipe";
 
-test.group('Dishes -> FetchRecipe', () => {
+test.group('Dishes -> FetchRecipe', (group) => {
+  group.tap((test) => test.tags(["dishes"]));
+
   /*
   | Route: GET /dishes/:id/recipe
   | Returns: Recipe instance of a Dish

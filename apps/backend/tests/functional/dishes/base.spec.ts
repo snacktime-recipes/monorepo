@@ -1,6 +1,8 @@
 import { test } from '@japa/runner'
 
-test.group('Dishes', () => {
+test.group('Dishes', (group) => {
+  group.tap((test) => test.tags(["dishes"]));
+
   /*
   | Route: GET /dishes
   | Returns: Paginated array of dishes

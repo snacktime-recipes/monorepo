@@ -1,7 +1,9 @@
 import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
 
-test.group('Dishes -> FetchProducts', () => {
+test.group('Dishes -> FetchProducts', (group) => {
+  group.tap((test) => test.tags(["dishes"]));
+
   /*
   | Route: GET /dishes/:id/products
   | Returns: array of Product
