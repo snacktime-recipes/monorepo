@@ -4,6 +4,7 @@
 dist
 *.sqlite3
 *.env
+build
 /out-tsc
 
 # dependencies
