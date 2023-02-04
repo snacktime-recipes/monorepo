@@ -2,7 +2,8 @@
 
 # compiled output
 dist
-tmp
+*.sqlite3
+*.env
 /out-tsc
 
 # dependencies
