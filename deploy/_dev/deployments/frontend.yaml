@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: registry.odzi.dog/snacktime-recipes/frontend:latest
+        image: registry.odzi.dog/snacktime-recipes/web:latest
         ports:
         - containerPort: 3000
 

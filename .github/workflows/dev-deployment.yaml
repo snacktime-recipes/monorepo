@@ -27,6 +27,7 @@ jobs:
           file: ./apps/${{ matrix.app }}/Dockerfile
           platforms: |
             linux/arm64
+        timeout-minutes: 15
 
   deploy-manifests:
     runs-on: ubuntu-latest
