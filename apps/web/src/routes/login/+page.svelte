@@ -7,30 +7,7 @@
     import CodiconLock from '~icons/codicon/lock';
     import { onMount, onDestroy } from 'svelte';
     import Header from '../../stores/Header.store';
-    import CodiconSignIn from '~icons/codicon/sign-in';
     import SimplePageTransition from '../../components/Special/SimplePageTransition.svelte';
-
-    onMount(() => {
-        Header.updateButtons([
-            {
-                text: 'Login',
-                type: 'ghost',
-                href: '/login',
-
-                displayOnMobile: false,
-            },    
-            {
-                text: 'Signup',
-                type: 'full',
-                href: '/register',
-                icon: CodiconSignIn,
-            }
-        ]);
-    });
-
-    onDestroy(() => {
-        Header.resetButtons();
-    });
 
     // Variables
     const fields: Array<InputField> = [
