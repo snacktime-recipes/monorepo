@@ -36,14 +36,7 @@
         function touchEnd() {
             isDragging = false;
             if (currentTranslate >= 400) {
-                // Closing
-                currentTranslate = 1000;
-                requestAnimationFrame(animation);
-                startPos = 0;
-
-                setTimeout(() => {
-                    isMenuOpened = false;
-                }, 100);
+                toggleMenu();
             } else {
                 currentTranslate = 100;
                 requestAnimationFrame(animation);
@@ -63,19 +56,35 @@
         isDragging && requestAnimationFrame(animation);
     };
 
-    function openMenu() {
+    function toggleMenu() {
         if (isMenuOpened) {
             // Closing
             currentTranslate = 1000;
             requestAnimationFrame(animation);
             startPos = 0;
 
+            // Removing overflow: hidden and overscroll-behaivor: containt to
+            // body
+            const body = getBody();
+            if (!body) return;
+
+            body.style.overflow = "auto";
+            body.style.overscrollBehavior = "auto";
+
             setTimeout(() => {
                 isMenuOpened = false;
             }, 100);            
         } else {
             isMenuOpened = true;
-            
+
+            // Adding overflow: hidden and overscroll-behaivor: containt to
+            // body
+            const body = getBody();
+            if (!body) return;
+
+            body.style.overflow = "hidden";
+            body.style.overscrollBehavior = "contain";
+
             setTimeout(() => {
                 currentTranslate = 100;
                 requestAnimationFrame(animation);
@@ -89,13 +98,19 @@
             ? event.pageY
             : event.touches[0]?.clientY;
     };
+
+    function getBody() {
+        return document.getElementById('body');
+    };
 </script>
 
 <div on:click={() => {
-    openMenu();
-}} class="md:hidden rounded-full cursor-pointer px-4 py-2 hover:bg-gray-200">
+    toggleMenu();
+}} class="md:hidden rounded-full cursor-pointer px-4 py-2 active:bg-gray-200">
     <Logotype />
 </div>
+
+<svelte:body class="bg-red-500" />
 
 <div bind:this={container} on:dragstart|preventDefault class="container { !isMenuOpened ? "hidden" : "" } md:hidden absolute z-50 inset-0 w-full pt-24 h-screen bg-gradient-to-t from-black transition-all ease-in-out duration-300">
     <div bind:this={card} on:dragstart|preventDefault class="card rounded-t-xl bg-white w-full h-full">
@@ -111,7 +126,7 @@
                 
                 <div on:click={() => {
                     goto(link.href);
-                    openMenu();
+                    toggleMenu();
                 }} class="flex items-center py-3 px-4 my-5 cursor-pointer border-b-[2px] border-gray-200">
                     <p class="text-xl font-medium">{link.title}</p>
 
