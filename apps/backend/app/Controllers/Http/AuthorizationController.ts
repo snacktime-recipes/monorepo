@@ -29,6 +29,24 @@ export default class AuthorizationController {
         
         return response.status(200).send({ok: true});
     };
+    public async register({ request, auth, response }: HttpContextContract) {
+        const email = request.input('email');
+        const userName = request.input('userName');
+        const password = request.input('password');
+
+        if(await Profile.findBy("email", email))
+            return response.status(404).send({error: '?'});
+        
+        const profile = await Profile.create({
+            email: email,
+            userName: userName,
+            password: password
+            });
+        profile.save()
+
+        return response.status(200).send({ok: true});
+
+    }
     public async getProducts({ auth, response }: HttpContextContract) {
         try{
             await auth.use('web').authenticate()
