@@ -1,9 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Dish from 'App/Models/Dish';
+import DishType from 'Types/Dish/Dish.interface';
 
 export default class DishesController {
     public async fetchById({ params }: HttpContextContract) {
-        return await Dish.find(params.id);
+        const dish = await Dish.find(params.id);
+        return {
+            ...dish?.serialize(),
+            meta: await dish?.computeMeta(),
+        }
     };
 
     public async getRecipe({params}: HttpContextContract) {
@@ -34,6 +39,18 @@ export default class DishesController {
         const paginated = await Dish.query().paginate(page, itemsPerPage);
         paginated.baseUrl("/dishes");
 
-        return paginated;
+        const serializedDishes: Array<DishType> = [];
+
+        for (let dish of paginated) {
+            serializedDishes.push({
+                ...dish.serialize() as DishType,
+                meta: await dish.computeMeta(),
+            });
+        };
+
+        return {
+            ...paginated.serialize(),
+            data: serializedDishes,
+        };
     };
 }

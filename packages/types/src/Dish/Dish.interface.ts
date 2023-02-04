@@ -5,7 +5,8 @@ export interface Dish {
     description?: string,
     likes: number,
     meta: {
-        productsCount: number,
+        doRecipeExists: boolean,
+        productsCount?: number,
     },
     createdAt: string,
     updatedAt: string,
