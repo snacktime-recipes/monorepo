@@ -30,18 +30,21 @@ export default class Dish extends BaseModel {
   
   public async computeMeta(): Promise<DishType["meta"]> {
     // Trying to fetch recipe
-    const recipe = await Recipe
+    const recipes = await Recipe
       .query()
       .preload('products')
       .where('dish_id', this.id);
 
-    if (recipe.length != 1) return {
+    if (recipes.length != 1) return {
       doRecipeExists: false,
     };
 
+    const recipe = recipes[0];
+
     return {
       doRecipeExists: true,
-      productsCount: recipe[0].products?.length,
+      productsCount: recipe.products?.length,
+      cookingTime: recipe.cookingTime,
     };
   };
 }
