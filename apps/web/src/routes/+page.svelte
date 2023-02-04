@@ -95,9 +95,9 @@
         { #each data.data as dish }
             { @const cookingTime = secondsToTime(dish.meta.cookingTime) }
 
-            <div class="flex-1 rounded-xl bg-white p-4">
+            <div class="flex-1 rounded-xl bg-white p-4 hover:scale-105 transition ease-in-out duration-200">
                 <!-- Image -->
-                <img src="{ dish.imageUrl }" alt="" class="rounded-xl">
+                <img src="{ dish.imageUrl }" alt="" class="cursor-pointer rounded-xl">
 
                 <!-- Tags (todo) -->
                 <div class="flex flex-wrap gap-2 my-4 opacity-80">
@@ -123,7 +123,7 @@
                 <!-- Buttons -->
                 <div class="flex flex-col md:flex-row items-stretch gap-2">
                     <!-- Add to favouries -->
-                    <button class="w-full md:w-1/2 py-2 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center">
+                    <button class="w-full md:w-1/2 py-2 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center hover:from-sky-600 hover:to-indigo-600 transition ease-in-out duration-200">
                         <CodiconBookmark class="text-white w-5 h-5" />
 
                         <p class="text-white text-sm ml-1">Bookmark</p>
