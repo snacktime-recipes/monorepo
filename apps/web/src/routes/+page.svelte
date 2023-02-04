@@ -4,6 +4,9 @@
     import CodiconSearch from '~icons/codicon/search';
     import CodiconWatch from '~icons/codicon/watch';
     import CodiconHeart from '~icons/codicon/heart';
+
+    /** @type {import('./$types').PageData} */
+    export let data;
 </script>
 
 <svelte:head>
@@ -87,28 +90,28 @@
 
     <!-- Recipes -->
     <div class="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        { #each [1,2,3,4,5,6,7,8] as _ }
+        { #each data.data as dish }
             <div class="flex-1 rounded-xl bg-white p-4">
                 <!-- Image -->
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80" alt="" class="rounded-xl">
+                <img src="{ dish.imageUrl }" alt="" class="rounded-xl">
 
                 <!-- Tags (todo) -->
                 <div class="flex flex-wrap gap-2 my-4 opacity-80">
                     <div class="rounded-xl flex items-center px-2 py-1.5 bg-gradient-to-r from-yellow-300 to-amber-400">
                         <CodiconHeart class="w-4 h-4 text-white mr-1" />
                         
-                        <p class="text-white text-xs">1.2к</p>
+                        <p class="text-white text-xs">{ dish.likes }</p>
                     </div>
 
                     <div class="rounded-xl flex items-center px-2 py-1.5 bg-gradient-to-br from-slate-400 to-gray-300">
-                        <p class="text-white text-xs">18 ингридиентов</p>
+                        <p class="text-white text-xs">{ dish.meta?.productsCount } ingredients</p>
                     </div>
                 </div>
 
                 <!-- Text -->
                 <div class="my-4">
-                    <h1 class="text-xl font-bold">Lorem ipsum dolor sit.</h1>
-                    <p class="hidden md:block text-sm md:text-xs opacity-60">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, delectus.</p>
+                    <h1 class="text-xl font-bold">{ dish.name }</h1>
+                    <p class="hidden md:block text-sm md:text-xs opacity-60">{ dish.description ?? "Empty description" }</p>
                 </div>
 
                 <!-- Buttons -->
