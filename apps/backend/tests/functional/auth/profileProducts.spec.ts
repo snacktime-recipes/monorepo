@@ -1,13 +1,14 @@
 import { test } from "@japa/runner";
+import Profile from "App/Models/Profile";
 import ErrorType from "Types/ErrorType.enum";
 
 test.group('Authorization -> ProfileProducts', (group) => {
     group.tap((test) => test.tags(["auth"]));
 
     test('fetch profile products', async ({ client }) => {
-        await client.post('/profile/login').json({ email: 'test@smail.com', password: '123' });
+        const profile = await Profile.find(1);
 
-        const response = await client.get('/profile/products');
+        const response = await client.get('/profile/products').loginAs(profile!);
         const { response: { body } } = response;
 
         response.assertStatus(200);
