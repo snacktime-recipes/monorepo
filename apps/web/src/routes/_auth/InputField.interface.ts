@@ -1,7 +1,6 @@
 export interface InputField {
-    type: "password" | "text",
+    id: string,
     icon: any,
     value?: string,
     placeholder?: string,
-    serializeAs: string,
 };

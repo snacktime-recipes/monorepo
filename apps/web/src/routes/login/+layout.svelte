@@ -33,4 +33,8 @@
     });
 </script>
 
+<svelte:head>
+    <title>snacktime - login</title>
+</svelte:head>
+
 <slot />
