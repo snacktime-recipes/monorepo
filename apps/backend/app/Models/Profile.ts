@@ -10,19 +10,22 @@ export default class Profile extends BaseModel {
   @column()
   public email: string
 
+  @column({ serializeAs: 'userName' })
+  public userName: string
+
   @column({ serializeAs: null })
   public password: string
 
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken: string | null
 
-  @column.dateTime({ autoCreate: true })
+  @column.dateTime({ autoCreate: true, serializeAs: 'createdAt' })
   public createdAt: DateTime
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'updatedAt' })
   public updatedAt: DateTime
 
   @beforeSave()
