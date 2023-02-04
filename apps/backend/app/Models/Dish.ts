@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, HasMany, hasMany, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Recipe from 'App/Models/Recipe'
+import ProfileDish from './ProfileDish'
 
 export default class Dish extends BaseModel {
   @column({ isPrimary: true })
@@ -11,6 +12,9 @@ export default class Dish extends BaseModel {
 
   @column()
   public description: string | null
+
+  @hasMany(() => ProfileDish)
+  public userActivity: HasMany<typeof ProfileDish>
 
   @hasOne(() => Recipe)
   public recipe: HasOne<typeof Recipe>

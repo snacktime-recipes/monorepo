@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import ProfileProduct from './ProfileProduct'
+import ProfileDish from './ProfileDish'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -15,6 +16,9 @@ export default class Profile extends BaseModel {
 
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
+
+  @hasMany(() => ProfileDish)
+  public dishes: HasMany<typeof ProfileDish>
 
   @column()
   public rememberMeToken: string | null
