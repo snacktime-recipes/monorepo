@@ -21,12 +21,13 @@ export default class extends BaseSeeder {
         await profileProduct.related('product').associate(product);
       };
 
-      const productId = 1;
+      const dishId = 1;
 
-      const dish = await Dish.findBy('id',productId);
+      const dish = await Dish.findBy('id', dishId);
       if (!dish) return;
 
       const ProfileDish = await dish.related('userActivity').create({like: true, bookmark: true});
+      await ProfileDish.related('dish').associate(dish);
       await ProfileDish.related('profile').associate(profile);
 
   }
