@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: ["backend", "frontend"]
+        app: ["backend", "web"]
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
