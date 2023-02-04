@@ -77,7 +77,7 @@
     <div class="w-full flex flex-col md:flex-row items-center justify-between">
         <!-- Company information -->
         <div class="w-2/3 md:w-1/3 text-center md:text-left">
-            <Logotype subtext="Lorem ipsum" />
+            <Logotype class="justify-center md:justify-start" subtext="Lorem ipsum" />
 
             <p class="text-sm opacity-60 mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, ipsa repudiandae. Error laborum similique reiciendis!</p>
         </div>
