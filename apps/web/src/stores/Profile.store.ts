@@ -3,8 +3,9 @@ import { writable } from "svelte/store";
 // Store interface
 interface AuthorizedProfile {
     isAuthorized: true
-
-    // todo: profile and token information
+    
+    username: string,
+    email: string,
 };
 
 interface UnauthorizedProfile {
@@ -19,7 +20,7 @@ class StoreClass {
     
     constructor() {
         const { subscribe, update } = writable<ProfileStore>({
-            isAuthorized: true,
+            isAuthorized: false,
         });
 
         this.subscribe = subscribe;

@@ -5,16 +5,16 @@ interface HeaderLink {
 
 export const HeaderLinks: Array<HeaderLink> = [
     {
-        title: 'lorem 1',
-        href: '/lorem'
+        title: 'Home',
+        href: '/'
     },
     {
-        title: 'lorem 2',
-        href: '/lorem2'
+        title: 'Products',
+        href: '/products'
     },
     {
-        title: 'lorem 3',
-        href: '/lorem3'
+        title: 'Recipes',
+        href: '/recipes'
     }
 ];
 
