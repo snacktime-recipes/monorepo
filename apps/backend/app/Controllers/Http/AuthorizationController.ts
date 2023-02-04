@@ -14,13 +14,8 @@ export default class AuthorizationController {
             return response.status(400).send({error: ErrorType.INVALID_PAYLOAD});
         }
 
-        const profile = await Profile.findBy("email", auth.user!.email);
-        return {
-            id: profile!.id,
-            email: profile!.email,
-            createdAt: profile!.createdAt,
-            updatedAt: profile!.updatedAt
-        }
+        return await Profile.findBy("email", auth.user!.email);
+        
         
     };
     public async logout({ auth, response }: HttpContextContract) {
