@@ -26,6 +26,14 @@
             "options": {
                 "command": "node ace test",
                 "cwd": "apps/backend"
+            },
+            "configurations": {
+                "auth": {
+                    "command": "node ace test --tags=auth"
+                },
+                "dishes": {
+                    "command": "node ace test --tags=dishes"
+                }
             }
         }
     },
