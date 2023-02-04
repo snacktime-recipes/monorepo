@@ -2,6 +2,7 @@ import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import ProfileProduct from './ProfileProduct'
+import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -15,6 +16,9 @@ export default class Profile extends BaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @attachment()
+  public avatar: AttachmentContract
 
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
