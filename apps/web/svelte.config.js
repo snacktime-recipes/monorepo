@@ -4,6 +4,13 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+  kit: {
+    alias: {
+      '$types': '../../packages/types/src',
+      '$types/*': '../../packages/types/src/*',
+    }
+  },
+
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
   preprocess: [
