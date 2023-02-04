@@ -5,46 +5,20 @@
     import AuthCard from '../_auth/AuthCard.svelte';
     import CodiconMail from '~icons/codicon/mail';
     import CodiconLock from '~icons/codicon/lock';
-    import { onMount, onDestroy } from 'svelte';
-    import Header from '../../stores/Header.store';
-    import CodiconSignIn from '~icons/codicon/sign-in';
     import SimplePageTransition from '../../components/Special/SimplePageTransition.svelte';
-
-    onMount(() => {
-        Header.updateButtons([
-            {
-                text: 'Login',
-                type: 'ghost',
-                href: '/login',
-
-                displayOnMobile: false,
-            },    
-            {
-                text: 'Signup',
-                type: 'full',
-                href: '/register',
-                icon: CodiconSignIn,
-            }
-        ]);
-    });
-
-    onDestroy(() => {
-        Header.resetButtons();
-    });
-
+    import { ApplicationConfig } from '../../configs/ApplicationConfig.const';
+    
     // Variables
     const fields: Array<InputField> = [
         {
-            type: 'text',
+            id: 'email',
             icon: CodiconMail,
             placeholder: 'user@mail.com',
-            serializeAs: 'email'
         },
         {
-            type: 'text',
+            id: 'password',
             icon: CodiconLock,
             placeholder: '****************',
-            serializeAs: 'password'
         }
     ];
 
@@ -56,11 +30,9 @@
     let isPanicked: boolean = false;
     let error: ErrorType | null = null;
 
-    function login(fields: Record<"email" | "password", InputField>) {
+    async function login(fields: Record<"email" | "password", InputField>) {
         const email = fields.email?.value;
         const password = fields.password?.value;
-
-        console.log('fields:', fields);
 
         isPanicked = false;
         error = null;
@@ -87,7 +59,24 @@
         };
 
         // Authorizing user
-        
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', '*/*');
+
+        // @ts-ignore
+        const response = await fetch(`${ApplicationConfig.apiUrl}/profile/login`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            redirect: 'follow',
+        });
+
+        // const json = await response.b();
+        console.log(response);
+        console.log(await response.text());
     };
 </script>
 

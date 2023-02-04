@@ -7,13 +7,13 @@
     import LogosTwitter from '~icons/logos/twitter';
     import LogosDiscordIcon from '~icons/logos/discord-icon';
     import LogosFacebook from '~icons/logos/facebook';
-  import { ErrorMessages } from "./ErrorMessages.const";
+    import { ErrorMessages } from "./ErrorMessages.const";
 
     $: serializedFields = () => {
         const serialized: Record<string, InputField> = {};
 
         fields.forEach((field) => {
-            serialized[field.serializeAs] = field;
+            serialized[field.id] = field;
         });
 
         return serialized;

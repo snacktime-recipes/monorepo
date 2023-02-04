@@ -1,5 +1,15 @@
 name: Run Tests
 on: [push]
+
+env:
+  PORT: 3333
+  HOST: 0.0.0.0
+  NODE_ENV: development
+  APP_KEY: 9UaTGJZqlVe6AFawap6p87TKEx-8XuxN
+  DRIVE_DISK: local
+  DB_CONNECTION: sqlite
+  SESSION_DRIVER: cookie
+
 jobs:
   backend-tests:
     runs-on: ubuntu-latest
@@ -14,13 +24,9 @@ jobs:
         run: npm install
       - name: Install backend packages
         run: cd apps/backend && npm install
+      - name: Migrating database
+        run: cd apps/backend && node ace migration:run
+      - name: Seeding database
+        run: cd apps/backend && node ace db:seed
       - name: Run tests
         run: npx nx test backend
-        env:
-          PORT: 3333
-          HOST: 0.0.0.0
-          NODE_ENV: development
-          APP_KEY: 9UaTGJZqlVe6AFawap6p87TKEx-8XuxN
-          DRIVE_DISK: local
-          DB_CONNECTION: sqlite
-          SESSION_DRIVER: cookie
