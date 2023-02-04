@@ -16,3 +16,11 @@ jobs:
         run: cd apps/backend && npm install
       - name: Run tests
         run: npx nx test backend
+        env:
+          PORT: 3333
+          HOST: 0.0.0.0
+          NODE_ENV: development
+          APP_KEY: 9UaTGJZqlVe6AFawap6p87TKEx-8XuxN
+          DRIVE_DISK: local
+          DB_CONNECTION: sqlite
+          SESSION_DRIVER: cookie
