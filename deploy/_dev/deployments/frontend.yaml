@@ -49,3 +49,5 @@ spec:
       services:
         - name: frontend
           port: entrypoint
+  tls:
+    certResolver: "cloudflare"
