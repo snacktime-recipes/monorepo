@@ -10,7 +10,13 @@ export default class Dish extends BaseModel {
   public name: string
 
   @column()
+  public imageUrl: string
+
+  @column()
   public description: string | null
+  
+  @column()
+  public likes: number
 
   @hasOne(() => Recipe)
   public recipe: HasOne<typeof Recipe>

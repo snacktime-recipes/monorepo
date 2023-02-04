@@ -8,7 +8,9 @@ export default class extends BaseSchema {
       table.increments('id').primary()
 
       table.string('name')
+      table.string('image_url').defaultTo("")
       table.string('description').nullable()
+      table.integer('likes').defaultTo(0)
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
