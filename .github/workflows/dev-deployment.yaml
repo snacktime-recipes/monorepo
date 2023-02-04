@@ -1,10 +1,10 @@
 name: Deploy to development
-on:
-  workflow_run:
-    workflows: ["Run Tests"]
-    branches: ["dev"]
-    types:
-      - completed
+on: [push]
+  # workflow_run:
+  #   workflows: ["Run Tests"]
+  #   branches: ["dev"]
+  #   types:
+  #     - completed
 jobs:
   build-images:
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: registry.odzi.dog/snacktime/${{ matrix.app }}:latest
+          tags: registry.odzi.dog/snacktime-recipes/${{ matrix.app }}:latest
           context: .
           file: ./apps/${{ matrix.app }}/Dockerfile
           platforms: |
@@ -31,3 +31,19 @@ jobs:
   deploy-manifests:
     runs-on: ubuntu-latest
     needs: build-images
+    steps:
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Update kubectl context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Deploy _dev manifests
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: snacktime-recipes
+          manifests: |
+            deploy/_dev
