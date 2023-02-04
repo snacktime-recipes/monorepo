@@ -1,4 +1,5 @@
 import { test } from '@japa/runner'
+import { assertOneDish } from './fetchOne.spec';
 
 test.group('Dishes', (group) => {
   group.tap((test) => test.tags(["dishes"]));
@@ -14,7 +15,12 @@ test.group('Dishes', (group) => {
   |     {
   |       id: number,
   |       name: string,
+  |       imageUrl: string,
   |       description: string,
+  |       likes: number,
+  |       meta: {
+  |         productsCount: number,
+  |       },
   |       createdAt: string,
   |       updatedAt: string,
   |     }
@@ -29,6 +35,7 @@ test.group('Dishes', (group) => {
 
     response.assert?.isObject(body.meta);
     response.assert?.isArray(body.data);
-    response.assert?.properties(body.data[0], ["id", "name", "description", "createdAt", "updatedAt"]);
+
+    assertOneDish(response, body.data[0]);
   });
 })
