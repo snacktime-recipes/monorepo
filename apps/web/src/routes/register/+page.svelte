@@ -8,6 +8,8 @@
     import CodiconLock from '~icons/codicon/lock';
     import CodiconAccount from '~icons/codicon/account';
     import SimplePageTransition from '../../components/Special/SimplePageTransition.svelte';
+    import { ApplicationConfig } from '../../configs/ApplicationConfig.const';
+    import Profile from '../../stores/Profile.store';
 
     // Variables
     const fields: Array<InputField> = [
@@ -33,14 +35,16 @@
         handler: register,
     };
 
+    let isLoading = false;
     let isPanicked: boolean = false;
     let error: ErrorType | null = null;
 
-    function register(fields: Record<"username" | "email" | "password", InputField>) {
+    async function register(fields: Record<"username" | "email" | "password", InputField>) {
         const username = fields.username!.value;
         const email = fields.email!.value;
         const password = fields.password!.value;
 
+        isLoading = true;
         isPanicked = false;
         error = null;
 
@@ -72,7 +76,30 @@
         };
 
         // Registering user
-        
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', '*/*');
+
+        const response = await fetch(`${ ApplicationConfig.apiUrl }/profile/register`, {
+            method: 'POST',
+            credentials: 'include',
+            headers,
+            body: JSON.stringify({
+                userName: username,
+                email,
+                password
+            }),
+        });
+
+        if (response.status == 200) {
+            const json = await response.json();
+            Profile._updateProfile(json);
+        } else {
+            // Handling error
+            console.log('error:', await response.text());
+        };
+
+        isLoading = false;
     };
 </script>
 

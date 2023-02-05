@@ -27,6 +27,7 @@
         handler: login,
     };
 
+    let isLoading = false;
     let isPanicked: boolean = false;
     let error: ErrorType | null = null;
 
@@ -34,6 +35,7 @@
         const email = fields.email?.value;
         const password = fields.password?.value;
 
+        isLoading = true;
         isPanicked = false;
         error = null;
 

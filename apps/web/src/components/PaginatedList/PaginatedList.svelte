@@ -14,7 +14,7 @@
 
     // Fetching 
     onMount(async () => {
-        const response = await fetch(`${ ApplicationConfig.apiUrl }${ url.startsWith("/") ? "" : "/" }${ url }`);
+        const response = await fetch(`${ ApplicationConfig.apiUrl }${ url.startsWith("/") ? "" : "/" }${ url }`, { credentials: 'include' });
 
         if (response.status == 200) {
             const json = await response.json();

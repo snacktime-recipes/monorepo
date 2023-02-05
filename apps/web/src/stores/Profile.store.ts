@@ -34,7 +34,7 @@ class StoreClass {
     // Methods
     async initialize() {
         // Trying to fetch user profile from backend session
-        const response = await fetch(`${ApplicationConfig.apiUrl}/profile`);
+        const response = await fetch(`${ApplicationConfig.apiUrl}/profile`, { credentials: 'include' });
         
         if (response.status == 200) {
             const json = await response.json();
@@ -56,6 +56,7 @@ class StoreClass {
         
         const response = await fetch(`${ApplicationConfig.apiUrl}/profile/login`, {
             method: 'POST',
+            credentials: 'include',
             headers,
             body: JSON.stringify({
                 email,
@@ -78,9 +79,8 @@ class StoreClass {
         // 
         const response = await fetch(`${ApplicationConfig.apiUrl}/profile/logout`, {
             method: 'POST',
+            credentials: 'include',
         });
-        console.log(response);
-        console.log(await response.json());
 
         if (response.status == 200) {
             // Updating store
@@ -106,7 +106,7 @@ class StoreClass {
                 isAuthorized: true,
 
                 email: profile.email,
-                username: "unknown"
+                username: profile.userName ?? "unknown"
             };
         });
     };
