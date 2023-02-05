@@ -3,6 +3,7 @@ import Route from '@ioc:Adonis/Core/Route'
 // Products route
 Route
     .group(() => {
+        Route.get('/search', 'DishesController.search')
         Route.get('/:id', 'DishesController.fetchById');
         Route.get('/:id/recipe', 'DishesController.getRecipe')
         Route.get('/:id/products', 'DishesController.getProducts')

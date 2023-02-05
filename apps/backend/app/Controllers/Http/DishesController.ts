@@ -1,6 +1,8 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Dish from 'App/Models/Dish';
+import Typesense from '@ioc:Typesense';
 import DishType from 'Types/Dish/Dish.interface';
+import ErrorType from 'Types/ErrorType.enum';
 
 export default class DishesController {
     public async fetchById({ params }: HttpContextContract) {
@@ -52,5 +54,21 @@ export default class DishesController {
             ...paginated.serialize(),
             data: serializedDishes,
         };
+    };
+
+    public async search({ response, request }: HttpContextContract) {
+        const query = request.input('query');
+
+        if (!query)
+            return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD, message: "?query parameter is mandatory" })
+
+        const hits = await Typesense.search('dishes', {
+            query
+        }).catch(() => {
+            response.status(500).send({ error: ErrorType.SERVER_ERROR });
+            response.finish();
+        });
+
+        response.send(hits);
     };
 }
