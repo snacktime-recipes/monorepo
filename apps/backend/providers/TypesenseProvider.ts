@@ -43,7 +43,8 @@ export default class TypesenseProvider {
     this.client = new Typesense.Client({
       apiKey: Env.get('SEARCH_API_KEY'),
       nodes: [
-        Env.get('NODE_ENV') == 'development' ? developmentNode : productionNode,
+        // Env.get('NODE_ENV') == 'development' ? developmentNode : productionNode,
+        developmentNode,
       ],
     });
   };
