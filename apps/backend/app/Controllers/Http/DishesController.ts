@@ -62,13 +62,29 @@ export default class DishesController {
         if (!query)
             return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD, message: "?query parameter is mandatory" })
 
-        const hits = await Typesense.search('dishes', {
+        const results = await Typesense.search('dishes', {
             query
-        }).catch(() => {
-            response.status(500).send({ error: ErrorType.SERVER_ERROR });
-            response.finish();
-        });
+        }).catch(() => response.status(500).send({ error: ErrorType.SERVER_ERROR }));
 
-        response.send(hits);
+        if (!results) return;
+
+        // Fetching dishes with these ids, and returning them
+        const serializedDishes: Array<DishType> = [];
+
+        for (let result of results.hits ?? []) {
+            const dish = await Dish.findBy('id', result.document['id']).catch(null);
+
+            if (dish) {
+                serializedDishes.push({
+                    ...dish.serialize() as DishType,
+                    meta: await dish.computeMeta(),
+                });
+            };
+        };
+
+        return {
+            found: results.found,
+            hits: serializedDishes,
+        };
     };
 }
