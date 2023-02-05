@@ -31,12 +31,12 @@ export default class AuthorizationController {
     };
     public async register({ request, auth, response }: HttpContextContract) {
         const email = request.input('email');
-        const userName = request.input('userName');
+        const username = request.input('username');
         const password = request.input('password');
         
         const profile = await Profile.create({
             email: email,
-            userName: userName,
+            username: username,
             password: password
             });
         
@@ -46,7 +46,7 @@ export default class AuthorizationController {
         catch{
             return response.status(404).send({error: '?'});
         }
-        
+
         try{
             await auth.use('web').loginViaId(profile.id)
         }
