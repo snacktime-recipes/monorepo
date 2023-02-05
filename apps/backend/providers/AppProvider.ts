@@ -5,7 +5,10 @@ export default class AppProvider {
   }
 
   public register () {
-    // Register your own bindings
+    this.app.container.singleton('Typesense', () => {
+      const Typesense = require('./TypesenseProvider').default;
+      return new Typesense(this.app);
+    });
   }
 
   public async boot () {
