@@ -14,7 +14,7 @@ const cringeLogos = [
 
 export const ApplicationConfig = {
     // Backend information
-    apiUrl: "http://localhost:3333",
+    apiUrl: "http://localhost:5173/api",
 
     // Theme information
     theme: {

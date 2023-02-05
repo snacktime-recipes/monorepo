@@ -5,11 +5,20 @@
   import CodiconBookmark from '~icons/codicon/bookmark';
   
   // Other modules
+  import { onMount } from 'svelte';
   import Profile from '../stores/Profile.store';
   import HeaderLinks from '../configs/HeaderLinks.const';
   import Logotype from '../components/Special/Logotype.svelte';
   import Header from '../stores/Header.store';
   import MobileLogotype from '../components/Special/MobileLogotype.svelte';
+  import MobileProfile from '../components/Special/MobileProfile.svelte';
+  import TextPlaceholder from '../components/Loaders/TextPlaceholder.svelte';
+  import { fade } from 'svelte/transition';
+  import DesktopProfile from '../components/Special/DesktopProfile.svelte';
+
+  onMount(() => {
+    Profile.initialize();
+  });
 </script>
 
 <main class='w-full bg-gray-100'>
@@ -30,24 +39,36 @@
         <!-- Profile (Mobile/Desktop) -->
         <div class="flex w-full md:w-auto items-center justify-between flex-row-reverse md:flex-row md:justimy-start">
             { #if $Profile.isAuthorized }
-                <div class="flex items-center h-14 p-2 md:pr-6 rounded-full bg-gray-100 hover:bg-gray-300 hover:cursor-pointer">
-                    <div style="background-image: url('https://media.istockphoto.com/id/1049869360/photo/cool-dog.jpg?s=612x612&w=0&k=20&c=J3GFEVyVxJW9JT7iAoqHTASmbKp4Zz4IleB6HP9Szho='); background-size: cover; background-position: center;" class="w-10 h-10 rounded-full bg-red-500"></div>
+                <!-- Desktop-only -->
+                <DesktopProfile />
 
-                    <div class="hidden md:block ml-3">
-                        <h1 class="text-sm font-medium">{ $Profile.username }</h1>
-                        <p class="text-xs opacity-60">{ $Profile.email }</p>
-                    </div>
-                </div>
+                <!-- Mobile-only -->
+                <MobileProfile />
             { :else }
-                { #each $Header.buttons as button }
-                    <a href={button.href} class="{ button.displayOnMobile == false ? "hidden md:flex" : "flex" } items-center mx-2 px-6 py-2 rounded-full { button.type == 'full' ? "bg-sky-500 hover:bg-sky-600 text-white font-medium" : "hover:bg-gray-200" } transition-all ease-in-out duration-200">
-                        { #if button.icon }
-                            <svelte:component this={button.icon} class="text-white h-5 w-5 mr-1" />
-                        { /if }
+                { #if $Profile.isLoaded }
+                    { #each $Header.buttons as button }
+                        <a href={button.href} class="{ button.displayOnMobile == false ? "hidden md:flex" : "flex" } items-center my-2 mx-2 px-6 py-2 rounded-full { button.type == 'full' ? "bg-sky-500 hover:bg-sky-600 text-white font-medium" : "hover:bg-gray-200" } transition-all ease-in-out duration-200">
+                            { #if button.icon }
+                                <svelte:component this={button.icon} class="text-white h-5 w-5 mr-1" />
+                            { /if }
 
-                        <p>{ button.text }</p>
-                    </a>
-                { /each }
+                            <p>{ button.text }</p>
+                        </a>
+                    { /each }
+                { :else }
+                    <div class="flex items-center md:py-2">
+                        <TextPlaceholder class="w-12 h-12 md:w-10 md:h-10" />
+
+                        <div class="ml-3 hidden md:block">
+                            <TextPlaceholder class="h-5 w-full" />
+
+                            <div class="flex items-center justify-start mt-1">
+                                <TextPlaceholder class="h-4 w-12" />
+                                <TextPlaceholder class="h-4 w-24 ml-3" />
+                            </div>
+                        </div>
+                    </div>
+                { /if }
             { /if }
 
             <!-- Mobile-only logotype -->
@@ -55,7 +76,7 @@
 
             <!-- Bookmarks -->
             { #if $Profile.isAuthorized }
-                <button class="hidden md:flex md:ml-4 w-14 h-14 bg-gray-100 hover:bg-gray-300 transition ease-in-out duration-200 rounded-full items-center justify-center">
+                <button in:fade class="hidden md:flex md:ml-4 w-14 h-14 bg-gray-100 hover:bg-gray-300 transition ease-in-out duration-200 rounded-full items-center justify-center">
                     <CodiconBookmark class="h-6 w-6 text-black" />
                 </button>
             { /if }

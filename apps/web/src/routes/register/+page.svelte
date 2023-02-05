@@ -12,22 +12,19 @@
     // Variables
     const fields: Array<InputField> = [
         {
-            type: 'text',
+            id: 'username',
             icon: CodiconAccount,
             placeholder: 'username',
-            serializeAs: 'username'
         },
         {
-            type: 'text',
+            id: 'email',
             icon: CodiconMail,
             placeholder: 'user@mail.com',
-            serializeAs: 'email'
         },
         {
-            type: 'text',
+            id: 'password',
             icon: CodiconLock,
             placeholder: '****************',
-            serializeAs: 'password'
         }
     ];
 
@@ -39,14 +36,19 @@
     let isPanicked: boolean = false;
     let error: ErrorType | null = null;
 
-    function register(fields: Record<"email" | "password", InputField>) {
-        const email = fields.email?.value;
-        const password = fields.password?.value;
-
-        console.log('fields:', fields);
+    function register(fields: Record<"username" | "email" | "password", InputField>) {
+        const username = fields.username!.value;
+        const email = fields.email!.value;
+        const password = fields.password!.value;
 
         isPanicked = false;
         error = null;
+
+        if (username == null) {
+            isPanicked = true;
+            error = "EMPTY_USERNAME";
+            return;
+        };
 
         // Checking if email or password is empty
         if (email == null) {
@@ -69,7 +71,7 @@
             return;
         };
 
-        // Authorizing user
+        // Registering user
         
     };
 </script>

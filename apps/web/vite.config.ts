@@ -12,6 +12,13 @@ const config: UserConfig = {
 	server: {
 		fs: {
 			allow: ["../../"]
+		},
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3333',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+			},
 		}
 	}
 };

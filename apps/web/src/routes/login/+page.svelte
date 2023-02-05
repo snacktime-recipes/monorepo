@@ -6,7 +6,7 @@
     import CodiconMail from '~icons/codicon/mail';
     import CodiconLock from '~icons/codicon/lock';
     import SimplePageTransition from '../../components/Special/SimplePageTransition.svelte';
-    import { ApplicationConfig } from '../../configs/ApplicationConfig.const';
+    import Profile from '../../stores/Profile.store';
     
     // Variables
     const fields: Array<InputField> = [
@@ -58,25 +58,8 @@
             return;
         };
 
-        // Authorizing user
-        const headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', '*/*');
-
-        // @ts-ignore
-        const response = await fetch(`${ApplicationConfig.apiUrl}/profile/login`, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify({
-                email,
-                password
-            }),
-            redirect: 'follow',
-        });
-
-        // const json = await response.b();
-        console.log(response);
-        console.log(await response.text());
+        // Trying to authorize this user
+        await Profile.login(email, password);
     };
 </script>
 

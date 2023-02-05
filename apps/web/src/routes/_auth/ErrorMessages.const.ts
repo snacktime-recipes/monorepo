@@ -1,6 +1,7 @@
 import type { ErrorType } from "./ErrorType.enum";
 
 export const ErrorMessages: Record<ErrorType, string> = {
+    EMPTY_USERNAME: "Username is empty",
     EMPTY_EMAIL: "Email is empty",
     EMPTY_PASSWORD: "Password is empty",
     INVALID_EMAIL: "Email is invalid",
