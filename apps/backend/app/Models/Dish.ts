@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, computed, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { afterSave, BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Recipe from 'App/Models/Recipe'
 import DishType from 'Types/Dish/Dish.interface';
+import Typesense from '@ioc:Typesense';
 
 export default class Dish extends BaseModel {
   @column({ isPrimary: true })
@@ -28,6 +29,11 @@ export default class Dish extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: 'updatedAt'  })
   public updatedAt: DateTime
   
+  @afterSave()
+  public static async updateSearchEntity(entity: Dish) {
+    await Typesense.updateOrCreate(entity);
+  };
+
   public async computeMeta(): Promise<DishType["meta"]> {
     // Trying to fetch recipe
     const recipes = await Recipe
