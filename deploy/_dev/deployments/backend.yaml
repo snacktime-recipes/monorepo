@@ -18,8 +18,15 @@ spec:
         envFrom:
           - configMapRef:
               name: backend-env
+        volumeMounts:
+          - mountPath: "/code/tmp"
+            name: database
         ports:
         - containerPort: 3000
+      volumes:
+        - name: database
+          persistentVolumeClaim:
+            claimName: sqlite-database
 
 ---
 apiVersion: v1
