@@ -8,6 +8,9 @@ export default class Product extends BaseModel {
   @column()
   public name: string
 
+  @column()
+  public description: string
+
   @column({ serializeAs: "imageUrl" })
   public imageUrl: string | null
 

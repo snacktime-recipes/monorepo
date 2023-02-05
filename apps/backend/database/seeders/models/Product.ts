@@ -12,6 +12,7 @@ export default class extends BaseSeeder {
       {
         id: 2,
         name: 'Apple',
+        description: 'Made in China',
         imageUrl: 'https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w='
       },
       {
