@@ -23,4 +23,5 @@ export default Env.rules({
 	NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
 	SESSION_DRIVER: Env.schema.string(),
 	COOKIE_DOMAIN: Env.schema.string(),
+	SEARCH_API_KEY: Env.schema.string(),
 })
