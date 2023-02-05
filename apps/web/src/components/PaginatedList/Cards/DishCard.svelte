@@ -3,13 +3,42 @@
     import CodiconBookmark from '~icons/codicon/bookmark';
     import CodiconHeart from '~icons/codicon/heart';
 
-    import type { Dish } from '$types';
+    import type { Dish, SearchableDish } from '$types';
     import secondsToTime from '../../../helpers/secondsToTime';
 
     // @ts-ignore
     $: cookingTime = secondsToTime(dish.meta?.cookingTime);
-    
-    let dish: Dish;
+
+    $: {
+        name = dish.name;
+        description = dish.description ?? "Empty description";
+
+        if (isSearchableDish(dish)) {
+            // Updating name and description fields (if needed)
+            dish.highlights.forEach((highlight) => {
+                switch (highlight.field) {
+                    case "name":
+                        name = highlight.snippet;
+
+                    case "description":
+                        description = highlight.snippet;
+                };
+            });
+        };
+    };
+
+    function isSearchableDish(dish: any): dish is SearchableDish {
+        if (dish.highlights) {
+            return true;
+        };
+
+        return false;
+    };
+
+    let name: string;
+    let description: string;
+
+    let dish: Dish | SearchableDish;
     export { dish as data };
 </script>
 
@@ -34,8 +63,8 @@
 
     <!-- Text -->
     <div class="my-4">
-        <h1 class="text-xl font-bold">{ dish.name }</h1>
-        <p class="hidden md:block text-sm md:text-xs opacity-60">{ dish.description ?? "Empty description" }</p>
+        <h1 class="text-xl font-bold">{ @html name }</h1>
+        <p class="hidden md:block text-sm md:text-xs opacity-60">{ @html description }</p>
     </div>
 
     <!-- Buttons -->

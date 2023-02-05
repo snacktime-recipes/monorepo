@@ -1,10 +1,7 @@
 <script lang="ts">
     // Imports
-    import CodiconSearch from '~icons/codicon/search';
     import CodiconHeart from '~icons/codicon/heart';
-    
-    import PaginatedList from '../components/PaginatedList/PaginatedList.svelte';
-    import DishCard from '../components/PaginatedList/Cards/DishCard.svelte';
+    import SearchableDishes from '../components/Lists/SearchableDishes.svelte';
 </script>
 
 <svelte:head>
@@ -76,16 +73,5 @@
 
 <!-- Content -->
 <section class="w-full mt-10 md:mt-24 px-4">
-    <!-- Search bar (desktop-only) -->
-    <div class="w-full flex items-stretch justify-between">
-        <!-- Search -->
-        <div class="rounded-full bg-white px-6 py-3 w-full lg:w-2/3 flex items-center">
-            <CodiconSearch class="w-5 h-5 text-black text-opacity-70 mr-3" />
-            
-            <input class="w-full" type="text" placeholder="Search...">
-        </div>
-    </div>
-
-    <!-- Recipes -->
-    <PaginatedList card={DishCard} url="/dishes" />
+    <SearchableDishes />
 </section>

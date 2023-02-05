@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { ApplicationConfig } from "../../configs/ApplicationConfig.const";
     import Circle from "../Loaders/Circle.svelte";
-  import TextPlaceholder from "../Loaders/TextPlaceholder.svelte";
 
     // Variables
     let isLoading = true;
@@ -10,7 +9,10 @@
 
     let totalElements: number = 0;
     let currentPage: number = 1;
-    let data: Array<any> = [];
+
+    $: if (!isSearching) {
+        items = initialItems;
+    };
 
     // Fetching 
     onMount(async () => {
@@ -22,7 +24,8 @@
             totalElements = json.meta.total;
             currentPage = json.meta.current_page;
 
-            data = json.data;
+            items = json.data;
+            initialItems = json.data;
         } else {
             isPanicked = true;
         };
@@ -35,6 +38,11 @@
 
     export let url: string;
     export let card: any;
+
+    let initialItems: Array<any>;
+    export let items: Array<any>;
+    
+    export let isSearching = false;
 </script>
 
 <div>
@@ -55,7 +63,7 @@
         { :else }
             <!-- Normal state -->
             <div class="mt-4 grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                { #each data as entry }
+                { #each items as entry }
                     <svelte:component this={card} data={entry} />
                 { /each }
             </div>
