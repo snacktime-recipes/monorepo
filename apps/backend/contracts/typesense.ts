@@ -1,6 +1,6 @@
 declare module '@ioc:Typesense' {
     import Client from 'providers/TypesenseProvider';
-    const TypesenseClient: Client;
+    const Typesense: Client;
     
-    export default TypesenseClient;
+    export default Typesense;
 }
