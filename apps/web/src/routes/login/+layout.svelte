@@ -4,12 +4,21 @@
     import { goto } from '$app/navigation';
     import CodiconSignIn from '~icons/codicon/sign-in';
     import Header from '../../stores/Header.store';
+    import Circle from "../../components/Loaders/Circle.svelte";
+
+    // Variables
+    let isLoading = true;
 
     onMount(() => {
-        if ($Profile.isAuthorized) {
-            goto('/');
-            return;
-        };
+        Profile.subscribe((object) => {
+            if (object.isLoaded) {
+                if (object.isAuthorized) {
+                    goto('/');
+                } else {
+                    isLoading = false;
+                };
+            }
+        });
 
         Header.updateButtons([
             {
@@ -37,4 +46,10 @@
     <title>snacktime - login</title>
 </svelte:head>
 
-<slot />
+{ #if isLoading }
+    <div class="w-full h-[65vh] flex items-center justify-center">
+        <Circle size="30" />
+    </div>
+{ :else }
+    <slot />
+{ /if }

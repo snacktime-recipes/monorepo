@@ -1,14 +1,17 @@
 import { writable } from "svelte/store";
+import { ApplicationConfig } from "../configs/ApplicationConfig.const";
 
 // Store interface
-interface AuthorizedProfile {
+export interface AuthorizedProfile {
+    isLoaded: boolean,
     isAuthorized: true
     
     username: string,
     email: string,
 };
 
-interface UnauthorizedProfile {
+export interface UnauthorizedProfile {
+    isLoaded: boolean,
     isAuthorized: false
 };
 
@@ -20,6 +23,7 @@ class StoreClass {
     
     constructor() {
         const { subscribe, update } = writable<ProfileStore>({
+            isLoaded: false,
             isAuthorized: false,
         });
 
@@ -28,6 +32,84 @@ class StoreClass {
     };
 
     // Methods
+    async initialize() {
+        // Trying to fetch user profile from backend session
+        const response = await fetch(`${ApplicationConfig.apiUrl}/profile`);
+        
+        if (response.status == 200) {
+            const json = await response.json();
+            this._updateProfile(json);
+        };
+
+        this._update((object) => {
+            return {
+                ...object,
+                isLoaded: true,
+            };
+        });
+    };
+
+    async login(email: string, password: string): Promise<boolean> {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Accept', '*/*');
+        
+        const response = await fetch(`${ApplicationConfig.apiUrl}/profile/login`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                email,
+                password
+            })
+        });
+
+        if (response.status == 200) {
+            const json = await response.json();
+            this._updateProfile(json);
+
+            return true;
+        } else {
+            // Handling this error
+            return false;
+        };
+    };
+
+    async logout(): Promise<boolean> {
+        // 
+        const response = await fetch(`${ApplicationConfig.apiUrl}/profile/logout`, {
+            method: 'POST',
+        });
+        console.log(response);
+        console.log(await response.json());
+
+        if (response.status == 200) {
+            // Updating store
+            this._update(() => {
+                return {
+                    isLoaded: true,
+                    isAuthorized: false,
+                };
+            });
+
+            return true;
+        } else {
+            return false;
+        };
+    };
+
+    _updateProfile(profile: any) {
+        this._update((object) => {
+            return {
+                ...object,
+                
+                isLoaded: true,
+                isAuthorized: true,
+
+                email: profile.email,
+                username: "unknown"
+            };
+        });
+    };
 };
 
 export const Profile = new StoreClass();

@@ -8,6 +8,8 @@
     import LogosDiscordIcon from '~icons/logos/discord-icon';
     import LogosFacebook from '~icons/logos/facebook';
     import { ErrorMessages } from "./ErrorMessages.const";
+    import { slide } from "svelte/transition";
+    import ErrorMessage from "./ErrorMessage.svelte";
 
     $: serializedFields = () => {
         const serialized: Record<string, InputField> = {};
@@ -40,12 +42,8 @@
 <div class="w-full md:py-6 flex items-center justify-center">
     <div class="w-full md:w-1/3 rounded-xl bg-white px-6 py-12">
         <!-- Error (if exists) -->
-        { #if isPanicked }
-            <div class="mb-6 rounded-xl px-5 py-3 bg-red-500 bg-opacity-80">
-                <p class="text-white">
-                    { error ? ErrorMessages[error] : "Unknown error" }
-                </p>
-            </div>
+        { #if isPanicked && error != null }
+            <ErrorMessage bind:isPanicked={isPanicked} {error} />
         { /if }
 
         <!-- Texts -->
