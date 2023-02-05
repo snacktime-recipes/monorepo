@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Dish from 'App/Models/Dish';
 import Typesense from '@ioc:Typesense';
 import DishType from 'Types/Dish/Dish.interface';
+import SearchableDish from 'Types/Dish/SearchableDish.interface';
 import ErrorType from 'Types/ErrorType.enum';
 
 export default class DishesController {
@@ -69,7 +70,7 @@ export default class DishesController {
         if (!results) return;
 
         // Fetching dishes with these ids, and returning them
-        const serializedDishes: Array<DishType> = [];
+        const serializedDishes: Array<SearchableDish> = [];
 
         for (let result of results.hits ?? []) {
             const dish = await Dish.findBy('id', result.document['id']).catch(null);
@@ -78,6 +79,11 @@ export default class DishesController {
                 serializedDishes.push({
                     ...dish.serialize() as DishType,
                     meta: await dish.computeMeta(),
+                    // @ts-ignore
+                    highlights: result.highlights?.map((highlight) => ({
+                        field: highlight.field,
+                        snippet: highlight.snippet,
+                    })) ?? [],
                 });
             };
         };
