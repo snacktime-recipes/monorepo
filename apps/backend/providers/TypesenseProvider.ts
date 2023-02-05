@@ -1,4 +1,5 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
+import Dish from 'App/Models/Dish';
 import type { Client } from 'typesense';
 import Typesense from 'typesense';
 
@@ -62,6 +63,36 @@ export default class TypesenseProvider {
       });
   };
 
+  public async updateOrCreate(entity: Dish) { 
+    const document = await this.client
+      .collections('dishes')
+      .documents(entity.id.toString())
+      .retrieve()
+      .catch(() => (null));
+
+    if (!document) {
+      // Creating new
+      await this.client
+        .collections('dishes')
+        .documents()
+        .create({
+          id: entity.id.toString(),
+          name: entity.name,
+          description: entity.description ?? "",
+        })
+    } else {
+      // Updating
+      await this.client
+        .collections('dishes')
+        .documents(entity.id.toString())
+        .update({
+          name: entity.name,
+          description: entity.description ?? "",
+        });
+    };
+  };
+
+  // Private
   private getQueryByProperty(collection: 'dishes'): string {
     switch (collection) {
       case 'dishes':
