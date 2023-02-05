@@ -10,8 +10,8 @@ export default class Profile extends BaseModel {
   @column()
   public email: string
 
-  @column({ serializeAs: 'userName' })
-  public userName: string
+  @column()
+  public username: string
 
   @column({ serializeAs: null })
   public password: string
