@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: typesense
+  namespace: snacktime-recipes
+spec:
+  selector:
+    matchLabels:
+      app: typesense
+  template:
+    metadata:
+      labels:
+        app: typesense
+    spec:
+      containers:
+      - name: typesense
+        image: typesense/typesense:0.24.0
+        args:
+          - --enable-cors
+          - --api-key=test
+          - --data-dir=/data
+        volumeMounts:
+          - mountPath: "/data"
+            name: data
+        ports:
+        - containerPort: 8108
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: search-volume
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: typesense
+  namespace: snacktime-recipes
+spec:
+  selector:
+    app: typesense
+  ports:
+  - port: 8108
+    targetPort: 8108
+    name: entrypoint
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: typesense
+  namespace: snacktime-recipes
+spec:
+  entryPoints:
+  - web
+  - websecure
+  routes:
+    - match: Host(`search.dev.snacktime.recipes`)
+      kind: Rule
+      services:
+        - name: typesense
+          port: entrypoint
+  tls:
+    certResolver: "cloudflare"
