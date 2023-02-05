@@ -30,21 +30,26 @@ export default class AuthorizationController {
         return response.status(200).send({ok: true});
     };
     public async register({ request, auth, response }: HttpContextContract) {
-        const email = request.input('email');
-        const userName = request.input('userName');
-        const password = request.input('password');
+        const body = request.body();
 
-        if(await Profile.findBy("email", email))
-            return response.status(404).send({error: '?'});
-        
+        const email = body.email;
+        const userName = body.userName;
+        const password = body.password;
+
+        if (!email || !userName || !password) return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD });
+
+        console.log(email, userName, password);
+
         const profile = await Profile.create({
             email: email,
             userName: userName,
             password: password
-            });
-        profile.save()
+        });
+        
+        await profile.save();
+        await auth.use('web').loginViaId(profile.id);
 
-        return response.status(200).send({ok: true});
+        return auth.user!;
 
     }
     public async getProducts({ auth, response }: HttpContextContract) {
