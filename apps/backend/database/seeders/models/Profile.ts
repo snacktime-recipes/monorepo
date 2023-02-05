@@ -2,12 +2,13 @@ import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Profile from 'App/Models/Profile';
 import Product from 'App/Models/Product';
 import Dish from 'App/Models/Dish';
+
 export default class extends BaseSeeder {
   public async run () {
     const profile = await Profile.create({
       id: 1,
       email: 'test@smail.com',
-      userName: 'UFO_believer',
+      username: 'UFO_believer',
       password: '123'
     });
 

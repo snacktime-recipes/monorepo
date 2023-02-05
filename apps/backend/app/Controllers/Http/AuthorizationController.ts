@@ -14,7 +14,7 @@ export default class AuthorizationController {
             return response.status(400).send({error: ErrorType.INVALID_PAYLOAD});
         }
 
-        return await Profile.findBy("email", auth.user!.email);
+        return auth.user;
         
         
     };
@@ -33,16 +33,14 @@ export default class AuthorizationController {
         const body = request.body();
 
         const email = body.email;
-        const userName = body.userName;
+        const username = body.username;
         const password = body.password;
 
-        if (!email || !userName || !password) return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD });
-
-        console.log(email, userName, password);
+        if (!email || !username || !password) return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD });
 
         const profile = await Profile.create({
             email: email,
-            userName: userName,
+            username: username,
             password: password
         });
         
