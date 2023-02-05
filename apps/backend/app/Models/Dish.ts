@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import { afterSave, BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import { afterSave, HasMany, hasMany, BaseModel, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Recipe from 'App/Models/Recipe'
 import DishType from 'Types/Dish/Dish.interface';
-import Typesense from '@ioc:Typesense';
+import Typesense from '@ioc:Typesense'
+import ProfileDish from './ProfileDish'
 
 export default class Dish extends BaseModel {
   @column({ isPrimary: true })
@@ -19,6 +20,9 @@ export default class Dish extends BaseModel {
   
   @column()
   public likes: number
+
+  @hasMany(() => ProfileDish)
+  public userActivity: HasMany<typeof ProfileDish>
 
   @hasOne(() => Recipe)
   public recipe: HasOne<typeof Recipe>

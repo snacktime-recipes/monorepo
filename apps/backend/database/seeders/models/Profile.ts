@@ -1,6 +1,7 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Profile from 'App/Models/Profile';
-import Product from '../../../app/Models/Product';
+import Product from 'App/Models/Product';
+import Dish from 'App/Models/Dish';
 export default class extends BaseSeeder {
   public async run () {
     const profile = await Profile.create({
@@ -20,5 +21,15 @@ export default class extends BaseSeeder {
         const profileProduct = await profile.related('products').create({productCount: 4});
         await profileProduct.related('product').associate(product);
       };
+
+      const dishId = 1;
+
+      const dish = await Dish.findBy('id', dishId);
+      if (!dish) return;
+
+      const ProfileDish = await dish.related('userActivity').create({like: true, bookmark: true});
+      await ProfileDish.related('dish').associate(dish);
+      await ProfileDish.related('profile').associate(profile);
+
   }
 }

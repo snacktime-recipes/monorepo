@@ -6,15 +6,23 @@ import SearchableDish from 'Types/Dish/SearchableDish.interface';
 import ErrorType from 'Types/ErrorType.enum';
 
 export default class DishesController {
-    public async fetchById({ params }: HttpContextContract) {
-        const dish = await Dish.find(params.id);
+    public async fetchById({ response, params }: HttpContextContract) {
+        const dishes = await Dish.query()
+            .where('id', params.id)
+            .preload('userActivity');
+        
+        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const dish = dishes[0];
+
         return {
             ...dish?.serialize(),
             meta: await dish?.computeMeta(),
         }
     };
 
-    public async getRecipe({params}: HttpContextContract) {
+    public async getRecipe({ params }: HttpContextContract) {
         const dish = await Dish
             .query()
             .where('id', params.id)
@@ -22,24 +30,35 @@ export default class DishesController {
         return dish[0].recipe;
     }
 
-    public async getProducts({params}: HttpContextContract) {
+    public async getProducts({ params, response }: HttpContextContract) {
         const dish = await Dish
             .query()
             .where('id', params.id)
             .preload('recipe', (query) => {
                 query.preload('products', (query) => query.preload('product'));
             });
-        return dish[0].recipe.products.map((recipeProduct) => ({
-            ...recipeProduct.product.serialize(),
-            count: recipeProduct.productCount
-        }));
+
+        if(dish.length == 0)
+            return response.status(404).send({error: ErrorType.NOT_FOUND, entity: 'DISH'});
+
+        try{
+            return dish[0].recipe.products.map((recipeProduct) => ({
+                ...recipeProduct.product.serialize(),
+                count: recipeProduct.productCount
+            }));
+        }
+        catch{
+            return [];
+        }
     }
 
     public async paginate({ request }: HttpContextContract) {
         const page = request.qs().page ?? 1;
         const itemsPerPage = 10;
 
-        const paginated = await Dish.query().paginate(page, itemsPerPage);
+        const paginated = await Dish.query()
+            .preload('userActivity')
+            .paginate(page, itemsPerPage);
         paginated.baseUrl("/dishes");
 
         const serializedDishes: Array<DishType> = [];
