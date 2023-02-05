@@ -37,24 +37,12 @@ export default class AuthorizationController {
         const profile = await Profile.create({
             email: email,
             username: username,
-            password: password
-            });
-        
-        try{
-            await profile.save()
-        }
-        catch{
-            return response.status(404).send({error: '?'});
-        }
-
-        try{
-            await auth.use('web').loginViaId(profile.id)
-        }
-        catch{
-            return response.status(404).send({error: '??'});
-        }
-
-        return response.status(200).send({profile, ok: true});
+            password: password})
+            .catch(()=> {return null});
+            
+        if(profile)
+            return response.status(200).send({profile, ok: true});
+        return response.status(404).send('?');
 
     }
     public async getProducts({ auth, response }: HttpContextContract) {
