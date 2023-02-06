@@ -2,6 +2,7 @@
     // Imports
     import CodiconHeart from '~icons/codicon/heart';
     import SearchableDishes from '../components/Lists/SearchableDishes.svelte';
+    import NewsSlider from './_landing/NewsSlider.svelte';
 </script>
 
 <svelte:head>
@@ -10,25 +11,7 @@
 
 <!-- Hero -->
 <section class="w-full flex flex-wrap md:px-2">
-    <!-- Big hero card -->
-    <section class="w-full lg:w-1/2 h-auto lg:h-[65vh]">
-        <!-- Card header -->
-        <div class="ml-2 rounded-xl px-4 py-2 bg-white flex items-center w-fit">
-            <img src="https://em-content.zobj.net/thumbs/120/apple/325/rolled-up-newspaper_1f5de-fe0f.png" class="w-7 h-7" alt="">
-
-            <p class="text-lg font-medium ml-3">News</p>
-        </div>
-
-        <!-- Card itself -->
-        <div class="w-full h-full p-2">
-            <div class="w-full h-full px-8 py-12 lg:py-0 flex items-center justify-start bg-gradient-to-br from-indigo-500 to-sky-400 rounded-xl shadow-xl"> 
-                <div class="w-full lg:w-2/3 text-left">
-                    <h1 class="text-6xl text-white font-bold">Lorem ipsum dolor sit amet</h1>
-                    <p class="text-base text-white text-opacity-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam repellat modi praesentium beatae eos quasi quod eveniet perferendis nobis atque.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <NewsSlider />
 
     <!-- Small hero cards -->
     <section class="w-full md:w-1/2 h-[70vh] md:h-[65vh] mt-16 md:mt-0 overflow-hidden md:overflow-visible">

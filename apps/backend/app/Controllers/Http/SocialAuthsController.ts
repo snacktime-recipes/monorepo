@@ -23,7 +23,7 @@ export default class SocialAuthsController {
         
         // Checking auth strategy
         let profile = await Profile.findBy('email', user.email!);
-        if (profile && profile.authType != provider) {
+        if (profile?.authType && profile?.authType != provider) {
             return response.status(500).send({ error: ErrorType.SERVER_ERROR, message: `Invalid authType: registered account authType: ${ profile.authType } sent authType: ${ provider }`});
         };
 

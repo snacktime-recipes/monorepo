@@ -18,6 +18,8 @@ spec:
         envFrom:
           - configMapRef:
               name: backend-env
+          - secretRef:
+              name: social-keys
         volumeMounts:
           - mountPath: "/code/tmp"
             name: database
