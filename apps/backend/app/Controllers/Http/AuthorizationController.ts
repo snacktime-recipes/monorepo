@@ -79,8 +79,7 @@ export default class AuthorizationController {
         }
         const profile = await Profile.findBy("email", auth.user!.email);
         const profileDishActivity = await ProfileDishActivity.query()
-            .where('profileId', profile!.id)
-            .preload('dishActivity');
+            .where('profileId', profile!.id);
         return profileDishActivity;
     };
     public async updateProduct({ params, auth, response, request }: HttpContextContract){
