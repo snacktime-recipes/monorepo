@@ -4,6 +4,8 @@ import ProfileProduct from 'App/Models/ProfileProduct';
 import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 import ErrorType from 'Types/ErrorType.enum';
 import { AuthType } from 'Types/Profile';
+import Dish from 'App/Models/Dish';
+import DishesController from './DishesController';
 
 export default class AuthorizationController {
     public async login({ auth, request, response }: HttpContextContract) {
@@ -114,6 +116,27 @@ export default class AuthorizationController {
             return response.status(401).send({error: ErrorType.UNAUTHORIZED});
         }
 
-        return await Profile.findBy("email", auth.user!.email);
+        const profiles = await Profile
+            .query()
+            .preload('myDishesActivivty')
+            .where('id', auth.user!.id);
+
+        if (profiles.length != 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const profile = profiles[0];
+
+        return {
+            ...profile.serialize(),
+            likes: await Promise.all(
+                profile.myDishesActivivty
+                    .filter((activity) => activity.isLiked)
+                    .map((activity) => DishesController.fetchById(activity.dishId))
+            ),
+            bookmarks: await Promise.all(
+                profile.myDishesActivivty
+                    .filter((activity) => activity.isBookmarked)
+                    .map((activity) => DishesController.fetchById(activity.dishId))
+            )
+        };
     }
 }

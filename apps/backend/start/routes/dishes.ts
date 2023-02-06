@@ -4,7 +4,7 @@ import Route from '@ioc:Adonis/Core/Route'
 Route
     .group(() => {
         Route.get('/search', 'DishesController.search')
-        Route.get('/:id', 'DishesController.fetchById');
+        Route.get('/:id', 'DishesController.fetch');
         Route.post('/:id/like', 'DishesController.like');
         Route.post('/:id/unlike', 'DishesController.unLike');
         Route.post('/:id/bookmark', 'DishesController.bookmark');

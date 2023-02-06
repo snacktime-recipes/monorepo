@@ -24,10 +24,10 @@ export default class Dish extends BaseModel {
   @column()
   public likes: number
 
-  @hasMany(() => ProfileDishActivity)
+  @hasMany(() => ProfileDishActivity, { serializeAs: null })
   public userActivity: HasMany<typeof ProfileDishActivity>
 
-  @hasOne(() => Recipe)
+  @hasOne(() => Recipe, { serializeAs: null })
   public recipe: HasOne<typeof Recipe>
 
   @column.dateTime({ autoCreate: true, serializeAs: 'createdAt'  })

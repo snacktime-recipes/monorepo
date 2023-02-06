@@ -7,7 +7,22 @@ import ErrorType from 'Types/ErrorType.enum';
 import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 
 export default class DishesController {
-    public async fetchById({ response, params }: HttpContextContract) {
+    public static async fetchById(id: number) {
+        const dishes = await Dish.query()
+            .preload('recipe')
+            .preload('userActivity')
+            .where('id', id);
+
+        if (dishes.length != 1) throw new Error("Not found");
+        const dish = dishes[0];
+
+        return {
+            ...dish.serialize(),
+            meta: await dish.computeMeta(),
+        };
+    };
+    
+    public async fetch({ response, params }: HttpContextContract) {
         const dishes = await Dish.query()
             .where('id', params.id)
             .preload('userActivity');
