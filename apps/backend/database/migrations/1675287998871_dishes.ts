@@ -12,6 +12,11 @@ export default class extends BaseSchema {
       table.string('description').nullable()
       table.integer('likes').defaultTo(0)
 
+      table
+        .integer('category_id')
+        .unsigned()
+        .references('categories.id')
+        .onDelete('CASCADE')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
