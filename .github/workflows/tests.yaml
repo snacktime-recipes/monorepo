@@ -9,6 +9,17 @@ env:
   DRIVE_DISK: local
   DB_CONNECTION: sqlite
   SESSION_DRIVER: cookie
+  SEARCH_API_KEY: test
+  COOKIE_DOMAIN: localhost
+  APP_URL: http://localhost:5173
+  GOOGLE_CLIENT_ID: clientId
+  GOOGLE_CLIENT_SECRET: clientSecret
+  TWITTER_CLIENT_ID: clientId
+  TWITTER_CLIENT_SECRET: clientSecret
+  DISCORD_CLIENT_ID: clientId
+  DISCORD_CLIENT_SECRET: clientSecret
+  FACEBOOK_CLIENT_ID: clientId
+  FACEBOOK_CLIENT_SECRET: clientSecret
 
 jobs:
   backend-tests:
