@@ -35,6 +35,9 @@ export default class DishesController {
         return {
             ...dish?.serialize(),
             meta: await dish?.computeMeta(),
+            likedby: dish.userActivity.map((activity)=>{
+                if(activity.isLiked)
+                return {id: activity.profileId}}),
         }
     };
 
@@ -201,6 +204,10 @@ export default class DishesController {
             serializedDishes.push({
                 ...dish.serialize() as DishType,
                 meta: await dish.computeMeta(),
+                likedby: dish.userActivity.map((activity)=>{
+                    if(activity.isLiked)
+                    return {id: activity.profileId}}),
+                
             });
         };
 

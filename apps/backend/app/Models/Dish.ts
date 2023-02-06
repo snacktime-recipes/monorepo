@@ -20,9 +20,6 @@ export default class Dish extends BaseModel {
 
   @column()
   public description: string | null
-  
-  @column()
-  public likes: number
 
   @hasMany(() => ProfileDishActivity, { serializeAs: null })
   public userActivity: HasMany<typeof ProfileDishActivity>

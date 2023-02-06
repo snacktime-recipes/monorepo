@@ -10,7 +10,6 @@ export default class extends BaseSchema {
       table.string('name')
       table.string('image_url').defaultTo("")
       table.string('description').nullable()
-      table.integer('likes').defaultTo(0)
 
       table
         .integer('category_id')

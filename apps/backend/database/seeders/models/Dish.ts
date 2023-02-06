@@ -8,7 +8,6 @@ export default class extends BaseSeeder {
     const withRecipe = await Dish.create({
       id: 1,
       imageUrl: "https://www.themealdb.com/images/media/meals/nv5lf31628771380.jpg",
-      likes: 1200,
       name: "Spicy Arrabiata Penne",
       description: "Something in Spanish",
     });
@@ -20,7 +19,6 @@ export default class extends BaseSeeder {
     const withEmptyRecipe = await Dish.create({
       id: 2,
       imageUrl: "https://www.themealdb.com/images/media/meals/0jv5gx1661040802.jpg",
-      likes: 20,
       name: "Fettuccine Alfredo"
     });
 
@@ -31,7 +29,6 @@ export default class extends BaseSeeder {
     const withoutRecipe = await Dish.create({
       id: 3,
       imageUrl: "https://www.themealdb.com/images/media/meals/u9l7k81628771647.jpg",
-      likes: 300,
       name: "Walnut Roll Gužvara",
       description: "Something in Spanish",
     });
