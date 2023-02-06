@@ -12,6 +12,9 @@ export default class Dish extends BaseModel {
   @column()
   public name: string
 
+  @column({ serializeAs: 'categoryId' })
+  public categoryId: number
+
   @column({ serializeAs: "imageUrl" })
   public imageUrl: string
 
