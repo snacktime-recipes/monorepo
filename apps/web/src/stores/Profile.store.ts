@@ -1,4 +1,5 @@
 import { writable } from "svelte/store";
+import type { Dish } from "$types";
 import { ApplicationConfig } from "../configs/ApplicationConfig.const";
 
 // Store interface
@@ -9,6 +10,9 @@ export interface AuthorizedProfile {
     avatar: string,
     username: string,
     email: string,
+    
+    bookmarks: Array<number>,
+    likes: Array<number>
 };
 
 export interface UnauthorizedProfile {
@@ -48,6 +52,11 @@ class StoreClass {
                 isLoaded: true,
             };
         });
+    };
+
+    async refetch() {
+        // uh-oh
+        await this.initialize();
     };
 
     async login(email: string, password: string): Promise<boolean> {
@@ -108,7 +117,10 @@ class StoreClass {
 
                 avatar: profile.avatar,
                 email: profile.email,
-                username: profile.username ?? "unknown"
+                username: profile.username ?? "unknown",
+
+                bookmarks: profile.bookmarks?.map((bookmark: Dish) => bookmark.id) ?? [],
+                likes: profile.likes?.map((bookmark: Dish) => bookmark.id) ?? []
             };
         });
     };

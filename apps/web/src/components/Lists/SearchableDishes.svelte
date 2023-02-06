@@ -10,20 +10,27 @@
         // Refetching items
         if (search) {
             isSearching = true;
-            fetch(`${ApplicationConfig.apiUrl}/dishes/search?query=${search}`)
-                .then((response) => response.json())
-                .then((response) => {
-                    if (isSearching) items = response.hits ?? [];
-                })
-                .catch(() => {
-                    isPanicked = true;
-                    isLoading = false;
-                });
+            currentSearchId += 1;
+
+            searchByQuery(search, currentSearchId);
         } else {
             isSearching = false;
         };
     };
 
+    function searchByQuery(query: string, searchId: number) {
+        fetch(`${ApplicationConfig.apiUrl}/dishes/search?query=${query}`)
+            .then((response) => response.json())
+            .then((response) => {
+                if (isSearching && currentSearchId <= searchId) items = response.hits ?? [];
+            })
+            .catch(() => {
+                isPanicked = true;
+                isLoading = false;
+            });
+    };
+
+    let currentSearchId = 0;
     let isSearching = false;
     let isLoading = false;
     let isPanicked = false;
