@@ -9,15 +9,19 @@ interface MetaWithoutRecipe {
     doRecipeExists: false,
 };
 
+interface ProfiledId{
+    id: number,
+}
+
 export interface Dish {
     id: number,
     name: string,
     imageUrl: string,
     description?: string,
-    likes: number,
     meta: MetaWithRecipe | MetaWithoutRecipe,
     createdAt: string,
     updatedAt: string,
+    likedby: Array<ProfiledId | undefined>,
 };
 
 export default Dish;

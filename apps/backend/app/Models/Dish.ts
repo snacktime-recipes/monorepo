@@ -20,11 +20,8 @@ export default class Dish extends BaseModel {
 
   @column()
   public description: string | null
-  
-  @column()
-  public likes: number
 
-  @hasMany(() => ProfileDishActivity)
+  @hasMany(() => ProfileDishActivity, {serializeAs: null})
   public userActivity: HasMany<typeof ProfileDishActivity>
 
   @hasOne(() => Recipe)
