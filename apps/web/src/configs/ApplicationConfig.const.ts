@@ -14,7 +14,7 @@ const cringeLogos = [
 
 export const ApplicationConfig = {
     // Backend information
-    apiUrl: "http://localhost:5173/api",
+    apiUrl: "https://api.dev.snacktime.recipes",
 
     // Theme information
     theme: {
