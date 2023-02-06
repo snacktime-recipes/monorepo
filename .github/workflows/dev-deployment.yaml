@@ -1,10 +1,10 @@
 name: Deploy to development
-on: [push]
-  # workflow_run:
-  #   workflows: ["Run Tests"]
-  #   branches: ["dev"]
-  #   types:
-  #     - completed
+on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: ["dev"]
+    types:
+      - completed
 jobs:
   build-images:
     timeout-minutes: 360
