@@ -4,7 +4,6 @@ import ProfileProduct from 'App/Models/ProfileProduct';
 import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 import ErrorType from 'Types/ErrorType.enum';
 import { AuthType } from 'Types/Profile';
-import Dish from 'App/Models/Dish';
 import DishesController from './DishesController';
 
 export default class AuthorizationController {
