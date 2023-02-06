@@ -32,7 +32,7 @@ export default class Profile extends BaseModel {
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
 
-  @hasMany(() => ProfileDishActivity)
+  @hasMany(() => ProfileDishActivity, { serializeAs: null })
   public myDishesActivivty: HasMany<typeof ProfileDishActivity>
 
   @column()

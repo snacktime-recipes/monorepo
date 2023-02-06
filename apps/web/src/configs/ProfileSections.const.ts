@@ -1,33 +1,26 @@
-// Icons
 import CodiconSymbolField from '~icons/codicon/symbol-field';
 import CodiconSettingsGear from '~icons/codicon/settings-gear';
 import CodiconHeartFilled from '~icons/codicon/heart-filled';
 import CodiconHistory from '~icons/codicon/history';
 import CodiconBookmark from '~icons/codicon/bookmark'
-import CodiconSignOut from '~icons/codicon/sign-out';
-import Profile from '../stores/Profile.store';
 
-// ProfileLink
-interface ProfileLink {
+interface ProfileSection {
     icon: any,
     title: string,
-    subtitle?: string,
+    description: string,
+    matches: RegExp,
     gradient?: {
         from: string,
         to: string,
     },
-    matches?: RegExp,
-    background?: string,
-    action?: CallableFunction,
-    href?: string,
-    isDesktopOnly?: boolean,
+    href: string,
 };
 
-export const ProfileLinks: Array<ProfileLink> = [
+export const ProfileSections: Array<ProfileSection> = [
     {
         icon: CodiconSymbolField,
-        title: "My Products",
-        subtitle: "Ingredients that you have",
+        title: "Products",
+        description: "Ingredients that you have",
         gradient: {
             from: "#2dd4bf",
             to: "#0891b2"
@@ -38,7 +31,7 @@ export const ProfileLinks: Array<ProfileLink> = [
     {
         icon: CodiconBookmark,
         title: "Bookmarks",
-        subtitle: "Recipes that've picked your interest",
+        description: "Recipes that've picked your interest",
         gradient: {
             from: "#fbbf24",
             to: "#eab308"
@@ -49,7 +42,7 @@ export const ProfileLinks: Array<ProfileLink> = [
     // {
     //     icon: CodiconHistory,
     //     title: "Viewed Recently",
-    //     subtitle: "Things you've seen recently",
+    //     description: "Things you've seen recently",
     //     gradient: {
     //         from: "#06b6d4",
     //         to: "#0284c7"
@@ -60,7 +53,7 @@ export const ProfileLinks: Array<ProfileLink> = [
     {
         icon: CodiconHeartFilled,
         title: "Liked",
-        subtitle: "Everything you've liked",
+        description: "Everything you've liked",
         gradient: {
             from: "#ef4444",
             to: "#ea580c"
@@ -71,22 +64,11 @@ export const ProfileLinks: Array<ProfileLink> = [
     // {
     //     icon: CodiconSettingsGear,
     //     title: "Settings",
-    //     subtitle: "Profile avatar, username and much more",
+    //     description: "Profile avatar, username and much more",
     //     gradient: {
     //         from: "#6d28d9",
     //         to: "#a21caf"
     //     },
-    //     matches: /profile\/settings/,
-    //     href: '/profile/settings',
-    // },
-    {
-        icon: CodiconSignOut,
-        title: "Logout",
-        background: "#e11d48",
-        action: () => {
-            Profile.logout();
-        },
-        isDesktopOnly: true
-    }
+    //     matches: /profile\/settings/
+    // }
 ];
-export default ProfileLinks;

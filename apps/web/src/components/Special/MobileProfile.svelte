@@ -4,6 +4,7 @@
     import ProfileLinks from "../../configs/ProfileLinks.const";
     import { goto } from "$app/navigation";
     import type { AuthorizedProfile } from "../../stores/Profile.store";
+    import { page } from '$app/stores';
 
     // Variables
     $: profile = $Profile as AuthorizedProfile;
@@ -125,7 +126,7 @@
         <div class="flex items-center justify-between px-6">
             <div class="flex items-start">
                 <!-- Logotype -->
-                <div style="background-image: url('https://media.istockphoto.com/id/1049869360/photo/cool-dog.jpg?s=612x612&w=0&k=20&c=J3GFEVyVxJW9JT7iAoqHTASmbKp4Zz4IleB6HP9Szho='); background-size: cover; background-position: center;" class="w-14 h-14 rounded-full bg-red-500"></div>
+                <div style="background-image: url('{ profile.avatar }'); background-size: cover; background-position: center;" class="w-14 h-14 rounded-full bg-red-500"></div>
 
                 <!-- Texts -->
                 <div class="ml-4">
@@ -147,6 +148,8 @@
         <div class="mt-8 px-6">
             { #each ProfileLinks as link }
                 { #if !link.isDesktopOnly }
+                    { @const isCurrentSection = link.matches?.test($page.route.id ?? "") }
+
                     <button on:click={() => {
                         if (link.action) {
                             link.action();
@@ -154,7 +157,7 @@
                             toggleMenu();
                             goto(link.href);
                         };
-                    }} class="w-full flex items-center border-4 border-gray-100 rounded-xl my-2 p-4">
+                    }} class="w-full flex items-center border-4 { isCurrentSection ? "bg-gray-100 border-gray-200" : "border-gray-100" } rounded-xl my-2 p-4">
                         <!-- Icon -->
                         <div style="{ `background: linear-gradient(45deg, ${ link.gradient?.from ?? "#38bdf8" } 0%, ${ link.gradient?.to ?? "#6366f1" } 100%);` }" class="p-2 rounded-xl">
                             <svelte:component this={link.icon} class="w-6 h-6 text-white" />

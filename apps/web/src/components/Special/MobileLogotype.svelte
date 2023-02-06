@@ -4,6 +4,7 @@
     import Logotype from "./Logotype.svelte";
     import { page } from "$app/stores";
     import { goto } from "$app/navigation";
+    import FlagUs4x3 from '~icons/flag/us-4x3';
 
     // Variables
     let startPos = 0,
@@ -107,6 +108,7 @@
 <div on:click={() => {
     toggleMenu();
 }} class="md:hidden rounded-full cursor-pointer px-4 py-2 active:bg-gray-200">
+    <!-- subtext="COOK! BOOK! EAT! HAVE FUN!" -->
     <Logotype />
 </div>
 
@@ -124,10 +126,10 @@
             { #each HeaderLinks as link }
                 { @const isCurrentPage = $page.route.id == link.href }
                 
-                <div on:click={() => {
+                <button on:click={() => {
                     goto(link.href);
                     toggleMenu();
-                }} class="flex items-center py-3 px-4 my-5 cursor-pointer border-b-[2px] border-gray-200">
+                }} class="w-full flex items-center py-3 px-4 my-5 cursor-pointer border-b-[2px] border-gray-200">
                     <p class="text-xl font-medium">{link.title}</p>
 
                     { #if isCurrentPage }
@@ -135,8 +137,21 @@
                             <p class="text-sm text-white">You are here</p>
                         </div>
                     { /if }
-                </div>
+                </button>
             { /each }
+
+            <!-- Language picker -->
+            <button class="w-full flex items-center py-3 px-4 my-5 cursor-pointer border-b-[2px] border-gray-200">
+                <!-- Icon -->
+                <FlagUs4x3 class="h-6 w-6" />
+
+                <!-- Text -->
+                <p class="text-xl font-medium ml-2">English</p>
+
+                <div class="ml-2 rounded-xl bg-gradient-to-tr px-3 py-0.5 from-yellow-400 to-amber-400">
+                    <p class="text-sm text-white">Soon</p>
+                </div>
+            </button>
         </div>
     </div>
 </div>
