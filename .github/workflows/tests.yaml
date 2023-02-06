@@ -8,7 +8,7 @@ env:
   APP_KEY: 9UaTGJZqlVe6AFawap6p87TKEx-8XuxN
   DRIVE_DISK: local
   DB_CONNECTION: sqlite
-  SESSION_DRIVER: cookie
+  SESSION_DRIVER: memory
   SEARCH_API_KEY: test
   COOKIE_DOMAIN: localhost
   APP_URL: http://localhost:5173
