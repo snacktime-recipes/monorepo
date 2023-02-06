@@ -109,7 +109,7 @@
 <div on:click={() => {
     toggleMenu();
 }} class="md:hidden rounded-full cursor-pointer active:bg-gray-200">
-    <div style="background-image: url('https://media.istockphoto.com/id/1049869360/photo/cool-dog.jpg?s=612x612&w=0&k=20&c=J3GFEVyVxJW9JT7iAoqHTASmbKp4Zz4IleB6HP9Szho='); background-size: cover; background-position: center;" class="w-12 h-12 rounded-full bg-red-500"></div>
+    <div style="background-image: url('{ profile.avatar }'); background-size: cover; background-position: center;" class="w-12 h-12 rounded-full bg-red-500"></div>
 </div>
 
 <svelte:body class="bg-red-500" />

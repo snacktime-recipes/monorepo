@@ -24,7 +24,8 @@
     "@adonisjs/auth",
     "@adonisjs/session",
     "./providers/TypesenseProvider",
-    "@adonisjs/attachment-lite"
+    "@adonisjs/attachment-lite",
+    "@adonisjs/ally"
   ],
   "metaFiles": [
     {

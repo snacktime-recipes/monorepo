@@ -20,7 +20,7 @@
     <Menu>
         <MenuButton>
             <div in:fade class="hidden md:flex items-center h-14 p-2 md:pr-6 rounded-full bg-gray-100 hover:bg-gray-300 hover:cursor-pointer">
-                <div style="background-image: url('https://media.istockphoto.com/id/1049869360/photo/cool-dog.jpg?s=612x612&w=0&k=20&c=J3GFEVyVxJW9JT7iAoqHTASmbKp4Zz4IleB6HP9Szho='); background-size: cover; background-position: center;" class="w-10 h-10 rounded-full bg-red-500"></div>
+                <div style="background-image: url('{ profile.avatar }'); background-size: cover; background-position: center;" class="w-10 h-10 rounded-full bg-red-500"></div>
 
                 <div class="ml-3 text-left">
                     <h1 class="text-sm font-medium">{ profile.username }</h1>

@@ -6,6 +6,7 @@ export interface AuthorizedProfile {
     isLoaded: boolean,
     isAuthorized: true
     
+    avatar: string,
     username: string,
     email: string,
 };
@@ -105,8 +106,9 @@ class StoreClass {
                 isLoaded: true,
                 isAuthorized: true,
 
+                avatar: profile.avatar,
                 email: profile.email,
-                username: profile.userName ?? "unknown"
+                username: profile.username ?? "unknown"
             };
         });
     };
