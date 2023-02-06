@@ -13,7 +13,7 @@ export default class extends BaseSchema {
       table.string('avatar').nullable()
       table.string('remember_me_token').nullable()
       table.enum('auth_type', Object.values(AuthType))
-
+      
       /**
        * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
        */

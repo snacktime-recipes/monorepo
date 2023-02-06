@@ -10,6 +10,13 @@ export default class extends BaseSchema {
       table.string('title', 255).notNullable().unique()
       table.string('description', 255).nullable()
       table.string('imageUrl').nullable()
+
+      table
+      .integer('profile_id')
+      .unsigned()
+      .references('profiles.id')
+      .onDelete('CASCADE')
+
       table.timestamp('created_at', { useTz: true }).notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
     })
