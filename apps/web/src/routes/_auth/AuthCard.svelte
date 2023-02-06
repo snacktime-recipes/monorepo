@@ -3,13 +3,8 @@
     import type { ErrorType } from "./ErrorType.enum";
     import type { InputField } from "./InputField.interface";
 
-    import LogosGoogleIcon from '~icons/logos/google-icon';
-    import LogosTwitter from '~icons/logos/twitter';
-    import LogosDiscordIcon from '~icons/logos/discord-icon';
-    import LogosFacebook from '~icons/logos/facebook';
-    import { ErrorMessages } from "./ErrorMessages.const";
-    import { slide } from "svelte/transition";
     import ErrorMessage from "./ErrorMessage.svelte";
+    import { SocialAuth } from "../../configs/SocialAuth.const";
 
     $: serializedFields = () => {
         const serialized: Record<string, InputField> = {};
@@ -86,29 +81,12 @@
             </div>
 
             <div class="grid grid-cols-2 gap-5 md:gap-3 items-stretch">
-                { #each [
-                    {
-                        title: "Google",
-                        icon: LogosGoogleIcon,
-                    },
-                    {
-                        title: "Facebook",
-                        icon: LogosFacebook,
-                    },
-                    {
-                        title: "Twitter",
-                        icon: LogosTwitter,
-                    },
-                    {
-                        title: "Discord",
-                        icon: LogosDiscordIcon,
-                    },
-                ] as link }
-                    <div class="flex-1 rounded-xl bg-gray-100 px-4 py-4 md:py-3 flex items-center">
+                { #each SocialAuth as link }
+                    <a href={link.href} class="flex-1 rounded-xl bg-gray-100 px-4 py-4 md:py-3 flex items-center hover:bg-gray-200">
                         <svelte:component this={link.icon} class="w-7 h-7 md:w-5 md:h-5" />
 
                         <p class="text-lg md:text-md opacity-70 ml-4 md:ml-2">{link.title}</p>
-                    </div>
+                    </a>
                 { /each }
             </div>
         { /if }
