@@ -37,6 +37,7 @@ export default class AuthorizationController {
         const username = body.username;
         const password = body.password;
 
+
         if (!email || !username || !password) return response.status(400).send({ error: ErrorType.INVALID_PAYLOAD });
 
         const profile = await Profile.create({
@@ -68,6 +69,30 @@ export default class AuthorizationController {
             count: profileProduct.productCount
         }));
     };
+    public async updateProduct({ params, auth, response, request }: HttpContextContract){
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+
+        const body = request.body();
+
+        const productCount = body.count;
+        const profile = await Profile.findBy("email", auth.user!.email);
+
+        const searchCriteria = {
+            productId: params.id,
+            profileId: profile!.id
+          }
+          
+        const savePayload = {
+            productCount: productCount
+        }
+       
+        return await ProfileProduct.updateOrCreate( searchCriteria, savePayload ); 
+    }
     public async getProfile({ auth, response }: HttpContextContract) {
         try{
             await auth.use('web').authenticate()
