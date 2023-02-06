@@ -20,13 +20,19 @@ export default class SocialAuthsController {
             return response.status(500).send({ error: ErrorType.SERVER_ERROR });
 
         const user = await result.user();
-        const profile = await Profile.updateOrCreate({
+        
+        // Checking auth strategy
+        let profile = await Profile.findBy('email', user.email!);
+        if (profile && profile.authType != provider) {
+            return response.status(500).send({ error: ErrorType.SERVER_ERROR, message: `Invalid authType: registered account authType: ${ profile.authType } sent authType: ${ provider }`});
+        };
+
+        profile = await Profile.updateOrCreate({
             email: user.email!
         }, {
             avatar: user.avatarUrl!,
             email: user.email!,
             username: user.nickName ?? user.name,
-            authType: provider as AuthType,
         });
 
         await auth.use('web').login(profile);
