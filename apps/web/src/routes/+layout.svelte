@@ -15,6 +15,8 @@
   import TextPlaceholder from '../components/Loaders/TextPlaceholder.svelte';
   import { fade } from 'svelte/transition';
   import DesktopProfile from '../components/Special/DesktopProfile.svelte';
+  import { goto } from '$app/navigation';
+  import FlagUs4x3 from '~icons/flag/us-4x3';
 
   onMount(() => {
     Profile.initialize();
@@ -31,13 +33,13 @@
 
             <div class="ml-8">
                 { #each HeaderLinks as link }
-                    <a href={link.href} class="opacity-80 text-sm text-black mx-4">{ link.title }</a>
+                    <a href={link.href} class="opacity-80 text-sm text-black mx-2 hover:bg-gray-100 rounded-full px-4 py-2">{ link.title }</a>
                 { /each }
             </div>
         </div>
 
         <!-- Profile (Mobile/Desktop) -->
-        <div class="flex w-full md:w-auto items-center justify-between flex-row-reverse md:flex-row md:justimy-start">
+        <div class="flex w-full md:w-auto items-center justify-between flex-row-reverse md:flex-row">
             { #if $Profile.isAuthorized }
                 <!-- Desktop-only -->
                 <DesktopProfile />
@@ -76,10 +78,23 @@
 
             <!-- Bookmarks -->
             { #if $Profile.isAuthorized }
-                <button in:fade class="hidden md:flex md:ml-4 w-14 h-14 bg-gray-100 hover:bg-gray-300 transition ease-in-out duration-200 rounded-full items-center justify-center">
+                <button on:click={() => {
+                    goto('/profile/bookmarks');
+                }} in:fade class="hidden md:flex md:ml-4 w-14 h-14 bg-gray-100 hover:bg-gray-300 transition ease-in-out duration-200 rounded-full items-center justify-center">
                     <CodiconBookmark class="h-6 w-6 text-black" />
                 </button>
             { /if }
+
+            <!-- Language picker -->
+            <button in:fade class="relative hidden md:flex ml-4 w-14 h-14 bg-gray-100 hover:bg-gray-300 transition ease-in-out duration-200 rounded-full items-center justify-center">
+                <FlagUs4x3 class="h-6 w-6" />
+
+                <div class="absolute top-0 right-[-35px]">
+                    <div class="rounded-full px-2 py-1 bg-gradient-to-tr from-yellow-400 to-amber-400">
+                        <p class="text-sm text-white">Soon</p>
+                    </div>
+                </div>
+            </button>
         </div>
     </div>
   </header>
