@@ -50,7 +50,8 @@
       "@adonisjs/lucid",
       "@adonisjs/auth",
       "@adonisjs/session",
-      "@adonisjs/attachment-lite"
+      "@adonisjs/attachment-lite",
+      "@adonisjs/ally"
     ]
   }
 }
