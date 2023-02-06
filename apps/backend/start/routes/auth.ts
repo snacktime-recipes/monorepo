@@ -7,6 +7,7 @@ Route
         Route.post('/logout', 'AuthorizationController.logout');
         Route.post('/register', 'AuthorizationController.register');
         Route.get('/products', 'AuthorizationController.getProducts');
+        Route.post('/products/:id', 'AuthorizationController.updateProduct');
         Route.get('', 'AuthorizationController.getProfile');
     })
     .prefix("/profile")
