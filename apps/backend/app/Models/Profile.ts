@@ -5,6 +5,7 @@ import ProfileProduct from './ProfileProduct'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import ProfileDish from './ProfileDish'
 import { AuthType } from 'Types/Profile'
+import Category from './Category'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -24,6 +25,9 @@ export default class Profile extends BaseModel {
 
   @column()
   public avatar: string
+
+  @hasMany(() => Category)
+  public categories: HasMany<typeof Category>
 
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>

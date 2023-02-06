@@ -10,5 +10,6 @@ export default class extends BaseSeeder {
     await this.runSeeder(await import('../models/Recipe'));
     await this.runSeeder(await import('../models/Dish'));
     await this.runSeeder(await import('../models/Profile'));
+    await this.runSeeder(await import('../models/Categories'));
   };
 }
