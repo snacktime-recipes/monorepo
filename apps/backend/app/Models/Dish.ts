@@ -3,7 +3,7 @@ import { afterSave, HasMany, hasMany, BaseModel, column, HasOne, hasOne } from '
 import Recipe from 'App/Models/Recipe'
 import DishType from 'Types/Dish/Dish.interface';
 import Typesense from '@ioc:Typesense'
-import ProfileDish from './ProfileDish'
+import ProfileDishActivity from './ProfileDishActivity'
 
 export default class Dish extends BaseModel {
   @column({ isPrimary: true })
@@ -21,8 +21,8 @@ export default class Dish extends BaseModel {
   @column()
   public likes: number
 
-  @hasMany(() => ProfileDish)
-  public userActivity: HasMany<typeof ProfileDish>
+  @hasMany(() => ProfileDishActivity)
+  public userActivity: HasMany<typeof ProfileDishActivity>
 
   @hasOne(() => Recipe)
   public recipe: HasOne<typeof Recipe>

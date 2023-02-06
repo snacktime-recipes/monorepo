@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Profile from 'App/Models/Profile';
 import ProfileProduct from 'App/Models/ProfileProduct';
+import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 import ErrorType from 'Types/ErrorType.enum';
 import { AuthType } from 'Types/Profile';
 
@@ -68,6 +69,19 @@ export default class AuthorizationController {
             ...profileProduct.product.serialize(),
             count: profileProduct.productCount
         }));
+    };
+    public async getActivity({ auth, response }: HttpContextContract) {
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+        const profile = await Profile.findBy("email", auth.user!.email);
+        const profileDishActivity = await ProfileDishActivity.query()
+            .where('profileId', profile!.id)
+            .preload('dishActivity');
+        return profileDishActivity;
     };
     public async updateProduct({ params, auth, response, request }: HttpContextContract){
         try{

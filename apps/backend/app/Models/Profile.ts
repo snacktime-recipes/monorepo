@@ -3,7 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import ProfileProduct from './ProfileProduct'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
-import ProfileDish from './ProfileDish'
+import ProfileDishActivity from './ProfileDishActivity'
 import { AuthType } from 'Types/Profile'
 import Category from './Category'
 
@@ -32,8 +32,8 @@ export default class Profile extends BaseModel {
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
 
-  @hasMany(() => ProfileDish)
-  public dishes: HasMany<typeof ProfileDish>
+  @hasMany(() => ProfileDishActivity)
+  public myDishesActivivty: HasMany<typeof ProfileDishActivity>
 
   @column()
   public rememberMeToken: string | null
