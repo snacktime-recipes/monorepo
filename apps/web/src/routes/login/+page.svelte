@@ -41,29 +41,43 @@
 
         // Checking if email or password is empty
         if (email == null) {
-            isPanicked = true;
-            error = "EMPTY_EMAIL";
+            throwError("EMPTY_EMAIL");
             return;
         } else {
             // Checking if email is valid using regexp
             if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]+$/)) {
-                isPanicked = true;
-                error = "INVALID_EMAIL";
+                throwError("INVALID_EMAIL");
                 return;
             };
         };
 
         // Checking if password is set
-        if (password == null) {
-            isPanicked = true;
-            error = "EMPTY_PASSWORD";
+        if (password == null || password == "") {
+            throwError("EMPTY_PASSWORD");
             return;
         };
 
         // Trying to authorize this user
-        await Profile.login(email, password);
+        const isSuccesfull = await Profile.login(email, password);
+        if (!isSuccesfull) {
+            throwError("INVALID_PASSWORD_OR_EMAIL");
+        };
+    };
+
+    function throwError(throwedError: ErrorType) {
+        isPanicked = false;
+        setTimeout(() => {
+            isLoading = false;
+            isPanicked = true;
+            error = throwedError;
+        }, 50);
     };
 </script>
 
 <SimplePageTransition />
-<AuthCard {fields} {button} bind:error={error} bind:isPanicked={isPanicked} />
+<AuthCard 
+    disableForgotPasswordField
+    {fields} 
+    {button} 
+    {isLoading} bind:error={error} bind:isPanicked={isPanicked}
+/>

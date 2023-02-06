@@ -47,7 +47,7 @@
             { :else }
                 { #if $Profile.isLoaded }
                     { #each $Header.buttons as button }
-                        <a href={button.href} class="{ button.displayOnMobile == false ? "hidden md:flex" : "flex" } items-center my-2 mx-2 px-6 py-2 rounded-full { button.type == 'full' ? "bg-sky-500 hover:bg-sky-600 text-white font-medium" : "hover:bg-gray-200" } transition-all ease-in-out duration-200">
+                        <a in:fade href={button.href} class="{ button.displayOnMobile == false ? "hidden md:flex" : "flex" } items-center my-2 mx-2 px-6 py-2 rounded-full { button.type == 'full' ? "bg-sky-500 hover:bg-sky-600 text-white font-medium" : "hover:bg-gray-200" } transition-all ease-in-out duration-200">
                             { #if button.icon }
                                 <svelte:component this={button.icon} class="text-white h-5 w-5 mr-1" />
                             { /if }

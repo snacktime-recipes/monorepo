@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { slide } from "svelte/transition";
+    import { fade, slide } from "svelte/transition";
     import { onMount, onDestroy } from "svelte";
     import { ErrorMessages } from "./ErrorMessages.const";
     import type { ErrorType } from "./ErrorType.enum";
@@ -38,7 +38,7 @@
 
 <button on:click={() => {
     isPanicked = false;
-}} in:slide out:slide class="w-full flex items-center justify-between mb-6 rounded-xl px-5 py-3 bg-red-400 opacity-80">
+}} in:slide out:fade class="w-full flex items-center justify-between mb-8 rounded-xl px-5 py-3 bg-red-400 opacity-80">
     <p class="text-white">
         { error ? ErrorMessages[error] : "Unknown error" }
     </p>
