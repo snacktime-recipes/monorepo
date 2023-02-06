@@ -36,6 +36,6 @@ export default class extends BaseSeeder {
       description: "Something in Spanish",
     });
 
-    await withEmptyRecipe.save();
+    await withoutRecipe.save();
   }
 }

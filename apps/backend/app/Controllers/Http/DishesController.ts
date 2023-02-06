@@ -22,12 +22,21 @@ export default class DishesController {
         }
     };
 
-    public async getRecipe({ params }: HttpContextContract) {
-        const dish = await Dish
+    public async getRecipe({ response, params }: HttpContextContract) {
+        const dishes = await Dish
             .query()
             .where('id', params.id)
             .preload('recipe', (query) => query.preload('steps'));
-        return dish[0].recipe;
+
+        if (dishes.length == 0)
+            return response.status(404).send({ error: ErrorType.NOT_FOUND, entity: "DISH" });
+
+        const dish = dishes[0];
+
+        if (dish.recipe == null)
+            return response.status(404).send({ error: ErrorType.NOT_FOUND, entity: "RECIPE" });
+
+        return dish.recipe;
     }
 
     public async getProducts({ params, response }: HttpContextContract) {

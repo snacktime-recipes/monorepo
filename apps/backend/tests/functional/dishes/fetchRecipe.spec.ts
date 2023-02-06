@@ -44,7 +44,7 @@ test.group('Dishes -> FetchRecipe', (group) => {
   });
 
   test('try to fetch nonexistent recipe of a dish', async ({ client }) => {
-    const response = await client.get('/dishes/2/recipe');
+    const response = await client.get('/dishes/3/recipe');
     const { response: { body } } = response;
 
     response.assertStatus(404);
