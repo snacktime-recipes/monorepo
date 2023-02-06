@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Profile from 'App/Models/Profile';
 import ProfileProduct from 'App/Models/ProfileProduct';
 import ErrorType from 'Types/ErrorType.enum';
+import { AuthType } from 'Types/Profile';
 
 export default class AuthorizationController {
     public async login({ auth, request, response }: HttpContextContract) {
@@ -41,7 +42,8 @@ export default class AuthorizationController {
         const profile = await Profile.create({
             email: email,
             username: username,
-            password: password
+            password: password,
+            authType: AuthType.PASSWORD,
         });
         
         await profile.save();

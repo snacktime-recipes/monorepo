@@ -4,6 +4,7 @@ import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Luc
 import ProfileProduct from './ProfileProduct'
 import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
 import ProfileDish from './ProfileDish'
+import { AuthType } from 'Types/Profile'
 
 export default class Profile extends BaseModel {
   @column({ isPrimary: true })
@@ -16,10 +17,13 @@ export default class Profile extends BaseModel {
   public username: string
 
   @column({ serializeAs: null })
-  public password: string
+  public password?: string
 
-  @attachment()
-  public avatar: AttachmentContract
+  @column({ serializeAs: 'authType' })
+  public authType: AuthType
+
+  @column()
+  public avatar: string
 
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
@@ -37,8 +41,8 @@ export default class Profile extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (profile: Profile) {
-    if (profile.$dirty.password) {
+  public static async hashPassword(profile: Profile) {
+    if (profile.$dirty.password && profile.password) {
       profile.password = await Hash.make(profile.password)
     }
   }
