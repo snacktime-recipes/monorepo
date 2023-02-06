@@ -1,9 +1,10 @@
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 import Category from 'App/Models/Category';
+import Dish from 'App/Models/Dish';
 
 export default class extends BaseSeeder {
   public async run () {
-    await Category.createMany([
+    const categories = await Category.createMany([
       {
         id: 1,
         title: 'Spicy!',
@@ -21,5 +22,7 @@ export default class extends BaseSeeder {
         
       }
     ]);
+
+    categories[0].related('dishes').save((await Dish.find(1))!)
   }
 }

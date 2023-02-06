@@ -4,6 +4,7 @@ import Typesense from '@ioc:Typesense';
 import DishType from 'Types/Dish/Dish.interface';
 import SearchableDish from 'Types/Dish/SearchableDish.interface';
 import ErrorType from 'Types/ErrorType.enum';
+import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 
 export default class DishesController {
     public async fetchById({ response, params }: HttpContextContract) {
@@ -21,6 +22,115 @@ export default class DishesController {
             meta: await dish?.computeMeta(),
         }
     };
+
+    public async like({ auth, params, response }: HttpContextContract){
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+        
+        const dishes = await Dish.query()
+        .where('id', params.id)
+        .preload('userActivity');
+    
+        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const searchCriteria = {
+            dishId: params.id,
+            profileId: auth.user!.id
+          }
+          
+        const savePayload = {
+            isLiked: true
+        }
+       
+        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
+
+    }
+
+    public async unLike({ auth, params, response }: HttpContextContract){
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+        
+        const dishes = await Dish.query()
+        .where('id', params.id)
+        .preload('userActivity');
+    
+        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const searchCriteria = {
+            dishId: params.id,
+            profileId: auth.user!.id
+          }
+          
+        const savePayload = {
+            isLiked: false
+        }
+       
+        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
+
+    }
+
+    public async bookmark({ auth, params, response }: HttpContextContract){
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+        
+        const dishes = await Dish.query()
+        .where('id', params.id)
+        .preload('userActivity');
+    
+        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const searchCriteria = {
+            dishId: params.id,
+            profileId: auth.user!.id
+          }
+          
+        const savePayload = {
+            isBookmarked: true
+        }
+       
+        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
+    }
+    public async unBookmark({ auth, params, response }: HttpContextContract){
+        try{
+            await auth.use('web').authenticate()
+        }
+        catch{
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        }
+        
+        const dishes = await Dish.query()
+        .where('id', params.id)
+        .preload('userActivity');
+    
+        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
+
+        const searchCriteria = {
+            dishId: params.id,
+            profileId: auth.user!.id
+          }
+          
+        const savePayload = {
+            isBookmarked: false
+        }
+       
+        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
+    }
 
     public async getRecipe({ response, params }: HttpContextContract) {
         const dishes = await Dish

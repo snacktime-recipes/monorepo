@@ -7,6 +7,8 @@ Route
         Route.post('/logout', 'AuthorizationController.logout');
         Route.post('/register', 'AuthorizationController.register');
         Route.get('/products', 'AuthorizationController.getProducts');
+        Route.get('/categories', 'AuthorizationController.getCategories');
+        Route.get('/activity', 'AuthorizationController.getActivity');
         Route.post('/products/:id', 'AuthorizationController.updateProduct');
         Route.get('', 'AuthorizationController.getProfile');
     })

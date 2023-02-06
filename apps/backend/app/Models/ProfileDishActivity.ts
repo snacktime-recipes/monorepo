@@ -2,7 +2,7 @@ import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import Dish from './Dish'
 import Profile from './Profile'
 
-export default class ProfileDish extends BaseModel {
+export default class ProfileDishActivity extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -12,16 +12,16 @@ export default class ProfileDish extends BaseModel {
   @column({ serializeAs: 'dishId' })
   public dishId: number
 
-  @column()
-  public like: boolean
+  @column({ serializeAs: 'isLiked' })
+  public isLiked: boolean
 
-  @column()
-  public bookmark: boolean
+  @column({ serializeAs: 'isBookmarked' })
+  public isBookmarked: boolean
 
   @belongsTo(() => Dish)
-  public dish: BelongsTo<typeof Dish>
+  public dishActivity: BelongsTo<typeof Dish>
 
   @belongsTo(() => Profile)
-  public profile: BelongsTo<typeof Profile>
+  public activityBy: BelongsTo<typeof Profile>
 
 }
