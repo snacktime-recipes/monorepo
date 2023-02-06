@@ -30,7 +30,7 @@ export default class SocialAuthsController {
         });
 
         await auth.use('web').login(profile);
-        return response.redirect().status(200).toPath(Env.get('APP_URL'));
+        return response.redirect().toPath(Env.get('APP_URL'));
     };
 
     public async redirect({ params, ally, response }: HttpContextContract) {
