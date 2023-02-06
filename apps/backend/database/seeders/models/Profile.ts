@@ -30,7 +30,7 @@ export default class extends BaseSeeder {
       const dish = await Dish.findBy('id', dishId);
       if (!dish) return;
 
-      const ProfileDishACtivity = await dish.related('userActivity').create({profileId:1, like: true, bookmark: true});
+      const ProfileDishACtivity = await dish.related('userActivity').create({profileId:1, isLiked: true, isBookmarked: true});
       await ProfileDishACtivity.related('dishActivity').associate(dish);
       await ProfileDishACtivity.related('activityBy').associate(profile);
 

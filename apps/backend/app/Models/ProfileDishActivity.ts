@@ -12,11 +12,11 @@ export default class ProfileDishActivity extends BaseModel {
   @column({ serializeAs: 'dishId' })
   public dishId: number
 
-  @column()
-  public like: boolean
+  @column({ serializeAs: 'isLiked' })
+  public isLiked: boolean
 
-  @column()
-  public bookmark: boolean
+  @column({ serializeAs: 'isBookmarked' })
+  public isBookmarked: boolean
 
   @belongsTo(() => Dish)
   public dishActivity: BelongsTo<typeof Dish>

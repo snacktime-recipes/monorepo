@@ -44,7 +44,7 @@ export default class DishesController {
           }
           
         const savePayload = {
-            like: true
+            isLiked: true
         }
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
@@ -72,7 +72,7 @@ export default class DishesController {
           }
           
         const savePayload = {
-            like: false
+            isLiked: false
         }
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
@@ -100,7 +100,7 @@ export default class DishesController {
           }
           
         const savePayload = {
-            bookmark: true
+            isBookmarked: true
         }
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
@@ -126,7 +126,7 @@ export default class DishesController {
           }
           
         const savePayload = {
-            bookmark: false
+            isBookmarked: false
         }
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
