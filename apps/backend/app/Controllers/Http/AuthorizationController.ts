@@ -4,6 +4,7 @@ import ProfileProduct from 'App/Models/ProfileProduct';
 import ProfileDishActivity from 'App/Models/ProfileDishActivity';
 import ErrorType from 'Types/ErrorType.enum';
 import { AuthType } from 'Types/Profile';
+import Dish from 'App/Models/Dish';
 
 export default class AuthorizationController {
     public async login({ auth, request, response }: HttpContextContract) {
@@ -114,6 +115,23 @@ export default class AuthorizationController {
             return response.status(401).send({error: ErrorType.UNAUTHORIZED});
         }
 
-        return await Profile.findBy("email", auth.user!.email);
+        const profiles =  await Profile.query()
+            .where("email", auth.user!.email)
+            .preload('myDishesActivivty');
+        const profile = profiles[0];
+        if(!profile)
+            return response.status(404).send({error: ErrorType.NOT_FOUND});
+
+        return {
+            ...profile.serialize(),
+            likedDishes: profile.myDishesActivivty.map((activity)=>{
+                if(activity.isLiked)
+                    return {id:activity.dishId};
+                }),
+            bookmarkedDishes: profile.myDishesActivivty.map((activity)=>{
+                if(activity.isBookmarked)
+                    return {id:activity.dishId};
+                }),
+        }
     }
 }
