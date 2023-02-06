@@ -5,6 +5,8 @@
 
     import ErrorMessage from "./ErrorMessage.svelte";
     import { SocialAuth } from "../../configs/SocialAuth.const";
+    import { fade } from "svelte/transition";
+    import Circle from "../../components/Loaders/Circle.svelte";
 
     $: serializedFields = () => {
         const serialized: Record<string, InputField> = {};
@@ -15,13 +17,14 @@
 
         return serialized;
     };
-
+    
     // Theme info
     export let disableForgotPasswordField = false;
     export let title: string = "Welcome back";
     export let subtitle: string = "To proceed, you'll need to authorize into your account";
 
     // Two-way bindable error info
+    export let isLoading: boolean;
     export let isPanicked: boolean;
     export let error: ErrorType | null;
 
@@ -37,9 +40,11 @@
 <div class="w-full md:py-6 flex items-center justify-center">
     <div class="w-full md:w-1/3 rounded-xl bg-white px-6 py-12">
         <!-- Error (if exists) -->
-        { #if isPanicked && error != null }
-            <ErrorMessage bind:isPanicked={isPanicked} {error} />
-        { /if }
+        { #key isPanicked }
+            { #if isPanicked && error }
+                <ErrorMessage bind:isPanicked={isPanicked} {error} />
+            { /if }
+        { /key }
 
         <!-- Texts -->
         <div class="text-center px-6">
@@ -50,7 +55,11 @@
         <!-- Input -->
         <div class="my-8">
             { #each fields as field }
-                <div class="my-4 bg-gray-100 px-4 py-4 md:py-2 rounded-xl flex items-center">
+                <div class="my-4 bg-gray-100 px-4 py-4 md:py-2 rounded-xl flex items-center relative">
+                    { #if isLoading }
+                        <div in:fade class="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 cursor-not-allowed rounded-xl"></div>
+                    { /if }
+
                     <svelte:component this={field.icon} class="w-6 h-6 md:w-5 md:h-5 opacity-60 mr-4 md:mr-2" />
 
                     <input bind:value={field.value} class="bg-gray-100 text-lg md:text-base" placeholder={field.placeholder}>
@@ -68,7 +77,11 @@
         <!-- Buttons -->
         { #if button }
             <button on:click={() => button?.handler(serializedFields())} class="w-full py-4 md:py-2 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center">
-                <p class="text-white text-lg md:text-base ml-1">{ button.text }</p>
+                { #if isLoading }
+                    <Circle color="#fff" size="25" />
+                { :else }
+                    <p in:fade class="text-white text-lg md:text-base ml-1">{ button.text }</p>
+                { /if }
             </button>
         { /if }
 
@@ -82,7 +95,7 @@
 
             <div class="grid grid-cols-2 gap-5 md:gap-3 items-stretch">
                 { #each SocialAuth as link }
-                    <a href={link.href} class="flex-1 rounded-xl bg-gray-100 px-4 py-4 md:py-3 flex items-center hover:bg-gray-200">
+                    <a href={isLoading ? "javascript:void()" : link.href} class="{isLoading ? "cursor-not-allowed" : ""} flex-1 rounded-xl bg-gray-100 px-4 py-4 md:py-3 flex items-center hover:bg-gray-200">
                         <svelte:component this={link.icon} class="w-7 h-7 md:w-5 md:h-5" />
 
                         <p class="text-lg md:text-md opacity-70 ml-4 md:ml-2">{link.title}</p>

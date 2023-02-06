@@ -17,18 +17,18 @@ export const SocialAuth: Array<SocialAuthEntry> = [
         href: `${ApplicationConfig.apiUrl}/social/google`,
     },
     {
-        title: "Facebook",
-        icon: LogosFacebook,
-        href: `${ApplicationConfig.apiUrl}/social/facebook`,
-    },
-    {
-        title: "Twitter",
-        icon: LogosTwitter,
-        href: `${ApplicationConfig.apiUrl}/social/twitter`,
-    },
-    {
         title: "Discord",
         icon: LogosDiscordIcon,
         href: `${ApplicationConfig.apiUrl}/social/discord`,
     },
+    // {
+    //     title: "Twitter",
+    //     icon: LogosTwitter,
+    //     href: `${ApplicationConfig.apiUrl}/social/twitter`,
+    // },
+    // {
+    //     title: "Facebook",
+    //     icon: LogosFacebook,
+    //     href: `${ApplicationConfig.apiUrl}/social/facebook`,
+    // },
 ];

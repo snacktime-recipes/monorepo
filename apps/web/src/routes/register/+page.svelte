@@ -49,29 +49,25 @@
         error = null;
 
         if (username == null) {
-            isPanicked = true;
-            error = "EMPTY_USERNAME";
+            throwError("EMPTY_USERNAME");
             return;
         };
 
         // Checking if email or password is empty
         if (email == null) {
-            isPanicked = true;
-            error = "EMPTY_EMAIL";
+            throwError("EMPTY_EMAIL");
             return;
         } else {
             // Checking if email is valid using regexp
             if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]+$/)) {
-                isPanicked = true;
-                error = "INVALID_EMAIL";
+                throwError("INVALID_EMAIL");
                 return;
             };
         };
 
         // Checking if password is set
         if (password == null) {
-            isPanicked = true;
-            error = "EMPTY_PASSWORD";
+            throwError("EMPTY_PASSWORD");
             return;
         };
 
@@ -85,7 +81,7 @@
             credentials: 'include',
             headers,
             body: JSON.stringify({
-                userName: username,
+                username: username,
                 email,
                 password
             }),
@@ -96,12 +92,28 @@
             Profile._updateProfile(json);
         } else {
             // Handling error
-            console.log('error:', await response.text());
+            throwError("SERVER_ERROR");
         };
 
         isLoading = false;
     };
+
+    function throwError(throwedError: ErrorType) {
+        isPanicked = false;
+        setTimeout(() => {
+            isLoading = false;
+            isPanicked = true;
+            error = throwedError;
+        }, 50);
+    };
 </script>
 
 <SimplePageTransition />
-<AuthCard disableForgotPasswordField title="Welcome!" subtitle='To proceed, fill out the form below and click on the "Register" button' {fields} {button} bind:error={error} bind:isPanicked={isPanicked} />
+<AuthCard
+    disableForgotPasswordField 
+    title="Welcome!" 
+    subtitle='To proceed, fill out the form below and click on the "Register" button' 
+    {fields} 
+    {button} 
+    bind:isLoading={isLoading} bind:error={error} bind:isPanicked={isPanicked}
+/>
