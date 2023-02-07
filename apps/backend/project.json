@@ -38,6 +38,20 @@
                     "command": "node ace test --tags=dishes"
                 }
             }
+        },
+        "migration": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "apps/backend"
+            },
+            "configurations": {
+                "refresh": {
+                    "command": "node ace migration:refresh"
+                },
+                "seed": {
+                    "command": "node ace db:seed"
+                }
+            }
         }
     },
     "tags": []
