@@ -448,6 +448,50 @@ export default class extends BaseSeeder {
             productsId: [55, 56, 57, 58, 59], 
             metric: [455, 145, 225, 60, 4] // g, g, g, ml, things
             },
+            {
+            id: 11,
+            coockingTime: 1500,
+            difficulty: RecipeDifficulty.MEDIUM,
+            steps: [
+                {
+                    id: 62,
+                    title: 'Prepare the oven',
+                    description: 'Preheat the oven to 350 degrees F (180 degrees C).',
+                },
+                {
+                    id: 63,
+                    title: 'Mix it',
+                    description: 'In a medium bowl, whisk No Salt Added Organic Sunflower Butter (320 g) , Egg (1) , Raw Sugar (125 g) , Vanilla Extract (5 mL) , Baking Powder (4 g) , and Kosher Salt (6 g) together.'
+                },
+                {
+                    id: 64,
+                    title: 'Add Cacao',
+                    description: 'When the ingredients are combined, add the 70% Cacao Chocolate Chips (85 g) and mix well.'
+                },
+                {
+                    id: 65,
+                    title: 'Add dough',
+                    description: 'Scoop out 1 tablespoon of the batter onto the tray with silicone mat or parchment paper.'
+                },
+                {
+                    id: 66,
+                    title: 'Add the Heart Candy',
+                    description: 'Sprinkle the Heart Candy (50 g) on the top of the cookies.'
+                },
+                {
+                    id: 67,
+                    title: 'Bake it',
+                    description: 'Bake for 10 minutes.'
+                },
+                {
+                    id: 68,
+                    title: 'Bon appetite',
+                    description: 'Let them cool completely before removing from the baking sheet, otherwise the cookies may break apart.'
+                },
+            ],
+            productsId: [60, 61, 4, 62, 63, 8, 64, 65], 
+            metric: [320, 125, 1, 5, 4, 6, 85, 50] // g, g, thing, ml, g, g, g, g
+            },
     ];
 
     for(let r of recipes){

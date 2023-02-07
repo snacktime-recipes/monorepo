@@ -299,6 +299,36 @@ export default class extends BaseSeeder {
           name: 'Hamburger Buns',
           imageUrl: 'https://www.sidechef.com/ingredient/small/dde910b2-c280-4807-afca-70e3bb076bd3.jpeg?d=96x96'
         },
+        {
+          id: 60,
+          name: 'No Salt Added Organic Sunflower Butter',
+          imageUrl: 'https://www.sidechef.com/static/images/default-ingredient.f135ba997382.png?d=48x48'
+        },
+        {
+          id: 61,
+          name: 'Raw Sugar',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/4a167f6b-f355-4df2-bf30-246bb287c964.jpeg?d=96x96'
+        },
+        {
+          id: 62,
+          name: 'Vanilla Extract',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/6874e7ea-0ef1-45ac-9e1e-90b530468ec7.jpg?d=96x96'
+        },
+        {
+          id: 63,
+          name: 'Baking Powder',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/95ffbe02-7319-4b86-9570-03d37e40f566.jpeg?d=96x96'
+        },
+        {
+          id: 64,
+          name: '70% Cacao Chocolate Chips',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/359cb80f-b7bf-4c77-adaa-f799e8e6836d.jpg?d=96x96'
+        },
+        {
+          id: 65,
+          name: 'Heart Candy',
+          imageUrl: 'https://www.sidechef.com/static/images/default-ingredient.f135ba997382.png?d=48x48'
+        },
       ];
 
     await Product.createMany(products);
