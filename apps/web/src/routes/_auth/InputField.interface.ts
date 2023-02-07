@@ -3,4 +3,5 @@ export interface InputField {
     icon: any,
     value?: string,
     placeholder?: string,
+    type: "string" | "password" | "email",
 };

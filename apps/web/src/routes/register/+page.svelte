@@ -17,16 +17,19 @@
             id: 'username',
             icon: CodiconAccount,
             placeholder: 'username',
+            type: 'string',
         },
         {
             id: 'email',
             icon: CodiconMail,
             placeholder: 'user@mail.com',
+            type: 'email',
         },
         {
             id: 'password',
             icon: CodiconLock,
             placeholder: '****************',
+            type: 'password',
         }
     ];
 

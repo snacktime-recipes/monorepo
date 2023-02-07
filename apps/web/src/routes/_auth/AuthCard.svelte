@@ -7,6 +7,7 @@
     import { SocialAuth } from "../../configs/SocialAuth.const";
     import { fade } from "svelte/transition";
     import Circle from "../../components/Loaders/Circle.svelte";
+    import InputFieldComponent from "./InputField.svelte";
 
     $: serializedFields = () => {
         const serialized: Record<string, InputField> = {};
@@ -55,15 +56,7 @@
         <!-- Input -->
         <div class="my-8">
             { #each fields as field }
-                <div class="my-4 bg-gray-100 px-4 py-4 md:py-2 rounded-xl flex items-center relative">
-                    { #if isLoading }
-                        <div in:fade class="absolute inset-0 flex items-center justify-center bg-gray-200 bg-opacity-50 cursor-not-allowed rounded-xl"></div>
-                    { /if }
-
-                    <svelte:component this={field.icon} class="w-6 h-6 md:w-5 md:h-5 opacity-60 mr-4 md:mr-2" />
-
-                    <input bind:value={field.value} class="bg-gray-100 text-lg md:text-base" placeholder={field.placeholder}>
-                </div>
+                <InputFieldComponent bind:field={field} {isLoading} />
             { /each }
 
             <!-- Forgot password links -->
