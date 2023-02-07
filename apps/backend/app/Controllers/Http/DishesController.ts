@@ -13,32 +13,23 @@ export default class DishesController {
             .preload('userActivity')
             .where('id', id);
 
-        if (dishes.length != 1) throw new Error("Not found");
+        if (dishes.length != 1) return null;
         const dish = dishes[0];
 
         return {
             ...dish.serialize(),
+            likedBy: dish.userActivity
+                .filter((activity) => activity.isLiked)
+                .map((activity) => activity.profileId) ?? [],
             meta: await dish.computeMeta(),
         };
     };
     
     public async fetch({ response, params }: HttpContextContract) {
-        const dishes = await Dish.query()
-            .where('id', params.id)
-            .preload('userActivity');
+        const dish = await DishesController.fetchById(params.id);
         
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const dish = dishes[0];
-
-        return {
-            ...dish?.serialize(),
-            meta: await dish?.computeMeta(),
-            likedby: dish.userActivity.map((activity)=>{
-                if(activity.isLiked)
-                return {id: activity.profileId}}),
-        }
+        if (!dish) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        return dish;
     };
 
     public async like({ auth, params, response }: HttpContextContract){
@@ -164,7 +155,15 @@ export default class DishesController {
         if (dish.recipe == null)
             return response.status(404).send({ error: ErrorType.NOT_FOUND, entity: "RECIPE" });
 
-        return dish.recipe;
+        return {
+            ...dish.recipe.serialize(),
+            steps: dish.recipe.steps.map((step) => ({
+                id: step.id,
+                title: step.title,
+                description: step.description,
+                videoUrl: step.videoUrl,
+            })),
+        };
     }
 
     public async getProducts({ params, response }: HttpContextContract) {
