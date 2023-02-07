@@ -4,7 +4,7 @@ export interface RecipeStep {
     id: number;
     title: string;
     description: string;
-    videoUrl?: string;
+    // videoUrl?: string;
 };
 
 export interface Recipe {

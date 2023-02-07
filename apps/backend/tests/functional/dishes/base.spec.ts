@@ -19,8 +19,10 @@ test.group('Dishes', (group) => {
     response.assert?.isObject(body.meta);
     response.assert?.isArray(body.data);
 
-    expect(body).toEqual(
-      expect.arrayContaining([DishSchema]),
-    )
+    expect(body).toMatchObject({
+      // todo test properly for paginate meta info
+      meta: expect.anything(),
+      data: expect.arrayContaining([ DishSchema ]),
+    });
   });
 })

@@ -1,13 +1,13 @@
 import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
-import { ProductSchema } from "../_schemas/Product.schema";
+import { DishProductSchema } from "../_schemas/Dish.schema";
 
 test.group('Dishes -> FetchProducts', (group) => {
   group.tap((test) => test.tags(["dishes"]));
 
   /*
   | Route: GET /dishes/:id/products
-  | Schema: ./_schemas/Product.schema.ts
+  | Schema: ./_schemas/Dish.schema.ts
   | Description:
   |   Returns array of Products, that are needed in this
   |   recipe.
@@ -20,7 +20,7 @@ test.group('Dishes -> FetchProducts', (group) => {
 
     response.assert?.isArray(body);
     expect(body).toEqual(
-      expect.arrayContaining([ProductSchema])
+      expect.arrayContaining([ DishProductSchema ])
     );
   });
 

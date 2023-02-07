@@ -14,9 +14,7 @@ test.group('Dishes -> FetchRecipe', (group) => {
     const { response: { body } } = response;
 
     response.assertStatus(200);
-    expect(body).toEqual(
-      expect.arrayContaining([RecipeSchema]),
-    );
+    expect(body).toMatchObject(RecipeSchema);
   });
 
   /*
