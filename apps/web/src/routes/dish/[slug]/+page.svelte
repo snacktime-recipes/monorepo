@@ -58,7 +58,7 @@
         isPanicked = true;
       });
       
-    const recipeREsponse = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}/recipe`)
+    const recipeResponse = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}/recipe`)
       .then((response) => response.json())
       .catch(() => {
         isLoading = false;
@@ -67,7 +67,7 @@
 
     dish = dishResponse;
     ingredients = dishProducts;
-    recipe = recipeREsponse;
+    recipe = recipeResponse;
     
     isLoading = false;
   });
@@ -222,7 +222,7 @@
               <!-- Name -->
               <div class="mt-4 text-left md:text-center md:w-2/3">
                 { #if ingredient.count != null }
-                  <p class="text-sm font-medium opacity-60">{ ingredient.count }</p>
+                  <p class="text-sm font-medium opacity-60">{ ingredient.count } { ingredient.measurement }</p>
                 { /if }
 
                 <h1 class="text-lg font-medium">{ ingredient.name }</h1>

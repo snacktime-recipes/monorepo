@@ -24,7 +24,18 @@
     let isLoading = true;
 </script>
 
-<div class="p-2">
+<div class="w-full py-16 flex justify-center">
+    <div class="w-full md:w-1/3 flex items-center justify-center rounded-xl bg-gray-100 p-4">
+        <img class="w-10" src="https://em-content.zobj.net/thumbs/120/apple/325/test-tube_1f9ea.png" alt="">
+
+        <div class="ml-4">
+            <h1 class="text-xl font-medium">Work in progress</h1>
+            <p class="text-sm opacity-80">We are currently working on this feature. Stay tuned!</p>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 p-2">
     <!-- Content -->
     { #if isLoading }
         <div class="w-full flex items-center justify-center py-20">
@@ -41,12 +52,6 @@
                 { #each products as product }
                     <ProductCard {product} />
                 { /each }
-
-                <!-- Add new product -->
-                <div class="rounded-xl flex-1 p-4 bg-gray-100 flex flex-col items-start justify-center">
-                    <h1 class="text-xl font-medium text-black">Want to add another?</h1>
-                    <p class="text-sm opacity-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, quis.</p>
-                </div>
             </div>
         { /if }
     { /if }

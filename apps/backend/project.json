@@ -48,6 +48,9 @@
                 "refresh": {
                     "command": "node ace migration:refresh"
                 },
+                "run":{
+                    "command": "node ace migration:run"
+                },
                 "seed": {
                     "command": "node ace db:seed"
                 }
