@@ -33,7 +33,6 @@ spec:
     targetPort: 3000
 
 ---
-# Traefik ingressroute
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
@@ -51,3 +50,35 @@ spec:
           port: entrypoint
   tls:
     certResolver: "cloudflare"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: frontend-root
+  namespace: snacktime-recipes
+spec:
+  entryPoints:
+  - web
+  - websecure
+  routes:
+    - match: Host(`snacktime.recipes`)
+      kind: Rule
+      services:
+        - name: frontend
+          port: entrypoint
+      middlewares:
+        - name: redirect-to-dev
+  tls:
+    certResolver: "cloudflare"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect-to-dev
+  namespace: snacktime-recipes
+spec:
+  redirectRegex:
+    regex: ^https://snacktime.recipes/(.*)
+    replacement: https://dev.snacktime.recipes/${1}
