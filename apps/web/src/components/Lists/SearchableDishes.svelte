@@ -37,7 +37,11 @@
     let items: Array<any> = [];
 
     let search: string;
+
+    export let disableCategories = false;
 </script>
+
+<!-- Categories -->
 
 <!-- Search bar (desktop-only) -->
 <div class="w-full flex items-stretch justify-between">
@@ -47,6 +51,8 @@
         
         <input bind:value={search} class="w-full" type="text" placeholder="Search...">
     </div>
+
+    <!-- Pagination settings (todo) -->
 </div>
 
 <!-- Recipes -->

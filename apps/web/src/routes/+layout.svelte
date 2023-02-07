@@ -17,6 +17,7 @@
   import DesktopProfile from '../components/Special/DesktopProfile.svelte';
   import { goto } from '$app/navigation';
   import FlagUs4x3 from '~icons/flag/us-4x3';
+  import { page } from '$app/stores';
 
   onMount(() => {
     Profile.initialize();
@@ -33,7 +34,9 @@
 
             <div class="ml-8">
                 { #each HeaderLinks as link }
-                    <a href={link.href} class="opacity-80 text-sm text-black mx-2 hover:bg-gray-100 rounded-full px-4 py-2">{ link.title }</a>
+                    { @const isCurrentPage = $page.route.id == link.href }
+
+                    <a href={link.href} class="opacity-80 text-sm text-black mx-2 { isCurrentPage ? "bg-gray-100 hover:bg-gray-200 cursor-not-allowed" : "hover:bg-gray-100" } transition duration-200 rounded-full px-4 py-2">{ link.title }</a>
                 { /each }
             </div>
         </div>

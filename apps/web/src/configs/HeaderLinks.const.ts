@@ -9,10 +9,6 @@ export const HeaderLinks: Array<HeaderLink> = [
         href: '/'
     },
     {
-        title: 'Products',
-        href: '/products'
-    },
-    {
         title: 'Recipes',
         href: '/recipes'
     }

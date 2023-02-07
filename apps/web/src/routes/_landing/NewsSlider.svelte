@@ -19,7 +19,6 @@
         const response = await fetch(`${ApplicationConfig.apiUrl}/news`)
             .then((response) => response.json())
             .catch((error) => {
-                console.log("error:", error);
                 isLoading = false;
                 isPanicked = true;
             });
@@ -43,14 +42,14 @@
 
     <!-- Card itself -->
     <div class="w-full h-full p-2">
-        <div class="w-full h-full px-8 py-12 lg:py-0 flex flex-col justify-center { isLoading ? "bg-white" : "bg-sky-500" } { isLoading || isPanicked ? "items-center" : "items-start" } transition-all duration-700 rounded-xl shadow-xl relative">
+        <div class="w-full h-full px-8 py-12 lg:py-0 flex flex-col justify-center { isLoading ? "bg-white" : "bg-gradient-to-tr from-sky-400 via-violet-500 to-fuchsia-400" } { isLoading || isPanicked ? "items-center" : "items-start" } transition-all duration-700 rounded-xl shadow-xl relative">
             { #if isLoading }
                 <Circle size="20" />
             { :else }
                 { #if isPanicked } 
                     <div class="text-center text-white">
                         <h1 class="text-xl font-bold">Error while fetching news</h1>
-                        <p class="text-sm opacity-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, iusto neque soluta ullam saepe officiis!</p>
+                        <p class="text-sm opacity-80">You could try to reload this page and see if this error is resolved or no. Otherwise I dunno</p>
                     </div>
                 { :else }
                     <div class="w-full lg:w-2/3 text-white text-left">
