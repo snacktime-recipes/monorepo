@@ -206,8 +206,8 @@ export default class extends BaseSeeder {
         },
         {
           id: 41,
-          name: 'Ground Cumin',
-          imageUrl: 'https://www.sidechef.com/ingredient/small/d674cdc4-1bfc-453c-b67f-749b16b3f498.jpeg?d=96x96'
+          name: 'Milk',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/ed6fe7af-e0d1-423d-985f-44a30f7f7166.jpg?d=96x96'
         },
         {
           id: 42,
@@ -241,13 +241,63 @@ export default class extends BaseSeeder {
         },
         {
           id: 48,
-          name: '',
-          imageUrl: ''
+          name: 'Medium Dill Pickles',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/bf7acfb1-d323-4d53-b274-58aa09e2d668.jpeg?d=96x96'
         },
         {
           id: 49,
-          name: '',
-          imageUrl: ''
+          name: 'All-Purpose Flour',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/0ad2bc9f-87f8-4585-a2de-579d0248d034.jpg?d=96x96'
+        },
+        {
+          id: 50,
+          name: 'Smoked Paprika',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/995c328f-4fa5-4be3-945d-645bac51f890.jpeg?d=96x96'
+        },
+        {
+          id: 51,
+          name: 'Ground Black Pepper',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/702f7daf-abfb-4673-9b44-49553d20e8d9.jpeg?d=96x96'
+        },
+        {
+          id: 52,
+          name: 'Panko Breadcrumbs',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/cbcb3f6d-009a-4d87-8ccb-90eaacdab431.jpeg?d=96x96'
+        },
+        {
+          id: 53,
+          name: 'Chocolate Frosting',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/b2354c76-fb64-4661-b15b-94f06017483b.jpeg?d=96x96'
+        },
+        {
+          id: 54,
+          name: 'Fresh Raspberries',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/8d28ffe3-c9e5-4871-b6cd-31592a32a23c.jpg?d=96x96'
+        },
+        {
+          id: 55,
+          name: 'Tyson® Chicken Thighs',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/55e0aa42-1ee0-4cbe-8231-e9994d7aa5d8.jpeg?d=96x96'
+        },
+        {
+          id: 56,
+          name: 'Barbecue Sauce',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/211395a7-e620-4f58-aab3-96c448ed1b6c.jpeg?d=96x96'
+        },
+        {
+          id: 57,
+          name: 'Coleslaw Mix',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/560c6177-61e3-4431-8f19-60f9d8a4efcd.jpeg?d=96x96'
+        },
+        {
+          id: 58,
+          name: 'Ranch Dressing',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/ff2251c2-1ced-4e56-b377-637e10b7f433.jpeg?d=96x96'
+        },
+        {
+          id: 59,
+          name: 'Hamburger Buns',
+          imageUrl: 'https://www.sidechef.com/ingredient/small/dde910b2-c280-4807-afca-70e3bb076bd3.jpeg?d=96x96'
         },
       ];
 

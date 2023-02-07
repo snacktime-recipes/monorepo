@@ -303,125 +303,150 @@ export default class extends BaseSeeder {
                     description: 'When the tofu is done to your liking you are ready to assemble and enjoy. If you arent keeping these vegan, add some crumbled Queso Fresco (to taste) to help cut a little bit of the heat. Cooking results may vary depending on microwave oven used.'
                 },
             ],
-            productsId: [32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 23],
+            productsId: [32, 33, 34, 35, 36, 37, 38, 39, 40, 27, 42, 43, 44, 45, 46, 47, 23],
             metric: [1, 4, 15, 1, 2, 3, 3, 3, 5, 3, 2, 1, 6, 15, 30, 6, 0.5] // block, g, ml, can, things, g, g, g, g, g, g, pinch, g, ml, g, thing, thing
             },
             {
             id: 8,
-            coockingTime: 1200,
-            difficulty: RecipeDifficulty.HARD,
+            coockingTime: 1500,
+            difficulty: RecipeDifficulty.MEDIUM,
             steps: [
                 {
-                    id: 7,
-                    title: '',
-                    description: '',
+                    id: 39,
+                    title: 'Cut the Medium Dill Pickles',
+                    description: 'Cut the Medium Dill Pickles (8) into thin (0.2-inch) slices. Set aside to dry.',
                 },
                 {
-                    id: 8,
-                    title: '',
-                    description: ''
+                    id: 40,
+                    title: 'Heat pan',
+                    description: 'Heat up the Vegetable Oil (as needed) in a large saucepan over medium heat, until it reaches 350 degrees F (175 degrees C).'
                 },
                 {
-                    id: 9,
-                    title: '',
-                    description: ''
+                    id: 41,
+                    title: 'Time to mix',
+                    description: 'Set up the dredging station. In a medium mixing bowl, whisk together All-Purpose Flour (125 g) , Cayenne Pepper (2 g) , Smoked Paprika (2 g) , Ground Cumin (2 g) , Salt (6 g) , and Ground Black Pepper (1 g) . Put the Eggs (2) in another medium bowl, and the Panko Breadcrumbs (100 g) in a third bowl.'
                 },
                 {
-                    id: 10,
-                    title: '',
-                    description: ''
+                    id: 42,
+                    title: 'More mix',
+                    description: 'Dredge the sliced pickles in the flour mixture first, then the eggs, then dredge in breadcrumbs.'
                 },
                 {
-                    id: 11,
-                    title: '',
-                    description: ''
+                    id: 43,
+                    title: 'Heat it!',
+                    description: 'Carefully lower the pickles into the oil and fry until both sides are golden brown, about 3-5 minutes. Fish the pickles out and put on a paper towel-lined plate.'
                 },
                 {
-                    id: 12,
-                    title: '',
-                    description: ''
+                    id: 44,
+                    title: 'Bon appetite',
+                    description: 'Serve with sauce of your choice.'
                 },
             ],
-            productsId: Array.from({length: 3}, (_, i) => i + 1), //productsIds 1-4
-            metric: [1, 80, 210, 2] //box, g, g, things
+            productsId: [48, 49, 38, 50, 27, 51, 44, 4, 52], //productsIds 1-4
+            metric: [8, 125, 2, 2, 2, 1, 6, 2, 100] //things, g, g, g, g, g, g, things, g
             },
             {
             id: 9,
             coockingTime: 1200,
-            difficulty: RecipeDifficulty.HARD,
+            difficulty: RecipeDifficulty.MEDIUM,
             steps: [
                 {
-                    id: 7,
-                    title: '',
-                    description: '',
+                    id: 45,
+                    title: 'Mix',
+                    description: 'Sift together All-Purpose Flour (250 g) , Caster Sugar (4 g) , Salt (2 g) . Set aside.',
                 },
                 {
-                    id: 8,
-                    title: '',
-                    description: ''
+                    id: 46,
+                    title: 'Beat eggs',
+                    description: 'In a large bowl, beat Eggs (3) , Milk (500 mL)'
                 },
                 {
-                    id: 9,
-                    title: '',
-                    description: ''
+                    id: 47,
+                    title: 'Mix 2',
+                    description: 'Beat in the flour mixture until smooth'
                 },
                 {
-                    id: 10,
-                    title: '',
-                    description: ''
+                    id: 48,
+                    title: 'Add butter',
+                    description: 'Stir in Unsalted Butter (30 g) .'
                 },
                 {
-                    id: 11,
-                    title: '',
-                    description: ''
+                    id: 49,
+                    title: 'Heat a pan',
+                    description: 'Heat a frying pan over medium heat. Spread butter on surface of the flat pan.'
                 },
                 {
-                    id: 12,
-                    title: '',
-                    description: ''
+                    id: 50,
+                    title: 'Add luquid',
+                    description: 'Pour in the batter on the pan, approximately 100 milliliter.'
+                },
+                {
+                    id: 51,
+                    title: 'Spread it',
+                    description: 'Rotate the pan to spread the batter as thin as possible.'
+                },
+                {
+                    id: 52,
+                    title: 'Repeat',
+                    description: 'Once the lower part is cooked and brown, fold the crepe and remove on a plate'
+                },
+                {
+                    id: 53,
+                    title: 'Bon appetite',
+                    description: 'Top with Chocolate Frosting (65 g) and Fresh Raspberries (100 g) . Served hot and enjoy!'
                 },
             ],
-            productsId: Array.from({length: 3}, (_, i) => i + 1), //productsIds 1-4
-            metric: [1, 80, 210, 2] //box, g, g, things
+            productsId: [49, 20, 44, 4, 41, 2, 53, 54],
+            metric: [250, 4, 2, 3, 500, 30, 65, 100] //g, g, g, things, ml, g, g, g 
             },
             {
             id: 10,
-            coockingTime: 1200,
-            difficulty: RecipeDifficulty.HARD,
+            coockingTime: 1500,
+            difficulty: RecipeDifficulty.MEDIUM,
             steps: [
                 {
-                    id: 7,
-                    title: '',
-                    description: '',
+                    id: 54,
+                    title: 'Preapre the chicken',
+                    description: 'Place the Tyson® Chicken Thighs (455 g) in an empty saucepan. Season generously with Salt (to taste) and Ground Black Pepper (to taste) , 1-2 tsp each (the extra seasoning is needed to flavor the chicken). Add water until the chicken is covered by 1-inch.',
                 },
                 {
-                    id: 8,
-                    title: '',
-                    description: ''
+                    id: 55,
+                    title: 'Bring the liquid',
+                    description: 'Bring the liquid to a boil over medium-high heat, then lower heat to a simmer. Cook for 5-10 more minutes until the middle is no longer pink or the internal temperature reaches 165 degrees F (74 degrees C).'
                 },
                 {
-                    id: 9,
-                    title: '',
-                    description: ''
+                    id: 56,
+                    title: 'Transfer the chicken',
+                    description: 'Transfer the chicken to a paper towel-lined tray to cool slightly.'
                 },
                 {
-                    id: 10,
-                    title: '',
-                    description: ''
+                    id: 57,
+                    title: 'Mix the salad',
+                    description: 'In a medium bowl, combine the Coleslaw Mix (225 g) and the Ranch Dressing (60 mL) . Season with Ground Black Pepper (to taste) and Salt (to taste) , if desired.'
                 },
                 {
-                    id: 11,
-                    title: '',
-                    description: ''
+                    id: 58,
+                    title: 'Shred the chicken',
+                    description: 'To shred the chicken, transfer the chicken to the bowl of a stand mixer and blend for 30-60 seconds until shredded. You can also use a hand mixer, or shred by hand with two forks.'
                 },
                 {
-                    id: 12,
-                    title: '',
-                    description: ''
+                    id: 59,
+                    title: 'Add sauce',
+                    description: 'Add the Barbecue Sauce (145 g) to the shredded chicken and toss until fully coated.'
+                },
+                {
+                    id: 60,
+                    title: 'Heat it',
+                    description: 'Place a skillet over high heat. Once hot, toast the Hamburger Buns (4) in the dry pan for 1-2 minutes, until golden.'
+                },
+                {
+                    id: 61,
+                    title: 'Bon appetite',
+                    description: 'Place a quarter of the shredded chicken on each of the bottom buns. Top with the ranch slaw and serve with sides of choice.'
                 },
             ],
-            productsId: Array.from({length: 3}, (_, i) => i + 1), //productsIds 1-4
-            metric: [1, 80, 210, 2] //box, g, g, things
+            productsId: [55, 56, 57, 58, 59], 
+            metric: [455, 145, 225, 60, 4] // g, g, g, ml, things
             },
     ];
 

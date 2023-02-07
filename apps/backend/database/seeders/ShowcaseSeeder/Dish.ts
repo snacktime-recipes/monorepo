@@ -77,5 +77,35 @@ export default class extends BaseSeeder {
     await dish.save();
     await dish.related('recipe').save((await Recipe.find(7))!);
 
+    dish = await Dish.create({
+      id: 8,
+      imageUrl: "https://www.sidechef.com/recipe/394430e2-d055-4b06-a8da-2833b268d232.jpg",
+      name: "Fried Pickles",
+      description: 'These fried pickles are the perfect appetizer or side dish to any party. They are spicy, crunchy, savory, and absolutely delicious.'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(8))!);
+
+    dish = await Dish.create({
+      id: 9,
+      imageUrl: "https://www.sidechef.com/recipe/742cf171-b247-4fa3-940c-0027ed162550.jpeg",
+      name: "Crepe",
+      description: 'Everybodys favourite breakfast dish - Crepe, delicious when topped with molten chocolate and fresh raspberries.'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(9))!);
+
+    dish = await Dish.create({
+      id: 10,
+      imageUrl: "https://www.sidechef.com/recipe/d218c4e6-1120-4f05-b3ee-ff86a3025ef8.jpg",
+      name: "5-Ingredient BBQ Chicken Sandwich with Ranch Slaw",
+      description: 'This BBQ Chicken Sandwich recipe couldn’t be easier! With only 5 ingredients and a special chicken shredding hack, you can have these juicy, flavorful sandwiches on the table for dinner in under half an hour. Enjoy the universally loved combo of BBQ chicken flavor and creamy ranch slaw in every bite, maximize the experience for your taste buds!'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(10))!);
+
   }
 }
