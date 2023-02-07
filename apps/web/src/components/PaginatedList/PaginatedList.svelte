@@ -1,34 +1,24 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { ApplicationConfig } from "../../configs/ApplicationConfig.const";
+    
     import Circle from "../Loaders/Circle.svelte";
+    import CodiconArrowLeft from '~icons/codicon/arrow-left';
+    import CodiconArrowRight from '~icons/codicon/arrow-right';
 
     // Variables
     let isLoading = true;
     let isPanicked = false;
 
-    let totalElements: number = 0;
-    let currentPage: number = 1;
-
     $: if (!isSearching) {
         items = initialItems;
     };
 
+    let pagesCount = 0;
+
     // Fetching 
     onMount(async () => {
-        const response = await fetch(`${ ApplicationConfig.apiUrl }${ url.startsWith("/") ? "" : "/" }${ url }`, { credentials: 'include' });
-
-        if (response.status == 200) {
-            const json = await response.json();
-
-            totalElements = json.meta.total;
-            currentPage = json.meta.current_page;
-
-            items = json.data;
-            initialItems = json.data;
-        } else {
-            isPanicked = true;
-        };
+        await fetchByPageNumber(currentPage);
 
         // Updating state
         setTimeout(() => {
@@ -36,12 +26,33 @@
         }, 150);
     });
 
+    async function fetchByPageNumber(page: number) {
+        const response = await fetch(`${ ApplicationConfig.apiUrl }${ url.startsWith("/") ? "" : "/" }${ url }?page=${page}&itemsPerPage=${itemsPerPage}`);
+
+        if (response.status == 200) {
+            const json = await response.json();
+
+            totalElements = json.meta.total;
+            currentPage = json.meta.current_page;
+            pagesCount = json.meta.last_page ?? 1;
+
+            items = json.data;
+            initialItems = json.data;
+        } else {
+            isPanicked = true;
+        };
+    };
+
     export let url: string;
     export let card: any;
 
     let initialItems: Array<any>;
     export let items: Array<any>;
     
+    export let totalElements = 0;
+    export let currentPage = 1;
+    export let itemsPerPage = 10;
+
     export let isSearching = false;
 </script>
 
@@ -66,6 +77,26 @@
                 { #each items as entry }
                     <svelte:component this={card} data={entry} />
                 { /each }
+            </div>
+
+            <!-- Pages information -->
+            <div class="w-full mt-6 flex items-center justify-center">
+                <!-- Previous page -->
+                <button on:click={() => {
+                    if (currentPage > 1) fetchByPageNumber(currentPage - 1);
+                }} class="rounded-xl px-4 py-2 bg-white { currentPage > 1 ? "hover:bg-gray-200" : "cursor-not-allowed opacity-50" }  transition duration-200">
+                    <CodiconArrowLeft class="w-5 h-5 text-black" />
+                </button>
+
+                <!-- Current page -->
+                <div class="mx-6 text-lg font-medium">{ currentPage }</div>
+
+                <!-- Next page -->
+                <button on:click={() => {
+                    if (currentPage < pagesCount) fetchByPageNumber(currentPage + 1);
+                }} class="rounded-xl px-4 py-2 bg-white { currentPage < pagesCount ? "hover:bg-gray-200" : "cursor-not-allowed opacity-50" }  transition duration-200">
+                    <CodiconArrowRight class="w-5 h-5 text-black" />
+                </button>
             </div>
         { /if }
     { /if }
