@@ -138,8 +138,8 @@ export default class extends BaseSeeder {
                     description: 'Garnish the dish with extra Pecorino and Fresh Parsley (1 handful) . Serve immediately.'
                 },
             ],
-            productsId: Array.from({length: 9}, (_, i) => i + 3), //productsIds 3-11
-            metric: [4, 170, 4, 3, 455, 120, 1, 1] //things, ml, cloves, g, g, g, handful, pinch 
+            productsId: [5, 6, 7, 4, 8, 9, 10, 11, 12], //productsIds 3-11
+            metric: [15, 170, 4, 3, 3, 455, 120, 1, 1] //things, ml, cloves, g, g, g, handful, pinch 
             },
             {
             id: 3,
@@ -167,7 +167,7 @@ export default class extends BaseSeeder {
                     description: 'Cut in half and serve hot.'
                 }
             ],
-            productsId: Array.from({length: 5}, (_, i) => i + 12), //productsIds 12-16
+            productsId: [13, 14, 15, 16, 17], //productsIds 12-16
             metric: [4, 30, 60, 4, 4] //slices, g, ml, slices, slices
             },
             {
