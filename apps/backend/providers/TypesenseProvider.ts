@@ -1,5 +1,7 @@
 import type { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import Dish from 'App/Models/Dish';
+// import Category from 'App/Models/Category';
+// import Dish from 'App/Models/Dish';
 import type { Client } from 'typesense';
 import Typesense from 'typesense';
 
@@ -79,6 +81,11 @@ export default class TypesenseProvider {
           id: entity.id.toString(),
           name: entity.name,
           description: entity.description ?? "",
+          // category: await Category.find(entity.categoryId) ?? null,
+          likes: entity.userActivity
+            .filter((activity) => activity.isLiked)
+            .length ?? 0,
+          products: entity.recipe?.products?.map(({ product }) => product.name) ?? [],
         })
     } else {
       // Updating
@@ -86,8 +93,14 @@ export default class TypesenseProvider {
         .collections('dishes')
         .documents(entity.id.toString())
         .update({
+          id: entity.id.toString(),
           name: entity.name,
           description: entity.description ?? "",
+          // category: await Category.find(entity.categoryId) ?? null,
+          likes: entity.userActivity
+            .filter((activity) => activity.isLiked)
+            .length ?? 0,
+          products: entity.recipe?.products?.map(({ product }) => product.name) ?? [],
         });
     };
   };
@@ -96,7 +109,7 @@ export default class TypesenseProvider {
   private getQueryByProperty(collection: 'dishes'): string {
     switch (collection) {
       case 'dishes':
-        return 'name,description';
+        return 'name,description,category,products';
     };
   };
 }

@@ -34,8 +34,18 @@ export default class Dish extends BaseModel {
   public updatedAt: DateTime
   
   @afterSave()
-  public static async updateSearchEntity(entity: Dish) {
-    await Typesense.updateOrCreate(entity);
+  public static async updateSearchEntity({ id }: Dish) {
+    const entities = await Dish
+      .query()
+      .preload('userActivity')
+      .preload('recipe', 
+        (query) => query.preload('products', 
+          (query) => query.preload('product')
+        )
+      )
+      .where('id', id);
+
+    await Typesense.updateOrCreate(entities[0]);
   };
 
   public async computeMeta(): Promise<DishType["meta"]> {
