@@ -18,3 +18,7 @@
 4. Three more steps to go! Firstly, you'll need to run migrations and seed your newly migrated **SQLite** database. Just run these commands: `nx run backend:migration:run` and then `nx run backend:migration:seed` to seed you database with showcase tables and data
 
 5. And then you'll be ready to go! Just run `nx run-many --target=serve` in root folder and access your local Snacktime instance at `http://localhost:5173`    
+
+## API Documentation
+
+API Documentation is currently available right here: `https://snacktime-recipes.apidog.io`  
