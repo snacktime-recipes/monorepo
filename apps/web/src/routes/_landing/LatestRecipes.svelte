@@ -5,6 +5,7 @@
     import TextPlaceholder from '../../components/Loaders/TextPlaceholder.svelte';
     import { ApplicationConfig } from '../../configs/ApplicationConfig.const';
     import type { Dish } from '$types';
+  import { goto } from '$app/navigation';
 
     let items: Array<Dish> = [];
 
@@ -48,14 +49,16 @@
                 { /each }
             { :else }
                 { #each items as dish }
-                    <div class="snap-center w-full h-full md:w-1/2 md:h-1/2 p-2">
-                        <div class="w-full h-full flex flex-col md:flex-row items-start justify-start md:justify-center bg-white rounded-xl shadow-xl"> 
+                    <button on:click={() => {
+                        goto(`/dish/${ dish.id }`);
+                    }} class="snap-center w-full h-full md:w-1/2 md:h-1/2 p-2">
+                        <div class="w-full h-full flex flex-col md:flex-row items-start justify-start md:justify-center bg-white rounded-xl shadow-xl hover:scale-105 transition duration-200"> 
                             <!-- Image -->
                             <div in:fade class="w-full h-full md:w-1/3 rounded-xl md:rounded-l-xl" style="background-image: url('{ dish.imageUrl }'); background-size: cover;">
                                 <div class="hidden md:block w-full h-full rounded-l-xl bg-gradient-to-r from-black to-transparent opacity-40"></div>
                             </div>
 
-                            <div in:fade class="w-2/3 p-8">
+                            <div in:fade class="w-full md:w-2/3 p-8 text-left">
                                 <!-- Tags and popularity -->
                                 <div class="flex items-stretch gap-2">
                                     <div class="rounded-xl flex items-center px-2 py-1.5 bg-gradient-to-r from-yellow-300 to-amber-400">
@@ -66,10 +69,10 @@
                                 </div>
 
                                 <h1 class="mt-1 text-xl font-medium">{ dish.name }</h1>
-                                <p class="text-sm text-black text-opacity-80 line-clamp-5">{ dish.description ?? "Empty description" }</p>
+                                <p class="text-sm text-black text-opacity-80 line-clamp-5 md:line-clamp-3">{ dish.description ?? "Empty description" }</p>
                             </div>
                         </div>
-                    </div>
+                    </button>
                 { /each }
             { /if }
         </div>

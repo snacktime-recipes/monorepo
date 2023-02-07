@@ -9,25 +9,44 @@
   import { onMount } from 'svelte';
   import { ApplicationConfig } from '../../../configs/ApplicationConfig.const';
   import { page } from '$app/stores';
-  import type { Dish } from '$types';
+  import type { Dish, DishProduct, Recipe } from '$types';
   import TextPlaceholder from '../../../components/Loaders/TextPlaceholder.svelte';
   import { fade } from 'svelte/transition';
   import Profile from '../../../stores/Profile.store';
   import type { AuthorizedProfile } from '../../../stores/Profile.store';
 
   onMount(async () => {
-    const response = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}`)
+    const dishResponse = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}`)
       .then((response) => response.json())
       .catch(() => {
         isLoading = false;
         isPanicked = true;
       });
 
-    dish = response;
+    const dishProducts = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}/products`)
+      .then((response) => response.json())
+      .catch(() => {
+        isLoading = false;
+        isPanicked = true;
+      });
+      
+    const recipeREsponse = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}/recipe`)
+      .then((response) => response.json())
+      .catch(() => {
+        isLoading = false;
+        isPanicked = true;
+      });
+
+    dish = dishResponse;
+    ingredients = dishProducts;
+    recipe = recipeREsponse;
+    
     isLoading = false;
   });
 
   let dish: Dish;
+  let ingredients: Array<DishProduct>;
+  let recipe: Recipe;
 
   $: profile = $Profile as AuthorizedProfile;
 
@@ -62,15 +81,18 @@
         </div>
       { :else }
         <div in:fade class="w-full md:w-1/2 relative">
+          <div class="rounded-xl w-full pt-[60%]" style="background-image: url('{ dish.imageUrl }'); background-size: cover; background-position: center;"></div>
+        </div>
+        <!-- <div in:fade class="w-full md:w-1/2 relative">
           <div class="rounded-xl w-full pt-[60%]" style="background-image: url('https://www.wikihow.com/images_en/thumb/7/79/Care-for-a-Husky-Step-3-Version-2.jpg/v4-460px-Care-for-a-Husky-Step-3-Version-2.jpg.webp'); background-size: cover;"></div>
         
-          <!-- Slides -->
+          Slides
           <div class="absolute inset-x-0 bottom-0 pb-4 pt-8 bg-gradient-to-t from-slate-800 rounded-b-xl flex items-center justify-center">
             { #each [1,2,3,4] as _ }
               <div class="{ _ == 1 ? "w-4 h-4" : "w-2 h-2 opacity-50" } rounded-full bg-white mx-4"></div>
             { /each }
           </div>
-        </div>
+        </div> -->
       { /if }
 
       <!-- Texts -->
@@ -132,7 +154,7 @@
                 <svelte:component this={ isBookmarked ? CodiconTrash : CodiconBookmark } class="text-white w-5 h-5" />
 
                 <p class="text-white text-sm ml-1">{ isBookmarked ? "Remove from bookmarks" : "Bookmark" }</p>
-            </button>
+              </button>
             { /if }
 
             { #if isLoading }
@@ -162,22 +184,17 @@
 
         <!-- Ingredients themselves -->
         <div class="w-full grid grid-cols-3 md:grid-cols-5 gap-4 mt-6">
-          { #each [1,2,3,4,5,6,7,8,9,10,11,12] as _ }
-            <div class="rounded-xl flex-1 p-4 bg-gray-100 flex flex-col md:flex-row items-center justify-center">
+          { #each ingredients as ingredient }
+            <div in:fade class="rounded-xl flex-1 p-4 bg-gray-100 flex flex-col items-start justify-center">
               <!-- Image -->
-              <img src="https://em-content.zobj.net/thumbs/120/apple/325/chicken_1f414.png" class="w-10 md:w-8" alt="">
+              <div class="w-full flex justify-center">
+                <img src="{ ingredient.imageUrl }" class="w-16 h-16 rounded-full object-cover" alt="">
+              </div>
 
               <!-- Name -->
-              <div class="mt-4 md:mt-0 md:ml-4">
-                <div class="flex items-center">
-                  <h1 class="text-lg font-medium">Chicken</h1>
-                  
-                  <!-- Desktop-only -->
-                  <div class="hidden md:block ml-2 rounded-xl px-2 py-1 w-fit bg-gradient-to-tr from-green-400 to-lime-500">
-                    <p class="text-xs text-white">Есть</p>
-                  </div>
-                </div>
-                <p class="text-sm opacity-60">1/2 часть</p>
+              <div class="mt-4 text-left flex-1">
+                <p class="text-sm font-medium opacity-60">{ ingredient.count }</p>
+                <h1 class="text-lg font-medium">{ ingredient.name }</h1>
               </div>
             </div>
           { /each }
@@ -185,6 +202,30 @@
       </section>
 
       <!-- Recipe itself -->
+      <section in:fade class="mt-16">
+        <div class="rounded-xl px-4 py-2 bg-gray-100 flex items-center w-fit">
+          <img src="https://em-content.zobj.net/thumbs/120/apple/325/memo_1f4dd.png" class="w-7 h-7" alt="">
+
+          <p class="text-lg font-medium ml-3">Recipe</p>
+        </div>
+
+        <!-- Steps themselves -->
+        { #each recipe.steps as step }
+          { @const stepIndex = recipe.steps.findIndex((x) => x == step) }
+
+          <div class="mt-4 w-full rounded-xl py-4 px-6 bg-gray-100 relative">
+            <!-- Step number -->
+            <div class="absolute top-0 left-[-20px]">
+              <div class="rounded-full w-10 h-10 flex items-center justify-center bg-sky-400 opacity-50">
+                <p class="text-md font-medium text-white">{ stepIndex +1 }</p>
+              </div>
+            </div>
+
+            <h1 class="text-lg font-medium">{ step.title }</h1>
+            <p class="text-md opacity-80">{ step.description }</p>
+          </div>
+        { /each }
+      </section>
     { /if }
   </div>
 </div>
