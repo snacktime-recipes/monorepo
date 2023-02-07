@@ -15,7 +15,6 @@ export default class Category extends BaseModel {
   @hasMany(() => Dish)
   public dishes: HasMany<typeof Dish>
 
-
   @column({ serializeAs: "imageUrl" })
   public imageUrl: string | null
 
