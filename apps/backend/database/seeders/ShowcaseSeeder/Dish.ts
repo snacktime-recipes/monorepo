@@ -107,5 +107,15 @@ export default class extends BaseSeeder {
     await dish.save();
     await dish.related('recipe').save((await Recipe.find(10))!);
 
+    dish = await Dish.create({
+      id: 11,
+      imageUrl: "https://www.sidechef.com/recipe/afa23dbc-13d2-4274-9d7a-e75ddfb564b5.jpg",
+      name: "Valentine’s Day Gluten-Free Chocolate Chip Cookies",
+      description: 'These Valentines Day Gluten Free Chocolate Chip Cookies are easy and quick to make, dairy-free, gluten-free, and grain-free, loaded with sunflower seed butter and heart candies!'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(11))!);
+
   }
 }
