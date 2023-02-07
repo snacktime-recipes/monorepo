@@ -74,10 +74,38 @@ export default class extends BaseSeeder {
       await recipe.save();
   
       steps = [
-          {
-              title: '',
-              description: ''
-          },
+            {
+                title: 'Stack the Pancetta',
+                description: 'Stack the Pancetta (3/4 cup) and using a very sharp knife, cut the stack into a 1/4 inch dice.',
+            },
+            {
+                title: 'Heat the Pancetta',
+                description: 'Heat a large, heavy-bottomed pan over medium heat and add the Olive Oil (1 Tbsp) . When the oil is hot, add the pancetta and cook for 8 to 10 minutes, stirring occasional until lightly golden.'
+            },
+            {
+                title: 'Add the Garlic',
+                description: 'Then add the Garlic (4 cloves) , stirring constantly, cooking for 1 more minute. Turn off the heat and set aside. Do not pour off the fat, as it adds to the flavor and texture of the dish.'
+            },
+            {
+                title: 'Beat the large Egg',
+                description: 'Beat the large Eggs (3) in a bowl, adding the Kosher Salt (1/2 tsp) , Ground Black Pepper (1/4 tsp) , and Pecorino Romano Cheese (1 cup) . Whisk until incorporated. Set the bowl aside to allow the eggs to come to room temperature.'
+            },
+            {
+                title: 'Add the Spaghetti',
+                description: 'Bring a large pot of generously salted water to a boil. Add the dried Spaghetti (1 lb) , and cook 7 -9 minutes, or until al dente. Before you drain the pasta, reserve 1/2 cup of pasta water.'
+            },
+            {
+                title: 'Add the drained pasta to the pan with the pancetta.',
+                description: 'Toss until well mixed. Add the egg mixture and 1/4 cup of the reserved pasta water, and quickly toss to coat the pasta. Toss quickly and constantly so the egg creates a creamy sauce.'
+            },
+            {
+                title: 'Add Ground Nutmeg',
+                description: 'If using, add a pinch of Ground Nutmeg (1 pinch) and toss to combine.'
+            },
+            {
+                title: 'Bon appetite',
+                description: 'Garnish the dish with extra Pecorino and Fresh Parsley (1 handful) . Serve immediately.'
+            },
       ];
   
       // ids 7-14
