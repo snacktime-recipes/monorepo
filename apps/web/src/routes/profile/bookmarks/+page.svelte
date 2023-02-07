@@ -41,7 +41,7 @@
                         )}
 
                         { #await dishFetcher() then dish }
-                            <DishCard dark data={dish} />
+                            <DishCard dark enableFullscreenBookmarkButton disableLikeButton data={dish} />
                         { /await }
                     { /each }
                 </div>
