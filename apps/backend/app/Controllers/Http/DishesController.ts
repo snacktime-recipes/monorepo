@@ -32,17 +32,16 @@ export default class DishesController {
         return dish;
     };
 
-    public async like({ auth, params, response }: HttpContextContract){
-        try{
+    public async like({ auth, params, response, request }: HttpContextContract){
+        try {
             await auth.use('web').authenticate()
-        }
-        catch{
+        } catch {
             return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
+        };
         
         const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
+            .where('id', params.id)
+            .preload('userActivity');
     
         if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
         if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
@@ -50,27 +49,25 @@ export default class DishesController {
         const searchCriteria = {
             dishId: params.id,
             profileId: auth.user!.id
-          }
+        };
           
         const savePayload = {
-            isLiked: true
-        }
+            isLiked: request.url().endsWith("/unlike") ? false : true
+        };
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
+    };
 
-    }
-
-    public async unLike({ auth, params, response }: HttpContextContract){
-        try{
+    public async bookmark({ auth, params, response, request }: HttpContextContract){
+        try {
             await auth.use('web').authenticate()
-        }
-        catch{
+        } catch {
             return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
+        };
         
         const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
+            .where('id', params.id)
+            .preload('userActivity');
     
         if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
         if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
@@ -78,68 +75,14 @@ export default class DishesController {
         const searchCriteria = {
             dishId: params.id,
             profileId: auth.user!.id
-          }
-          
-        const savePayload = {
-            isLiked: false
-        }
-       
-        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-
-    }
-
-    public async bookmark({ auth, params, response }: HttpContextContract){
-        try{
-            await auth.use('web').authenticate()
-        }
-        catch{
-            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
+        };
         
-        const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
-    
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const searchCriteria = {
-            dishId: params.id,
-            profileId: auth.user!.id
-          }
-          
         const savePayload = {
-            isBookmarked: true
-        }
+            isBookmarked: request.url().endsWith("/unbookmark") ? false : true
+        };
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-    }
-    public async unBookmark({ auth, params, response }: HttpContextContract){
-        try{
-            await auth.use('web').authenticate()
-        }
-        catch{
-            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
-        
-        const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
-    
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const searchCriteria = {
-            dishId: params.id,
-            profileId: auth.user!.id
-          }
-          
-        const savePayload = {
-            isBookmarked: false
-        }
-       
-        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-    }
+    };
 
     public async getRecipe({ response, params }: HttpContextContract) {
         const dishes = await Dish
