@@ -20,7 +20,7 @@
 
 import './routes/products';
 import './routes/dishes';
-import './routes/auth';
+import './routes/profile';
 import './routes/socialAuth';
 import './routes/categories';
 import './routes/news';

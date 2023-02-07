@@ -1,33 +1,36 @@
 import { test } from "@japa/runner";
 import ErrorType from "Types/ErrorType.enum";
+import { DishProductSchema } from "../_schemas/Dish.schema";
 
 test.group('Dishes -> FetchProducts', (group) => {
   group.tap((test) => test.tags(["dishes"]));
 
   /*
   | Route: GET /dishes/:id/products
-  | Returns: array of Product
-  | Model: Product (App/Models/Product)
-  | Schema: [
-  |   {
-  |     id: number,
-  |     name: string,
-  |     imageUrl: string,
-  |     createdAt: string,
-  |     updatedAt: string,
-  |   } 
-  | ]
+  | Schema: ./_schemas/Dish.schema.ts
+  | Description:
+  |   Returns array of Products, that are needed in this
+  |   recipe.
   */
-  test('get products of a dish\'s recipe', async ({ client }) => {
+  test('get products of a dish\'s recipe', async ({ client, expect }) => {
     const response = await client.get('/dishes/1/products');
     const { response: { body } } = response;
 
     response.assertStatus(200);
 
     response.assert?.isArray(body);
-    response.assert?.properties(body[0], ["id", "name", "count", "imageUrl", "createdAt", "updatedAt"]);
+    expect(body).toEqual(
+      expect.arrayContaining([ DishProductSchema ])
+    );
   });
 
+  /*
+  | Route: GET /dishes/:id/products
+  | Schema: ...
+  | Description:
+  |   Returns 404 status code with { error: ErrorType.NOT_FOUND, entity: "DISH" } payload,
+  |   that means that Dish with this id is not found.
+  */
   test('try to get products of a nonexistent dish', async ({ client }) => {
     const response = await client.get('/dishes/:bruh/products');
     const { response: { body } } = response;
@@ -39,6 +42,12 @@ test.group('Dishes -> FetchProducts', (group) => {
     });
   });
 
+  /*
+  | Route: get /dishes/:id/products
+  | Description:
+  |   Returns empty array, because dish with this id
+  |   does not have any products assigned
+  */
   test('try to fetch empty products', async ({ client }) => {
     const response = await client.get('/dishes/2/products');
     const { response: { body } } = response;

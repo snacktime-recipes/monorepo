@@ -26,16 +26,13 @@ export default class Profile extends BaseModel {
   @column()
   public avatar: string
 
-  @hasMany(() => Category)
-  public categories: HasMany<typeof Category>
-
   @hasMany(() => ProfileProduct)
   public products: HasMany<typeof ProfileProduct>
 
   @hasMany(() => ProfileDishActivity, { serializeAs: null })
   public myDishesActivivty: HasMany<typeof ProfileDishActivity>
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken: string | null
 
   @column.dateTime({ autoCreate: true, serializeAs: 'createdAt' })

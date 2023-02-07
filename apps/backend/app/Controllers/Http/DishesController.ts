@@ -13,45 +13,61 @@ export default class DishesController {
             .preload('userActivity')
             .where('id', id);
 
-        if (dishes.length != 1) throw new Error("Not found");
+        if (dishes.length != 1) return null;
         const dish = dishes[0];
 
         return {
             ...dish.serialize(),
+            likedBy: dish.userActivity
+                .filter((activity) => activity.isLiked)
+                .map((activity) => activity.profileId) ?? [],
             meta: await dish.computeMeta(),
         };
     };
     
     public async fetch({ response, params }: HttpContextContract) {
+        const dish = await DishesController.fetchById(params.id);
+        
+        if (!dish) return response.status(404).send({ error: ErrorType.NOT_FOUND });
+        return dish;
+    };
+
+    public async like({ auth, params, response, request }: HttpContextContract){
+        try {
+            await auth.use('web').authenticate()
+        } catch {
+            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
+        };
+        
         const dishes = await Dish.query()
             .where('id', params.id)
             .preload('userActivity');
-        
+    
         if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
         if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
 
-        const dish = dishes[0];
-
-        return {
-            ...dish?.serialize(),
-            meta: await dish?.computeMeta(),
-            likedby: dish.userActivity.map((activity)=>{
-                if(activity.isLiked)
-                return {id: activity.profileId}}),
-        }
+        const searchCriteria = {
+            dishId: params.id,
+            profileId: auth.user!.id
+        };
+          
+        const savePayload = {
+            isLiked: request.url().endsWith("/unlike") ? false : true
+        };
+       
+        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
     };
 
-    public async like({ auth, params, response }: HttpContextContract){
-        try{
+    public async bookmark({ auth, params, response, request }: HttpContextContract){
+        try {
             await auth.use('web').authenticate()
-        }
-        catch{
+        } catch {
             return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
+        };
         
         const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
+            .where('id', params.id)
+            .preload('userActivity');
     
         if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
         if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
@@ -59,96 +75,14 @@ export default class DishesController {
         const searchCriteria = {
             dishId: params.id,
             profileId: auth.user!.id
-          }
-          
-        const savePayload = {
-            isLiked: true
-        }
-       
-        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-
-    }
-
-    public async unLike({ auth, params, response }: HttpContextContract){
-        try{
-            await auth.use('web').authenticate()
-        }
-        catch{
-            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
+        };
         
-        const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
-    
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const searchCriteria = {
-            dishId: params.id,
-            profileId: auth.user!.id
-          }
-          
         const savePayload = {
-            isLiked: false
-        }
+            isBookmarked: request.url().endsWith("/unbookmark") ? false : true
+        };
        
         return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-
-    }
-
-    public async bookmark({ auth, params, response }: HttpContextContract){
-        try{
-            await auth.use('web').authenticate()
-        }
-        catch{
-            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
-        
-        const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
-    
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const searchCriteria = {
-            dishId: params.id,
-            profileId: auth.user!.id
-          }
-          
-        const savePayload = {
-            isBookmarked: true
-        }
-       
-        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-    }
-    public async unBookmark({ auth, params, response }: HttpContextContract){
-        try{
-            await auth.use('web').authenticate()
-        }
-        catch{
-            return response.status(401).send({error: ErrorType.UNAUTHORIZED});
-        }
-        
-        const dishes = await Dish.query()
-        .where('id', params.id)
-        .preload('userActivity');
-    
-        if (dishes.length <= 0) return response.status(404).send({ error: ErrorType.NOT_FOUND });
-        if (dishes.length > 1) return response.status(500).send({ error: ErrorType.SERVER_ERROR });
-
-        const searchCriteria = {
-            dishId: params.id,
-            profileId: auth.user!.id
-          }
-          
-        const savePayload = {
-            isBookmarked: false
-        }
-       
-        return await ProfileDishActivity.updateOrCreate( searchCriteria, savePayload ); 
-    }
+    };
 
     public async getRecipe({ response, params }: HttpContextContract) {
         const dishes = await Dish
@@ -164,7 +98,15 @@ export default class DishesController {
         if (dish.recipe == null)
             return response.status(404).send({ error: ErrorType.NOT_FOUND, entity: "RECIPE" });
 
-        return dish.recipe;
+        return {
+            ...dish.recipe.serialize(),
+            steps: dish.recipe.steps.map((step) => ({
+                id: step.id,
+                title: step.title,
+                description: step.description,
+                videoUrl: step.videoUrl,
+            })),
+        };
     }
 
     public async getProducts({ params, response }: HttpContextContract) {
@@ -190,30 +132,17 @@ export default class DishesController {
     }
 
     public async paginate({ request }: HttpContextContract) {
-        const page = request.qs().page ?? 1;
-        const itemsPerPage = 10;
+        const page = request.input("page") ?? 1;
+        const itemsPerPage = request.input("itemsPerPage") ?? 10;
 
         const paginated = await Dish.query()
-            .preload('userActivity')
             .paginate(page, itemsPerPage);
+
         paginated.baseUrl("/dishes");
-
-        const serializedDishes: Array<DishType> = [];
-
-        for (let dish of paginated) {
-            serializedDishes.push({
-                ...dish.serialize() as DishType,
-                meta: await dish.computeMeta(),
-                likedby: dish.userActivity.map((activity)=>{
-                    if(activity.isLiked)
-                    return {id: activity.profileId}}),
-                
-            });
-        };
 
         return {
             ...paginated.serialize(),
-            data: serializedDishes,
+            data: await Promise.all(paginated.map((dish) => DishesController.fetchById(dish.id))),
         };
     };
 
