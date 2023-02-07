@@ -20,7 +20,7 @@ export default Env.rules({
 	APP_KEY: Env.schema.string(),
 	APP_NAME: Env.schema.string(),
   	DRIVE_DISK: Env.schema.enum(['local'] as const),
-	NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
+	NODE_ENV: Env.schema.enum(['development', 'production', 'test', 'showcase'] as const),
 	SESSION_DRIVER: Env.schema.string(),
 	COOKIE_DOMAIN: Env.schema.string(),
 	SEARCH_API_KEY: Env.schema.string(),
