@@ -13,7 +13,7 @@ export default class extends BaseSchema {
 
       // Relationships
       table
-        .integer('recipeId')
+        .integer('recipe_id')
         .unsigned()
         .references('recipes.id')
         .onDelete('CASCADE')

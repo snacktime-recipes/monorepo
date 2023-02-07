@@ -22,7 +22,10 @@
     "@adonisjs/core",
     "@adonisjs/lucid",
     "@adonisjs/auth",
-    "@adonisjs/session"
+    "@adonisjs/session",
+    "./providers/TypesenseProvider",
+    "@adonisjs/attachment-lite",
+    "@adonisjs/ally"
   ],
   "metaFiles": [
     {

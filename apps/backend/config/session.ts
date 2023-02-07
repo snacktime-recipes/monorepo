@@ -85,9 +85,14 @@ export default sessionConfig({
   |
   */
   cookie: {
+    domain: Env.get('COOKIE_DOMAIN'),
     path: '/',
-    httpOnly: true,
     sameSite: false,
+    ...Env.get('NODE_ENV') == 'development' ? {
+      httpOnly: true,
+    } : {
+      secure: true,
+    }
   },
 
   /*

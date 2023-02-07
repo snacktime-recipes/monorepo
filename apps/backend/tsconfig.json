@@ -49,7 +49,9 @@
       "@japa/preset-adonis/build/adonis-typings",
       "@adonisjs/lucid",
       "@adonisjs/auth",
-      "@adonisjs/session"
+      "@adonisjs/session",
+      "@adonisjs/attachment-lite",
+      "@adonisjs/ally"
     ]
   }
 }

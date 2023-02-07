@@ -1,0 +1,50 @@
+name: Deploy to development
+on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: ["dev"]
+    types:
+      - completed
+jobs:
+  build-images:
+    timeout-minutes: 360
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ["backend", "web"]
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: registry.odzi.dog/snacktime-recipes/${{ matrix.app }}:latest
+          context: .
+          file: ./apps/${{ matrix.app }}/Dockerfile
+          platforms: |
+            linux/arm64
+
+  deploy-manifests:
+    runs-on: ubuntu-latest
+    needs: build-images
+    steps:
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Update kubectl context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Deploy _dev manifests
+        uses: azure/k8s-deploy@v4
+        with:
+          namespace: snacktime-recipes
+          manifests: |
+            deploy/_dev

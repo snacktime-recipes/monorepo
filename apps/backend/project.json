@@ -13,9 +13,10 @@
         },
         "build": {
             "executor": "nx:run-commands",
+            "defaultConfiguration": "production",
             "configurations": {
                 "production": {
-                    "command": "node ace build --production",
+                    "command": "node ace build --production --ignore-ts-errors",
                     "cwd": "apps/backend"
                 }
             }
@@ -25,6 +26,34 @@
             "options": {
                 "command": "node ace test",
                 "cwd": "apps/backend"
+            },
+            "configurations": {
+                "auth": {
+                    "command": "node ace test --tags=auth"
+                },
+                "profile": {
+                    "command": "node ace test --tags=profile"
+                },
+                "dishes": {
+                    "command": "node ace test --tags=dishes"
+                }
+            }
+        },
+        "migration": {
+            "executor": "nx:run-commands",
+            "options": {
+                "cwd": "apps/backend"
+            },
+            "configurations": {
+                "refresh": {
+                    "command": "node ace migration:refresh"
+                },
+                "run":{
+                    "command": "node ace migration:run"
+                },
+                "seed": {
+                    "command": "node ace db:seed"
+                }
             }
         }
     },

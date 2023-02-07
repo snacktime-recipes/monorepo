@@ -8,8 +8,14 @@ export default class extends BaseSchema {
       table.increments('id').primary()
 
       table.string('name')
+      table.string('image_url').defaultTo("")
       table.string('description').nullable()
 
+      table
+        .integer('category_id')
+        .unsigned()
+        .references('categories.id')
+        .onDelete('CASCADE')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

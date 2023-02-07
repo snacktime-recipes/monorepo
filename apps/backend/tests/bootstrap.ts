@@ -7,7 +7,8 @@
 
 import type { Config } from '@japa/runner'
 import TestUtils from '@ioc:Adonis/Core/TestUtils'
-import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-adonis'
+import { assert, specReporter, apiClient } from '@japa/preset-adonis';
+import { expect } from '@japa/expect';
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ import { assert, runFailedTests, specReporter, apiClient } from '@japa/preset-ad
 | Feel free to remove existing plugins or add more.
 |
 */
-export const plugins: Required<Config>['plugins'] = [assert(), apiClient()]
+export const plugins: Required<Config>['plugins'] = [assert(), apiClient(), expect()]
 
 /*
 |--------------------------------------------------------------------------
@@ -49,9 +50,6 @@ export const reporters: Required<Config>['reporters'] = [specReporter()]
 export const runnerHooks: Pick<Required<Config>, 'setup' | 'teardown'> = {
   setup: [
     () => TestUtils.ace().loadCommands(),
-    () => TestUtils.db().truncate(),
-    () => TestUtils.db().migrate(),
-    () => TestUtils.db().seed(),
   ],
   teardown: [],
 }
