@@ -2,12 +2,17 @@
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import CodiconHeart from '~icons/codicon/heart';
+    import CodiconHeartFilled from '~icons/codicon/heart-filled';
     import TextPlaceholder from '../../components/Loaders/TextPlaceholder.svelte';
     import { ApplicationConfig } from '../../configs/ApplicationConfig.const';
     import type { Dish } from '$types';
-  import { goto } from '$app/navigation';
+    import { goto } from '$app/navigation';
+    import Profile from '../../stores/Profile.store';
+    import type { AuthorizedProfile } from '../../stores/Profile.store';
 
     let items: Array<Dish> = [];
+
+    $: profile = $Profile as AuthorizedProfile;
 
     onMount(async () => {
         const response = await fetch(`${ApplicationConfig.apiUrl}/dishes?itemsPerPage=4`)
@@ -49,6 +54,8 @@
                 { /each }
             { :else }
                 { #each items as dish }
+                    { @const isLiked = profile.likes?.includes(dish.id) }
+                    
                     <button on:click={() => {
                         goto(`/dish/${ dish.id }`);
                     }} class="snap-center w-full h-full md:w-1/2 md:h-1/2 p-2">
@@ -62,7 +69,7 @@
                                 <!-- Tags and popularity -->
                                 <div class="flex items-stretch gap-2">
                                     <div class="rounded-xl flex items-center px-2 py-1.5 bg-gradient-to-r from-yellow-300 to-amber-400">
-                                        <CodiconHeart class="w-4 h-4 text-white mr-1" />
+                                        <svelte:component this={ isLiked ? CodiconHeartFilled : CodiconHeart } class="w-4 h-4 text-white mr-1" />
                                         
                                         <p class="text-white text-xs">{ dish.likedBy?.length ?? 0 } likes</p>
                                     </div>

@@ -83,7 +83,7 @@
             <div class="w-full mt-6 flex items-center justify-center">
                 <!-- Previous page -->
                 <button on:click={() => {
-                    if (currentPage > 1) fetchByPageNumber(currentPage - 1);
+                    if (currentPage > 1 && !isSearching) fetchByPageNumber(currentPage - 1);
                 }} class="rounded-xl px-4 py-2 bg-white { currentPage > 1 ? "hover:bg-gray-200" : "cursor-not-allowed opacity-50" }  transition duration-200">
                     <CodiconArrowLeft class="w-5 h-5 text-black" />
                 </button>
@@ -93,7 +93,7 @@
 
                 <!-- Next page -->
                 <button on:click={() => {
-                    if (currentPage < pagesCount) fetchByPageNumber(currentPage + 1);
+                    if (currentPage < pagesCount && !isSearching) fetchByPageNumber(currentPage + 1);
                 }} class="rounded-xl px-4 py-2 bg-white { currentPage < pagesCount ? "hover:bg-gray-200" : "cursor-not-allowed opacity-50" }  transition duration-200">
                     <CodiconArrowRight class="w-5 h-5 text-black" />
                 </button>

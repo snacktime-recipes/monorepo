@@ -7,7 +7,7 @@
 <!-- Search  -->
 <div class="w-full px-4">
     <!-- Categories -->
-    <CategoriesHero />
+    <!-- <CategoriesHero /> -->
 
     <!-- Dishes -->
     <SearchableDishes disableCategories />

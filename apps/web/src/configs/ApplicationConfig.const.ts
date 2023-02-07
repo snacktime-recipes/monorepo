@@ -11,9 +11,10 @@ const emojis = [
 export const ApplicationConfig = {
     // Backend information
     apiUrl: "https://api.dev.snacktime.recipes",
-
+    
     // Theme information
     theme: {
-        logo: emojis[Math.floor(Math.random() * emojis.length)],
+        // logo: emojis[Math.floor(Math.random() * emojis.length)],
+        logo: "https://assets.k8s.odzi.dog/snacktime/logo.svg",
     }
 };

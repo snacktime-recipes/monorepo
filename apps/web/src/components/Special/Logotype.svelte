@@ -23,9 +23,9 @@
 { :else }
     <svelte:element this={ href == null ? "span" : "a" } {href} class="{ centered ? "justify-center" : "" } flex items-center { classNames }">
         { #if withIcon }
-            <img src={ typeof withIcon == "string" ? withIcon : ApplicationConfig.theme.logo} class="h-6" alt="">
+            <img src={ typeof withIcon == "string" ? withIcon : ApplicationConfig.theme.logo} class="h-10" alt="">
         { /if }
 
-        <h1 class="text-xl font-bold ml-2">snacktime</h1>
+        <h1 class="text-xl font-bold">snacktime</h1>
     </svelte:element>
 { /if }

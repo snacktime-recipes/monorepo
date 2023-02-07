@@ -15,6 +15,34 @@
   import Profile from '../../../stores/Profile.store';
   import type { AuthorizedProfile } from '../../../stores/Profile.store';
 
+  async function bookmark() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', '*/*');
+
+    await fetch(`${ApplicationConfig.apiUrl}/dishes/${dish.id}/${ isBookmarked ? "unbookmark" : "bookmark" }`, {
+        method: 'POST',
+        headers,
+        credentials: 'include'
+    });
+    
+    await Profile.refetch();
+  };
+
+  async function like() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Accept', '*/*');
+
+    await fetch(`${ApplicationConfig.apiUrl}/dishes/${dish.id}/${ isLiked ? "unlike" : "like" }`, {
+        method: 'POST',
+        headers,
+        credentials: 'include'
+    });
+
+    await Profile.refetch();
+  };
+
   onMount(async () => {
     const dishResponse = await fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}`)
       .then((response) => response.json())
@@ -50,8 +78,8 @@
 
   $: profile = $Profile as AuthorizedProfile;
 
-  $: isLiked = profile.likes?.includes(dish.id);
-  $: isBookmarked = profile.bookmarks?.includes(dish.id);
+  $: isLiked = profile.likes?.includes(dish?.id);
+  $: isBookmarked = profile.bookmarks?.includes(dish?.id);
   
   let isPanicked = false;
   let isLoading = true;
@@ -149,7 +177,7 @@
               <TextPlaceholder class="w-full h-10" />
             { :else }
               <button on:click|preventDefault|stopPropagation={() => {
-                // bookmark();
+                bookmark();
               }} class="w-full py-2 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center hover:from-sky-600 hover:to-indigo-600 transition ease-in-out duration-200">
                 <svelte:component this={ isBookmarked ? CodiconTrash : CodiconBookmark } class="text-white w-5 h-5" />
 
@@ -161,7 +189,7 @@
               <TextPlaceholder class="w-full h-10" />
             { :else }
               <button on:click|preventDefault|stopPropagation={() => {
-                // like();
+                like();
               }} class="w-full py-2 rounded-full bg-gradient-to-tr from-red-500 to-pink-500 flex items-center justify-center hover:from-red-600 hover:to-pink-600 transition ease-in-out duration-200">
                   <svelte:component this={isLiked ? CodiconHeartFilled : CodiconHeart} class="text-white w-5 h-5" />
 
@@ -185,15 +213,18 @@
         <!-- Ingredients themselves -->
         <div class="w-full grid grid-cols-3 md:grid-cols-5 gap-4 mt-6">
           { #each ingredients as ingredient }
-            <div in:fade class="rounded-xl flex-1 p-4 bg-gray-100 flex flex-col items-start justify-center">
+            <div in:fade class="rounded-xl flex-1 p-4 bg-gray-100 flex flex-col md:flex-row items-start md:items-center justify-center">
               <!-- Image -->
-              <div class="w-full flex justify-center">
+              <div class="w-full flex-1 flex justify-center">
                 <img src="{ ingredient.imageUrl }" class="w-16 h-16 rounded-full object-cover" alt="">
               </div>
 
               <!-- Name -->
-              <div class="mt-4 text-left flex-1">
-                <p class="text-sm font-medium opacity-60">{ ingredient.count }</p>
+              <div class="mt-4 text-left md:text-center md:w-2/3">
+                { #if ingredient.count != null }
+                  <p class="text-sm font-medium opacity-60">{ ingredient.count }</p>
+                { /if }
+
                 <h1 class="text-lg font-medium">{ ingredient.name }</h1>
               </div>
             </div>

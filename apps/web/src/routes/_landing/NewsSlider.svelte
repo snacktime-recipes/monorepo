@@ -5,6 +5,7 @@
     import Circle from "../../components/Loaders/Circle.svelte";
     import { fade } from "svelte/transition";
     import CodiconLinkExternal from '~icons/codicon/link-external';
+  import TextPlaceholder from "../../components/Loaders/TextPlaceholder.svelte";
 
     $: currentEntry = news.find((x) => x.id == currentEntryId);
 
@@ -44,7 +45,20 @@
     <div class="w-full h-full p-2">
         <div class="w-full h-full px-8 py-12 lg:py-0 flex flex-col justify-center { isLoading ? "bg-white" : "bg-gradient-to-tr from-sky-400 via-violet-500 to-fuchsia-400" } { isLoading || isPanicked ? "items-center" : "items-start" } transition-all duration-700 rounded-xl shadow-xl relative">
             { #if isLoading }
-                <Circle size="20" />
+                <div class="flex gap-2">
+                    <TextPlaceholder class="w-24 h-8" />
+                    <TextPlaceholder class="w-16 h-8" />
+                </div>
+
+                <div class="w-2/3 flex items-center justify-center gap-2 flex-wrap mt-6">
+                    <TextPlaceholder class="w-16 h-6" />
+                    <TextPlaceholder class="w-24 h-6" />
+                    <TextPlaceholder class="w-32 h-6" />
+                    <TextPlaceholder class="w-12 h-6" />
+                    <TextPlaceholder class="w-40 h-6" />
+                    <TextPlaceholder class="w-24 h-6" />
+                    <TextPlaceholder class="w-8 h-6" />
+                </div>
             { :else }
                 { #if isPanicked } 
                     <div class="text-center text-white">

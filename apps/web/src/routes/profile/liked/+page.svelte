@@ -28,12 +28,12 @@
     { :else }
         { #if isPanicked }
             <div in:fade class="w-full flex items-center justify-center py-20 text-center">
-                <h1 class="text-xl font-bold">Error while fetching news</h1>
-                <p class="text-sm opacity-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque, iusto neque soluta ullam saepe officiis!</p>
+                <h1 class="text-xl font-bold">Error while fetching liked dishes</h1>
+                <p class="text-sm opacity-80">Uh-oh! How unfortunate! You could try again later.</p>
             </div>
         { :else }
             { #if profile.likes.length > 0 }
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                     { #each profile.likes as dishId }
                         { @const dishFetcher = async () => (
                             fetch(`${ApplicationConfig.apiUrl}/dishes/${dishId}`)
@@ -51,7 +51,7 @@
                         <img src="https://em-content.zobj.net/thumbs/120/apple/325/milky-way_1f30c.png" class="w-20" alt="">
 
                         <h1 class="text-2xl font-medium mt-2">Nothing here...</h1>
-                        <p class="text-sm opacity-80">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum ipsa doloribus velit unde rem tenetur sunt, rerum delectus sint nam quos ad veritatis cumque dolorem eaque ex accusamus, neque laudantium deleniti aperiam quibusdam! Vero.</p>
+                        <p class="text-sm opacity-80">It's empty here... I wonder why...</p>
                     </div>
                 </div>
             { /if }
