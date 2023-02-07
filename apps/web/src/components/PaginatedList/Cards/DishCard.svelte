@@ -119,8 +119,8 @@
 }} class="flex-1 rounded-xl { dark ? "bg-gray-100" : "bg-white" } flex flex-col p-4 hover:scale-105 transition ease-in-out duration-200">
     <!-- Image -->
     <div class="relative">
-        <img src="{ dish.imageUrl }" alt="" class="cursor-pointer rounded-xl">
-    
+        <img src="{ dish.imageUrl }" alt="{ dish.name }" class="object-cover w-full h-64 inset-0 cursor-pointer rounded-xl">
+
         <!-- Like button -->
         { #if !disableLikeButton }
             <div class="absolute top-0 right-0 p-3">
@@ -134,7 +134,7 @@
     <!-- Text -->
     <div class="my-4 text-left flex-1">
         <h1 class="text-xl font-bold">{ @html name }</h1>
-        <p class="md:text-sm opacity-60">{ @html description }</p>
+        <p class="md:text-sm opacity-60 line-clamp-4">{ @html description }</p>
     </div>
 
     <!-- Divider -->
