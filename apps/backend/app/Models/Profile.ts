@@ -42,6 +42,13 @@ export default class Profile extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
+  public static async nullableAvatar(profile: Profile) {
+    if (profile.avatar == null && profile.$dirty.avatar == null) {
+      profile.avatar = `https://ui-avatars.com/api/?name=${ profile.username }`;
+    };
+  };
+
+  @beforeSave()
   public static async hashPassword(profile: Profile) {
     if (profile.$dirty.password && profile.password) {
       profile.password = await Hash.make(profile.password)
