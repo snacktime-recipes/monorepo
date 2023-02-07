@@ -1,8 +1,6 @@
-export interface ProfileProduct {
-    id: number,
-    name: string,
-    description?: string,
-    imageUrl: string
+import { Product } from "../Product";
+
+export interface ProfileProduct extends Product {
     count: number,
 };
 export default ProfileProduct;

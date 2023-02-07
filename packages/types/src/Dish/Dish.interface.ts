@@ -1,3 +1,5 @@
+import { Profile } from "../Profile";
+
 interface MetaWithRecipe {
     doRecipeExists: true,
 
@@ -9,19 +11,18 @@ interface MetaWithoutRecipe {
     doRecipeExists: false,
 };
 
-interface ProfiledId{
-    id: number,
-}
-
 export interface Dish {
     id: number,
     name: string,
     imageUrl: string,
     description?: string,
+    categoryId: number,
     meta: MetaWithRecipe | MetaWithoutRecipe,
+
+    likedBy: Array<Profile>,
+    
     createdAt: string,
     updatedAt: string,
-    likedby: Array<ProfiledId | undefined>,
 };
 
 export default Dish;
