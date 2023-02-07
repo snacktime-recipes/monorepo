@@ -123,7 +123,8 @@ export default class DishesController {
         try{
             return dish[0].recipe.products.map((recipeProduct) => ({
                 ...recipeProduct.product.serialize(),
-                count: recipeProduct.productCount
+                count: recipeProduct.productCount,
+                measurement: recipeProduct.measurement,
             }));
         }
         catch{

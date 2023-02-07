@@ -15,6 +15,9 @@ export default class RecipeProduct extends BaseModel {
   @column({ serializeAs: 'productCount' })
   public productCount: number
 
+  @column({ serializeAs: 'measurement' })
+  public measurement: string;
+
   @belongsTo(() => Product)
   public product: BelongsTo<typeof Product>
 

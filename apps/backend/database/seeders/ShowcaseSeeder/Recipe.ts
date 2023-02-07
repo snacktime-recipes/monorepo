@@ -15,7 +15,10 @@ interface RecipeInterface{
     difficulty: RecipeDifficulty,
     steps: Array<StepInterface>,
     productsId: Array<number>,
-    metric: Array<number>
+    metric: Array<{
+        count: number,
+        name: string,
+    }>
 }
 
 
@@ -43,7 +46,10 @@ export default class extends BaseSeeder {
         const product = await Product.find(productId);
         if (!product) return;
   
-        const recipeProduct = await recipe.related('products').create({productCount: metric[iterator]});
+        const recipeProduct = await recipe.related('products').create({
+            productCount: metric[iterator].count,
+            measurement: metric[iterator].name
+        });
         await recipeProduct.related('product').associate(product);
         iterator += 1;
       };
@@ -90,7 +96,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: Array.from({length: 3}, (_, i) => i + 1), //productsIds 1-4
-            metric: [1, 80, 210, 2] //box, g, g, things
+            metric: [{ count: 1, name: "box" }, { count: 80, name: "g" }, { count: 210, name: "g" }, { count: 2, name: "things" }] //box, g, g, things
             },
             {
             id: 2,
@@ -139,7 +145,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [5, 6, 7, 4, 8, 9, 10, 11, 12], //productsIds 3-11
-            metric: [15, 170, 4, 3, 3, 455, 120, 1, 1] //things, ml, cloves, g, g, g, handful, pinch 
+            metric: [{ count: 15, name: "things" }, { count: 170, name: "ml" }, { count: 4, name: "cloves" }, { count: 3, name: "g" }, { count: 3, name: "g" }, { count: 455, name: "g" }, { count: 120, name: "g" }, { count: 1, name: "handful" }, { count: 1, name: "pinch" }] //things, ml, cloves, g, g, g, handful, pinch 
             },
             {
             id: 3,
@@ -168,7 +174,7 @@ export default class extends BaseSeeder {
                 }
             ],
             productsId: [13, 14, 15, 16, 17], //productsIds 12-16
-            metric: [4, 30, 60, 4, 4] //slices, g, ml, slices, slices
+            metric: [{ count: 4, name: "slices" }, { count: 30, name: "g" }, { count: 60, name: "ml" }, { count: 4, name: "slices" }, { count: 4, name: "slices" }] //slices, g, ml, slices, slices
             },
             {
             id: 4,
@@ -192,7 +198,7 @@ export default class extends BaseSeeder {
                 }
             ],
             productsId: [18, 19, 20, 21],
-            metric: [0.25, 15, 45, 1] //thing, ml, g, thing
+            metric: [{ count: 0.25, name: "thing" }, { count: 15, name: "ml" }, { count: 45, name: "g" }, { count: 1, name: "thing" }] //thing, ml, g, thing
             },
             {
             id: 5,
@@ -226,7 +232,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [22, 23, 24, 25, 26, 27, 28, 29, 30],
-            metric: [455, 1, 1, 2, 1, 4, 35, 115, 15] // g, thing, thing, thing, can, g, g, g, ml
+            metric: [{ count: 455, name: "g" }, { count: 1, name: "thing" }, { count: 1, name: "thing" }, { count: 2, name: "thing" }, { count: 1, name: "can" }, { count: 4, name: "g" }, { count: 35, name: "g" }, { count: 115, name: "g" }, { count: 15, name: "ml" }] // g, thing, thing, thing, can, g, g, g, ml
             },
             {
             id: 6,
@@ -255,7 +261,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [4, 5, 31],
-            metric: [4, 30, 1] //things, ml, handful
+            metric: [{ count: 4, name: "things" }, { count: 30, name: "ml" }, { count: 1, name: "handful" }] //things, ml, handful
             },
             {
             id: 7,
@@ -304,7 +310,8 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [32, 33, 34, 35, 36, 37, 38, 39, 40, 27, 42, 43, 44, 45, 46, 47, 23],
-            metric: [1, 4, 15, 1, 2, 3, 3, 3, 5, 3, 2, 1, 6, 15, 30, 6, 0.5] // block, g, ml, can, things, g, g, g, g, g, g, pinch, g, ml, g, thing, thing
+            metric: [{ count: 1, name: "minecraft block" }, { count: 4, name: "g" }, { count: 15, name: "ml" }, { count: 1, name: "can" }, { count: 2, name: "things" }, { count: 3, name: "g" }, { count: 3, name: "g" }, { count: 3, name: "g" }, { count: 5, name: "g" }, { count: 3, name: "g" }, { count: 2, name: "g" }, { count: 1, name: "pinch" }, { count: 6, name: "g" }, { count: 15, name: "ml" }, { count: 30, name: "g" }, { count: 6, name: "thing" }, { count: 0.5, name: "thing" }] 
+            // block, g, ml, can, things, g, g, g, g, g, g, pinch, g, ml, g, thing, thing
             },
             {
             id: 8,
@@ -343,7 +350,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [48, 49, 38, 50, 27, 51, 44, 4, 52], //productsIds 1-4
-            metric: [8, 125, 2, 2, 2, 1, 6, 2, 100] //things, g, g, g, g, g, g, things, g
+            metric: [{ count: 8, name: "things" }, { count: 125, name: "g" }, { count: 2, name: "g" }, { count: 2, name: "g" }, { count: 2, name: "g" }, { count: 1, name: "g" }, { count: 6, name: "g" }, { count: 2, name: "things" }, { count: 100, name: "g" }] //things, g, g, g, g, g, g, things, g
             },
             {
             id: 9,
@@ -397,7 +404,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [49, 20, 44, 4, 41, 2, 53, 54],
-            metric: [250, 4, 2, 3, 500, 30, 65, 100] //g, g, g, things, ml, g, g, g 
+            metric: [{ count: 250, name: "g" }, { count: 4, name: "g" }, { count: 2, name: "g" }, { count: 3, name: "things" }, { count: 500, name: "ml" }, { count: 30, name: "g" }, { count: 65, name: "g" }, { count: 100, name: "g" }] //g, g, g, things, ml, g, g, g 
             },
             {
             id: 10,
@@ -446,7 +453,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [55, 56, 57, 58, 59], 
-            metric: [455, 145, 225, 60, 4] // g, g, g, ml, things
+            metric: [{ count: 455, name: "g" }, { count: 145, name: "g" }, { count: 228, name: "g" }, { count: 60, name: "ml" }, { count: 4, name: "things" }] // g, g, g, ml, things
             },
             {
             id: 11,
@@ -490,7 +497,7 @@ export default class extends BaseSeeder {
                 },
             ],
             productsId: [60, 61, 4, 62, 63, 8, 64, 65], 
-            metric: [320, 125, 1, 5, 4, 6, 85, 50] // g, g, thing, ml, g, g, g, g
+            metric: [{ count: 320, name: "g" }, { count: 125, name: "g" }, { count: 1, name: "thing" }, { count: 5, name: "ml" }, { count: 4, name: "g" }, { count: 6, name: "g" }, { count: 85, name: "g" }, { count: 50, name: "g" }] // g, g, thing, ml, g, g, g, g
             },
     ];
 

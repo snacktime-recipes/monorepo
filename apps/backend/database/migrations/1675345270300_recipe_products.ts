@@ -6,7 +6,9 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+
       table.integer('product_count').defaultTo(1)
+      table.string('measurement').notNullable()
 
       table
         .integer('recipe_id')
