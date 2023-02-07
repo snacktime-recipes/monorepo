@@ -122,7 +122,7 @@
         <img src="{ dish.imageUrl }" alt="{ dish.name }" class="object-cover w-full h-64 inset-0 cursor-pointer rounded-xl">
 
         <!-- Like button -->
-        { #if !disableLikeButton }
+        { #if !disableLikeButton && $Profile.isAuthorized }
             <div class="absolute top-0 right-0 p-3">
                 <button on:click|preventDefault|stopPropagation={() => like()} class="p-3 rounded-full bg-gradient-to-tr from-red-400 to-pink-400">
                     <svelte:component this={ isLiked ? CodiconHeartFilled : CodiconHeart } class="w-6 h-6 text-white" />
@@ -163,7 +163,7 @@
     <!-- Buttons -->
     <div class="mt-5 flex flex-col md:flex-row items-stretch gap-2">
         <!-- Add to favouries -->
-        { #if enableFullscreenBookmarkButton }
+        { #if enableFullscreenBookmarkButton && $Profile.isAuthorized }
             <button on:click|preventDefault|stopPropagation={() => {
                 bookmark();
             }} class="w-full py-2 rounded-full bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center hover:from-sky-600 hover:to-indigo-600 transition ease-in-out duration-200">
@@ -174,7 +174,7 @@
         { /if }
 
         <!-- Fullscreen like button -->
-        { #if enableFullscreenLikeButton }
+        { #if enableFullscreenLikeButton && $Profile.isAuthorized }
             <button on:click|preventDefault|stopPropagation={() => {
                 like();
             }} class="w-full py-2 rounded-full bg-gradient-to-tr from-red-500 to-pink-500 flex items-center justify-center hover:from-red-600 hover:to-pink-600 transition ease-in-out duration-200">
