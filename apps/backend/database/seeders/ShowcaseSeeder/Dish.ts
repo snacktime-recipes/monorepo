@@ -35,7 +35,47 @@ export default class extends BaseSeeder {
     });
 
     await dish.save();
-    await dish.related('recipe').save((await Recipe.find(2))!);
+    await dish.related('recipe').save((await Recipe.find(3))!);
+
+    dish = await Dish.create({
+      id: 4,
+      imageUrl: "https://www.sidechef.com/recipe/7ebccafc-5883-402e-a4da-5bebe4f944f1.jpeg",
+      name: "Watermelon Granita",
+      description: 'This Watermelon Granita has just four ingredients and an is ultra-delicious and simple way to cool off with watermelon. Granitas fall somewhere between slushies and sorbets on the texture scale. Our ultra haute method of making these (literally just scraping and stirring away at it) produces light flakes of crystalline watermelon.'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(4))!);
+
+    dish = await Dish.create({
+      id: 5,
+      imageUrl: "https://www.sidechef.com/recipe/4fc97039-a2f2-4b15-bb47-69b5c7fe5da1.jpg",
+      name: "Ground Beef and Zucchini Taco Skillet",
+      description: 'Any taco fan who loves the combination of zesty flavor and cheesy goodness will be drooling over this mouth-watering Ground Beef and Zucchini Taco Skillet! This is an incredibly fun meal that your whole family will love. The ground beef in this dish is fused with bite-sized pieces of zucchini, peppers, and onions. The mix of ingredients provides a great base for the flavors to shine through. Sprinkled with taco seasoning and plenty of salsa for a kick, you won’t regret adding this delicious dinner option to your weekly rotation.'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(5))!);
+    
+    dish = await Dish.create({
+      id: 6,
+      imageUrl: "https://www.sidechef.com/recipe/558d15a4-6414-4b2f-82fc-d07d863c4f5f.jpg",
+      name: "The Perfect Scrambled Eggs",
+      description: 'These are the creamiest, tastiest and simplest scrambled eggs, they are made in minutes and you won’t believe how good they are. Here’s How To Make Perfect Scrambled Eggs EVERY TIME in 4 simple steps!!'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(6))!);
+    
+    dish = await Dish.create({
+      id: 7,
+      imageUrl: "https://www.sidechef.com/recipe/720470f7-8507-40b6-a20c-78f6ae9dd2b4.jpg",
+      name: "Tofu Chorizo (Soyrizo) Tacos",
+      description: 'Tacos are a great Chicago immigrant food. Chicago is home to the second-largest Mexican population in the states outside of LA) and we are home to some fantastic local products, as a result! (Partnership with Panasonic)'
+    });
+
+    await dish.save();
+    await dish.related('recipe').save((await Recipe.find(7))!);
 
   }
 }
