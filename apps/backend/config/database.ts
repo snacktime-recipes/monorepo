@@ -48,7 +48,10 @@ const databaseConfig: DatabaseConfig = {
         naturalSort: true,
       },
       seeders: {
-        paths: ["./database/seeders/TestingSeeder"]
+        paths: [
+          "./database/seeders/ShowcaseSeeder/Runner",
+          "./database/seeders/TestingSeeder/Runner"
+        ]
       },
       useNullAsDefault: true,
       healthCheck: false,
