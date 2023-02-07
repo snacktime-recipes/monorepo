@@ -166,8 +166,7 @@ export default class DishesController {
 
             if (dish) {
                 serializedDishes.push({
-                    ...dish.serialize() as DishType,
-                    meta: await dish.computeMeta(),
+                    ...await DishesController.fetchById(dish.id),
                     // @ts-ignore
                     highlights: result.highlights?.map((highlight) => ({
                         field: highlight.field,
