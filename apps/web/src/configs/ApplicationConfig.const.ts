@@ -1,15 +1,11 @@
-const cringeLogos = [
-    "https://cdn3.emoji.gg/emojis/4142-head-pat.png",
-    "https://cdn3.emoji.gg/emojis/7243-wtf.png",
-    "https://cdn3.emoji.gg/emojis/6269-lmao.png",
-    "https://cdn3.emoji.gg/emojis/6728-sunglas.png",
-    "https://cdn3.emoji.gg/emojis/5806-clown-trophy.png",
-    "https://cdn3.emoji.gg/emojis/2665-cute-gun.png",
-    "https://cdn3.emoji.gg/emojis/8314-lip-bite.png",
-    "https://cdn3.emoji.gg/emojis/8655-whatthehellphone.png",
-    "https://cdn3.emoji.gg/emojis/3796-moyai-the-rock.png",
-    "https://cdn3.emoji.gg/emojis/9378-fuckboi.png",
-    "https://cdn3.emoji.gg/emojis/4373-amongus-dancing.gif"
+const emojis = [
+    "https://em-content.zobj.net/thumbs/120/apple/325/pot-of-food_1f372.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/shallow-pan-of-food_1f958.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/takeout-box_1f961.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/falafel_1f9c6.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/curry-rice_1f35b.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/shrimp_1f990.png",
+    "https://em-content.zobj.net/thumbs/120/apple/325/bacon_1f953.png",
 ];
 
 export const ApplicationConfig = {
@@ -18,8 +14,6 @@ export const ApplicationConfig = {
 
     // Theme information
     theme: {
-        // todo
-        // make normal logo
-        logo: cringeLogos[Math.floor(Math.random() * cringeLogos.length)],
+        logo: emojis[Math.floor(Math.random() * emojis.length)],
     }
 };
