@@ -190,30 +190,17 @@ export default class DishesController {
     }
 
     public async paginate({ request }: HttpContextContract) {
-        const page = request.qs().page ?? 1;
-        const itemsPerPage = 10;
+        const page = request.input("page") ?? 1;
+        const itemsPerPage = request.input("itemsPerPage") ?? 10;
 
         const paginated = await Dish.query()
-            .preload('userActivity')
             .paginate(page, itemsPerPage);
+
         paginated.baseUrl("/dishes");
-
-        const serializedDishes: Array<DishType> = [];
-
-        for (let dish of paginated) {
-            serializedDishes.push({
-                ...dish.serialize() as DishType,
-                meta: await dish.computeMeta(),
-                likedby: dish.userActivity.map((activity)=>{
-                    if(activity.isLiked)
-                    return {id: activity.profileId}}),
-                
-            });
-        };
 
         return {
             ...paginated.serialize(),
-            data: serializedDishes,
+            data: await Promise.all(paginated.map((dish) => DishesController.fetchById(dish.id))),
         };
     };
 
