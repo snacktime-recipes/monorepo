@@ -31,6 +31,9 @@
                 "auth": {
                     "command": "node ace test --tags=auth"
                 },
+                "profile": {
+                    "command": "node ace test --tags=profile"
+                },
                 "dishes": {
                     "command": "node ace test --tags=dishes"
                 }

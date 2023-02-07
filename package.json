@@ -8,6 +8,7 @@
     "@builder.io/qwik": "0.16.2",
     "@builder.io/qwik-city": "0.0.128",
     "@iconify/json": "^2.2.15",
+    "@japa/expect": "^2.0.1",
     "@nrwl/eslint-plugin-nx": "15.5.2",
     "@nrwl/js": "15.5.2",
     "@nrwl/linter": "15.5.2",
