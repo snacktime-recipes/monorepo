@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  namespace: snacktime-recipes
 spec:
   selector:
     matchLabels:
@@ -14,7 +13,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: registry.odzi.dog/snacktime-recipes/backend:latest
+        image: git.odzi.dog/snacktime/backend:latest
         envFrom:
           - configMapRef:
               name: backend-env

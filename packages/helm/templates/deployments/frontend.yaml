@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-  namespace: snacktime-recipes
 spec:
   selector:
     matchLabels:
@@ -14,7 +13,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: registry.odzi.dog/snacktime-recipes/web:latest
+        image: git.odzi.dog/snacktime/web:latest
         ports:
         - containerPort: 3000
 

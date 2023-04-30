@@ -1,3 +1,0 @@
-# _dev deployment strategy
-
-This deployment strategy is used to deploy development builds to our development infrastructure. You shouldn't *(but we're not stopping you)* use this k8s manifests to deploy snacktime to your infrastructure. You can use [helm repo](https://github.com/snacktime-recipes/monorepo/blob/main/deploy/helm/README.md) to effortlessly deploy your snacktime instance to your kubernetes cluster
